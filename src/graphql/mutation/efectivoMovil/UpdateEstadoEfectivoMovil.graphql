@@ -1,0 +1,7 @@
+mutation UpdateEstadoEfectivoMovil($input: UpdateEstadoEfectivoMovilInput) {
+  UpdateEstadoEfectivoMovil(input: $input) {
+    efectivoMovilId
+    titulo
+    estado
+  }
+}

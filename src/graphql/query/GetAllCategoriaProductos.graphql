@@ -1,0 +1,27 @@
+query GetAllCategoriaProductos($estado: String) {
+  GetAllCategoriaProductos(estado: $estado) {
+    numeroTotal
+    data{
+      categoriaProductoId
+      titulo
+      slug
+      estado
+      keywords
+      descripcion
+      imagenPrincipal{
+        id
+        titulo
+        estado
+        url
+      }
+      imagenSecundaria{
+        id
+        titulo
+        estado
+        url
+      }
+      created_at
+      updated_at
+    }
+  }
+}

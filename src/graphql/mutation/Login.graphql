@@ -1,0 +1,17 @@
+mutation Login($input: LoginInput!) {
+  Login(input: $input) {
+    id
+    tipoUsuario
+    tipoDocumento
+    numeroDocumento
+    genero
+    nombres
+    apellidos
+    celular
+    fechaNacimiento
+    foto
+    email
+    apiToken
+    customer_id
+  }
+}

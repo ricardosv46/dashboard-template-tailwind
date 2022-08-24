@@ -1,0 +1,25 @@
+query GetAllEfectivoMovil($estado: String) {
+  GetAllEfectivoMovil(estado: $estado) {
+    numeroTotal
+    data {
+      efectivoMovilId
+      titulo
+      estado
+      imagenPrincipal {
+        url
+        estado
+        titulo
+        id
+      }
+      imagenQr {
+        url
+        estado
+        titulo
+        id
+      }
+      numeroCelular
+      created_at
+      updated_at
+    }
+  }
+}

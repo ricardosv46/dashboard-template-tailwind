@@ -1,0 +1,14 @@
+mutation CreateSlider($input: SliderInput!) {
+	CreateSlider(input: $input) {
+		sliderId
+		titulo
+		tipoLink
+		link
+		imagenPrincipal {
+			id
+			titulo
+			estado
+			url
+		}
+	}
+}

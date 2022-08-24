@@ -1,0 +1,44 @@
+query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String) {
+  GetAllProductos(pagina: $pagina, numeroPagina: $numeroPagina, estado: $estado)  {
+    numeroTotal
+    data {
+      productoId
+      titulo
+      slug
+      estado
+      descripcionCorta
+      descripcionLarga
+      precioReal
+      precioOferta
+      stockMinimo
+      stockReal
+      imagenPrincipal {
+        id
+        titulo
+        estado
+        url
+      }
+      imagenSecundaria {
+        id
+        titulo
+        estado
+        url
+      }
+      galeria {
+        id
+        titulo
+        estado
+        url
+      }
+      keywords
+      destacado
+      estado
+      categoriaProductoId
+      CategoriaProducto {
+        titulo
+      }
+      created_at
+      updated_at
+    }
+  }
+}

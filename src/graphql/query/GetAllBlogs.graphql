@@ -1,0 +1,34 @@
+query GetAllBlogs($pagina: Int, $numeroPagina: Int, $estado: String) {
+  GetAllBlogs(pagina: $pagina, numeroPagina: $numeroPagina, estado: $estado) {
+    numeroTotal
+    data {
+      blogId
+      titulo
+      slug
+      descripcionCorta
+      descripcionLarga
+      imagenPrincipal {
+        id
+        titulo
+        estado
+        url
+      }
+      imagenSecundaria {
+        id
+        titulo
+        estado
+        url
+      }
+      keywords
+      estado
+      destacado
+      categoriaBlogId
+      CategoriaBlog {
+        titulo
+      }
+      usuarioId
+      created_at
+      updated_at
+    }
+  }
+}

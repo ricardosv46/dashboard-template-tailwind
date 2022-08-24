@@ -1,0 +1,17 @@
+query GetAllSlider($estado: String) {
+	GetAllSliders(estado: $estado) {
+		numeroTotal
+		data {
+			sliderId
+			titulo
+			tipoLink
+			link
+			estado
+			imagenPrincipal {
+				id
+				titulo
+				url
+			}
+		}
+	}
+}

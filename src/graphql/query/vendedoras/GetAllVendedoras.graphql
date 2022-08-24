@@ -1,0 +1,20 @@
+query GetAllVendedoras($estado: String) {
+  GetAllVendedoras(estado: $estado) {
+    numeroTotal
+    data {
+      vendedoraId
+      nombres
+      apellidos
+      link
+      estado
+      imagenPrincipal {
+        id
+        titulo
+        estado
+        url
+      }
+      created_at
+      updated_at
+    }
+  }
+}

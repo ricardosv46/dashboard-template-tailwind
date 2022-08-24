@@ -1,0 +1,59 @@
+mutation CreateProducto($input: ProductoInput!) {
+  CreateProducto(input: $input) {
+    productoId
+    titulo
+    slug
+    descripcionCorta
+    descripcionLarga
+    precioReal
+    precioOferta
+    stockMinimo
+    stockReal
+    imagenPrincipal {
+      url
+      estado
+      titulo
+      id
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+    galeria {
+      url
+      estado
+      titulo
+      id
+    }
+    keywords
+    destacado
+    estado
+    categoriaProductoId
+    CategoriaProducto {
+      updated_at
+      created_at
+      imagenSecundaria {
+        estado
+        titulo
+        id
+        url
+      }
+      imagenPrincipal {
+        url
+        estado
+        titulo
+        id
+      }
+      descripcion
+      keywords
+      estado
+      slug
+      titulo
+      categoriaProductoId
+    }
+    created_at
+    updated_at
+  }
+}

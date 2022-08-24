@@ -1,0 +1,19 @@
+query GetAllBancos($estado: String) {
+  GetAllBancos(estado: $estado) {
+    data {
+      bancoId
+      titulo
+      estado
+      numeroCuenta
+      imagenPrincipal {
+        id
+        titulo
+        estado
+        url
+      }
+      created_at
+      updated_at
+    }
+    numeroTotal
+  }
+}

@@ -1,0 +1,24 @@
+mutation UpdateEstadoCategoriaProducto($input: UpdateEstadoCategoriaProductoInput!) {
+  UpdateEstadoCategoriaProducto(input: $input) {
+    categoriaProductoId
+    titulo
+    slug
+    estado
+    keywords
+    descripcion
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+    created_at
+    updated_at
+  }
+}

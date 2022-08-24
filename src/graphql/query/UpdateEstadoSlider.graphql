@@ -1,0 +1,7 @@
+mutation UpdateEstadoSlider($input: UpdateEstadoSliderInput!) {
+	UpdateEstadoSlider(input: $input) {
+		sliderId
+		titulo
+		estado
+	}
+}

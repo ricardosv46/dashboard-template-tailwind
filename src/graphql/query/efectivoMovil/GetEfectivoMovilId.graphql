@@ -1,0 +1,22 @@
+query GetEfectivoMovilId($efectivoMovilId: Int) {
+  GetEfectivoMovilId(efectivoMovilId: $efectivoMovilId) {
+    efectivoMovilId
+    titulo
+    estado
+    imagenPrincipal {
+      url
+      estado
+      titulo
+      id
+    }
+    updated_at
+    created_at
+    numeroCelular
+    imagenQr {
+      url
+      estado
+      titulo
+      id
+    }
+  }
+}

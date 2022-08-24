@@ -1,0 +1,28 @@
+mutation updateBlog($input: BlogInput!) {
+  updateBlog(input: $input) {
+    blogId
+    titulo
+    slug
+    descripcionCorta
+    descripcionLarga
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+    keywords
+    estado
+    destacado
+    categoriaBlogId
+    usuarioId
+    created_at
+    updated_at
+  }
+}

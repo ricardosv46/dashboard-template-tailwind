@@ -1,0 +1,62 @@
+query GetAllPedidos($numeroPagina: Int, $pagina: Int) {
+  GetAllPedidos(numeroPagina: $numeroPagina, pagina: $pagina) {
+    numeroTotal
+    data {
+      pedidoId
+    fechaPedido
+    estado
+    visto
+    tipoPago
+    tipoVenta
+    medioPago
+    numeroOperacion
+    tipoEnvio
+    precioEnvio
+    precioTotal
+    voucher
+    ticketPdf
+    direccionEnvio
+    usuarioId
+      Usuario {
+        id
+        tipoUsuario
+        tipoDocumento
+        numeroDocumento
+        genero
+        nombres
+        apellidos
+        celular
+        fechaNacimiento
+        foto
+        email
+        apiToken
+        customer_id
+      }
+      DetallePedido {
+        detallePedidoId
+        titulo
+        imagenPrincipal
+        cantidad
+        precio
+        total
+        pedidoId
+        productoId
+      }
+      DireccionEnvio {
+        direccionEnvioId
+        email
+        celular
+        DeparCodi
+        ProvCodi
+        DistCodi
+        direccion
+        nombreAgencia
+      }
+      Recibo {
+        reciboId
+        ruc
+        razonSocial
+      }
+    }
+  }
+}

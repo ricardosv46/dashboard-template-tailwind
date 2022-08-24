@@ -1,0 +1,16 @@
+mutation UpdateEstadoBanco($input: UpdateEstadoBancoInput) {
+  UpdateEstadoBanco(input: $input) {
+    bancoId
+    titulo
+    estado
+    numeroCuenta
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    created_at
+    updated_at
+  }
+}

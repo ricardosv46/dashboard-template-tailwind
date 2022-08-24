@@ -1,0 +1,17 @@
+mutation UpdateVendedora($input: VendedoraInput!) {
+  UpdateVendedora(input: $input) {
+    vendedoraId
+    nombres
+    apellidos
+    link
+    estado
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    created_at
+    updated_at
+  }
+}

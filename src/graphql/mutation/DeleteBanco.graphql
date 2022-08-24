@@ -1,0 +1,3 @@
+mutation DeleteBancos($bancoId: Int!) {
+  DeleteBancos(bancoId: $bancoId)
+}

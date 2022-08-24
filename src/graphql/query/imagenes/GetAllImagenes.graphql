@@ -1,0 +1,11 @@
+query GetAllImagenes($pagina: Int, $numeroPagina: Int) {
+  GetAllImagenes(pagina: $pagina, numeroPagina: $numeroPagina) {
+    numeroTotal
+    data {
+      id
+      url
+      titulo
+      estado
+    }
+  }
+}

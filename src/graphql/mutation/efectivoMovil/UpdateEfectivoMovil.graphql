@@ -1,0 +1,22 @@
+mutation UpdateEfectivoMovil($input: EfectivoMovilInput) {
+  UpdateEfectivoMovil(input: $input) {
+    efectivoMovilId
+    titulo
+    estado
+    imagenPrincipal {
+      url
+      estado
+      titulo
+      id
+    }
+    imagenQr {
+      url
+      estado
+      titulo
+      id
+    }
+    updated_at
+    created_at
+    numeroCelular
+  }
+}

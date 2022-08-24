@@ -1,0 +1,14 @@
+mutation UpdateSlider($input: SliderInput!) {
+	UpdateSlider(input: $input) {
+		sliderId
+		titulo
+		tipoLink
+		link
+		imagenPrincipal {
+			id
+			titulo
+			estado
+			url
+		}
+	}
+}
