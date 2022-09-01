@@ -7,6 +7,15 @@ module.exports = {
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        'auto-fit': 'repeat(auto-fit, minmax(200px, 1fr))',
+        'auto-fill': 'repeat(auto-fill, minmax(0, 1fr))',
+        'auto-fit2': 'repeat(auto-fit, minmax(185px, 300px))',
+      },
+      gridTemplateRows: {
+        'auto-fit': 'repeat(auto-fit, minmax(0, 1fr))',
+        'auto-fill': 'repeat(auto-fill, minmax(0, 1fr))',
+      },
       colors: { ...themes },
       animation: {
         move: 'move 1s ease-in-out',

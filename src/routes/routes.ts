@@ -1,8 +1,9 @@
+import { IconImage } from '@icons'
 import { Route } from '@interface/index'
 import { lazy } from 'react'
 
 // const BlogsPage = lazy(() => import('../pages/home/blogs/BlogsPage'))
-// const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
+const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
 // const ProductsPage = lazy(() => import('../pages/home/products/ProductsPage'))
 // const PedidosPage = lazy(() => import('../pages/home/pedidos/PedidosPage'))
 // const VerPedidos = lazy(() => import('../pages/home/pedidos/VerPedidos'))
@@ -29,7 +30,16 @@ import { lazy } from 'react'
 // const CreateVendedora = lazy(() => import('../pages/home/vendedoras/CreateVendedora'))
 // const EditVendedora = lazy(() => import('../pages/home/vendedoras/EditVendedora'))
 
-export const homeRoutes: Route[] = []
+export const homeRoutes: Route[] = [
+  {
+    icon: IconImage,
+    path: 'images',
+    name: 'Imagenes',
+    to: '/images',
+    component: ImagesPage,
+    subMenu: { value: false, paths: [] }
+  }
+]
 
 // [
 // 	{

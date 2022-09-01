@@ -2,8 +2,7 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconChevronsLeft,
-  IconChevronsRight,
-  IconClose
+  IconChevronsRight
 } from '@icons'
 import React, { Dispatch } from 'react'
 
@@ -32,7 +31,7 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
 
   return (
     <>
-      <div className="flex items-center justify-between my-4">
+      <div className="flex items-center justify-between my-4 text-black dark:text-white">
         <div>
           <button
             className="btn-icon btn-ghost-primary"

@@ -1,4 +1,4 @@
-import PlantillaPage from '@components/PlantillaPage/PlantillaPage'
+import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import { IconPlus } from '@icons'
 
 const PedidosPage = () => {

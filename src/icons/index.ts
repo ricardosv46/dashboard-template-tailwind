@@ -16,6 +16,9 @@ import IconChevronsLeft from './IconChevronsLeft'
 import IconChevronsRight from './IconChevronsRight'
 import IconChevronRight from './IconChevronRight'
 import IconChevronUp from './IconChevronUp'
+import IconImage from './IconImage'
+import IconCloudUpload from './IconCloudUpload'
+
 export {
   IconLogo,
   IconBars,
@@ -34,5 +37,7 @@ export {
   IconChevronsLeft,
   IconChevronsRight,
   IconChevronRight,
-  IconChevronUp
+  IconChevronUp,
+  IconImage,
+  IconCloudUpload
 }

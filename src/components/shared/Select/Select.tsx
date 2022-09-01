@@ -21,6 +21,7 @@ interface Props<T> {
   options?: T[]
   label?: string
   error?: string
+  touched?: boolean
   withFilter?: boolean
   value?: string | number
   dataExtractor?: { value: keyof T; label: keyof T }
@@ -96,16 +97,18 @@ const Select = <T extends object>({
     <div className="w-full">
       <div className="relative w-full">
         <Input
+          disabled={!withFilter}
           ref={inputRef}
           label={label}
           value={innerValue}
           error={props.error}
+          touched={props.touched}
           onBlur={onBlur}
           onChange={handleChange}
           rightElement={
             <button
               type="button"
-              className="btn-icon btn-ghost-primary"
+              className="btn-icon btn-ghost-primary dark:btn-ghost-second"
               onClick={() => {
                 inputRef.current?.focus()
                 setIsFiltering(false)
@@ -115,7 +118,7 @@ const Select = <T extends object>({
               <IconChevronDown
                 className={classNames([
                   isOpen ? 'rotate-180' : 'rotate-0',
-                  'transition-transform'
+                  'transition-transform ease-out duration-300'
                 ])}
               />
             </button>

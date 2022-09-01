@@ -1,9 +1,9 @@
 .tableContainer {
-  @apply overflow-x-auto rounded-t-md w-full;
+  @apply w-full overflow-x-auto rounded-t-md;
 }
 
 .tableContainer table {
-  @apply text-sm text-left w-full;
+  @apply w-full text-sm text-left;
 }
 
 .tableContainer thead {
@@ -18,7 +18,7 @@
 }
 
 .tableContainer tbody tr {
-  @apply bg-white border-b dark:bg-slate-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700 dark:text-white transition-colors;
+  @apply transition-colors bg-white border-b dark:bg-slate-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700 dark:text-white;
 }
 
 .tableContainer tbody tr td {

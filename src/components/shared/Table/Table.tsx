@@ -10,8 +10,7 @@ interface State {
 
 interface Props {
   className?: string
-  th: any
-  td: any
+  children: ReactElement | ReactElement[]
   widthPaginator?: boolean
   state?: State
   setState?: Dispatch<React.SetStateAction<State>>
@@ -19,13 +18,12 @@ interface Props {
 }
 
 const Table = ({
-  th,
-  td,
   className,
   widthPaginator,
   state,
   setState,
-  nTotal
+  nTotal,
+  children
 }: Props) => {
   const paginas =
     widthPaginator && nTotal && nTotal > 0
@@ -33,26 +31,7 @@ const Table = ({
       : []
   return (
     <div className={classNames([styles.tableContainer, className])}>
-      <table>
-        <thead>
-          <tr className="dark:border-b-slate-700">
-            {th.map((item: any) => (
-              <th key={item} className="text-center">
-                {item}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="dark:bg-transparent dark:text-slate-50 dark:hover:bg-slate-900 dark:border-b-slate-700">
-            {td.map((item: any) => (
-              <td key={item} className="text-center">
-                {item}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+      <table>{children}</table>
       {widthPaginator && paginas.length > 0 && (
         <Paginator setState={setState!} state={state!} paginas={paginas} />
       )}

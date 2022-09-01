@@ -1,7 +1,5 @@
 import Table from '@components/shared/Table/Table'
-import ToggleTheme from '@components/shared/ToggleTheme/ToggleTheme'
-import { IconBars } from '@icons'
-import { useState } from 'react'
+import { Children, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Welcome from '../../assets/imgs/welcome.png'
@@ -52,14 +50,9 @@ const WelcomePage = () => {
           </div>
         </Link>
       </div>
-      <Table
-        th={['fua', 'fe', '1']}
-        td={['fua', 'fe']}
-        widthPaginator
-        nTotal={20}
-        setState={setState}
-        state={state}
-      />
+      {/* <Table widthPaginator nTotal={20} setState={setState} state={state}>
+        <tr>sfaasf</tr>
+      </Table> */}
     </div>
   )
 }
