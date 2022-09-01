@@ -8,9 +8,17 @@ interface IModal {
   onClick: () => void
   header: string
   body: string
+  loading?: boolean
 }
 
-const ModalConfirmar = ({ isOpen, onClick, onClose, body, header }: IModal) => {
+const ModalDelete = ({
+  isOpen,
+  onClick,
+  onClose,
+  body,
+  header,
+  loading
+}: IModal) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} hasOverlay>
       <div className="px-8 py-5 bg-white rounded-lg w-[450px] dark:bg-gray-800 dark:text-white ">
@@ -31,13 +39,14 @@ const ModalConfirmar = ({ isOpen, onClick, onClose, body, header }: IModal) => {
           </button>
           <button
             type="button"
+            disabled={loading}
             onClick={() => {
               onClick()
               onClose()
             }}
-            className="px-4 py-2 text-lg font-semibold text-white bg-green-600 rounded-lg"
+            className="px-4 py-2 text-lg font-semibold text-white bg-red-600 rounded-lg"
           >
-            Confirmar
+            Eliminar
           </button>
         </div>
       </div>
@@ -45,4 +54,4 @@ const ModalConfirmar = ({ isOpen, onClick, onClose, body, header }: IModal) => {
   )
 }
 
-export default ModalConfirmar
+export default ModalDelete

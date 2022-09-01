@@ -50,16 +50,16 @@ const LoginPage = () => {
     })
 
   return (
-    <div className="h-screen flex justify-center relative px-4 md:px-0 overflow-hidden">
-      <div className="flex flex-col items-center justify-center  md:w-1/2   w-full md:mx-auto  px-6 md:px-8">
-        <form onSubmit={handleSubmit} className="w-full max-w-sm py-8  ">
+    <div className="relative flex justify-center h-screen px-4 overflow-hidden md:px-0">
+      <div className="flex flex-col items-center justify-center w-full px-6 md:w-1/2 md:mx-auto md:px-8">
+        <form onSubmit={handleSubmit} className="w-full max-w-sm py-8 ">
           <div className="w-48 mb-10">
             <IconLogo />
           </div>
-          <h1 className=" mb-3 text-left  text-slate-800 dark:text-slate-200 text-2xl lg:text-4xl font-bold">
+          <h1 className="mb-3 text-2xl font-bold text-left text-slate-800 dark:text-slate-200 lg:text-4xl">
             Inicia sesión
           </h1>
-          {/* <p className="paragraph-2 mb-3 text-slate-500 dark:text-slate-300">
+          {/* <p className="mb-3 paragraph-2 text-slate-500 dark:text-slate-300">
             Si eres nuevo por aquí regístrate ahora:
             <span className="font-bold"> Crear cuenta</span>
           </p> */}
@@ -91,17 +91,17 @@ const LoginPage = () => {
               className="btn btn-solid-primary"
             >
               Inicia sesión
-              {loadingLogin && <Spinner />}
+              {loadingLogin && <Spinner className="h-[21px] w-[21px]" />}
             </button>
 
-            <div className="flex flex-col gap-y-3 sm:flex-row justify-between">
+            <div className="flex flex-col justify-between gap-y-3 sm:flex-row">
               <CheckBox
                 label="Recordarme"
                 value={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
               />
               <p
-                className="text-slate-500 dark:text-slate-300 cursor-pointer hover:text-primary-500 hover:underline"
+                className="cursor-pointer text-slate-500 dark:text-slate-300 hover:text-primary-500 hover:underline"
                 // onClick={navigate('./recuperar', { replace: true })!}
                 onClick={() => {
                   router('/auth/change-password')
@@ -113,12 +113,12 @@ const LoginPage = () => {
           </div>
         </form>
       </div>
-      <div className="hidden md:block md:w-1/2 h-full relative">
-        <img className="w-full h-full object-cover" src={ImageLogin} alt="" />
+      <div className="relative hidden h-full md:block md:w-1/2">
+        <img className="object-cover w-full h-full" src={ImageLogin} alt="" />
         <div className="bg-[#0E1C3A] absolute opacity-70 inset-0"></div>
-        <div className="w-full h-full flex flex-col justify-center items-start absolute top-0 p-16 font-bold">
-          <h2 className=" text-white text-6xl font-bold"> {titleLoginTop}</h2>
-          <h2 className=" text-primary-500 text-6xl font-bold">
+        <div className="absolute top-0 flex flex-col items-start justify-center w-full h-full p-16 font-bold">
+          <h2 className="text-6xl font-bold text-white "> {titleLoginTop}</h2>
+          <h2 className="text-6xl font-bold text-primary-500">
             {titleLoginBottom}
           </h2>
         </div>

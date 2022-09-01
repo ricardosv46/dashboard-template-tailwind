@@ -1,7 +1,7 @@
 /* eslint-disable multiline-ternary */
 import Portal from '../Portal/Portal'
 import { motion } from 'framer-motion'
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import Overlay from '../Overlay/Overlay'
 
 const fade = {
@@ -11,7 +11,7 @@ const fade = {
 
 interface Props {
   isOpen?: boolean
-  children?: ReactElement | ReactElement[]
+  children?: ReactNode
   className?: string
   hasOverlay?: boolean
   sidebar?: boolean
@@ -32,7 +32,7 @@ const Modal = ({
         <motion.div
           variants={fade}
           animate={isOpen ? 'open' : 'closed'}
-          initial={{ opacity: 0, pointerEvents: 'none' }}
+          initial={{ opacity: 1, pointerEvents: 'none' }}
           className="fixed top-0 z-50 flex w-full h-screen "
         >
           {hasOverlay && <Overlay show={isOpen} onClick={onClose} />}
@@ -42,7 +42,7 @@ const Modal = ({
         <motion.div
           variants={fade}
           animate={isOpen ? 'open' : 'closed'}
-          initial={{ opacity: 0, pointerEvents: 'none' }}
+          initial={{ opacity: 1, pointerEvents: 'none' }}
           className="fixed top-0 z-50 grid w-full h-screen place-items-center"
         >
           {hasOverlay && <Overlay show={isOpen} onClick={onClose} />}

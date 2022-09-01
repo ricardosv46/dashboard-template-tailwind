@@ -18,6 +18,9 @@ import IconChevronRight from './IconChevronRight'
 import IconChevronUp from './IconChevronUp'
 import IconImage from './IconImage'
 import IconCloudUpload from './IconCloudUpload'
+import IconEdit from './IconEdit'
+import IconTrash from './IconTrash'
+import IconOptions from './IconOptions'
 
 export {
   IconLogo,
@@ -39,5 +42,8 @@ export {
   IconChevronRight,
   IconChevronUp,
   IconImage,
-  IconCloudUpload
+  IconCloudUpload,
+  IconEdit,
+  IconTrash,
+  IconOptions
 }

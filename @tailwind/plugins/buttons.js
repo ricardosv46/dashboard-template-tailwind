@@ -52,6 +52,10 @@ module.exports = plugin(function ({ addComponents, theme }) {
         color: colors[key]['700'],
         borderColor: colors[key]['700'],
         backgroundColor: hexToRGB(colors[key]['400'], 0.2)
+      },
+      '&:disabled': {
+        pointerEvents: 'none',
+        opacity: 0.5
       }
     }
 

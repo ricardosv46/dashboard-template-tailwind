@@ -1,4 +1,4 @@
-import { IconImage } from '@icons'
+import { IconImage, IconOptions } from '@icons'
 import { Route } from '@interface/index'
 import { lazy } from 'react'
 
@@ -23,9 +23,9 @@ const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
 // const EfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/EfectivoMovil'))
 // const CreateEfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/CreateEfectivoMovil'))
 // const EditEfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/EditarEfectivoMovil'))
-// const SlidersPage = lazy(() => import('../pages/home/sliders/SlidersPage'))
-// const CreateSlider = lazy(() => import('../pages/home/sliders/CreateSlider'))
-// const EditSlider = lazy(() => import('../pages/home/sliders/EditSlider'))
+const SlidersPage = lazy(() => import('../pages/home/Sliders/SliderPage'))
+const CreateSlider = lazy(() => import('../pages/home/Sliders/CreateSlider'))
+const EditSlider = lazy(() => import('../pages/home/Sliders/EditSlider'))
 // const VendedoraPage = lazy(() => import('../pages/home/vendedoras/VendedoraPage'))
 // const CreateVendedora = lazy(() => import('../pages/home/vendedoras/CreateVendedora'))
 // const EditVendedora = lazy(() => import('../pages/home/vendedoras/EditVendedora'))
@@ -38,6 +38,34 @@ export const homeRoutes: Route[] = [
     to: '/images',
     component: ImagesPage,
     subMenu: { value: false, paths: [] }
+  },
+  {
+    icon: IconImage,
+    name: 'Sliders',
+    to: '/sliders',
+    path: 'sliders',
+    component: SlidersPage,
+    subMenu: {
+      value: false,
+      paths: [
+        {
+          icon: IconOptions,
+          name: 'Crear Slider',
+          path: '/sliders/create-slider',
+          to: '',
+          component: CreateSlider,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Slider',
+          path: '/sliders/edit-slider/:slug',
+          to: '',
+          component: EditSlider,
+          render: false
+        }
+      ]
+    }
   }
 ]
 

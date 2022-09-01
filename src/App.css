@@ -5,11 +5,11 @@
   @apply h-2;
 }
 ._tableContainer_14yl8_1::-webkit-scrollbar-thumb {
-  @apply rounded bg-gray-300;
+  @apply bg-gray-300 rounded;
 }
 
 body {
-  @apply dark:bg-[#121927];
+  @apply dark:bg-gray-800;
 }
 
 .no-scrollbar::-webkit-scrollbar {

@@ -30,8 +30,8 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
   }
 
   return (
-    <>
-      <div className="flex items-center justify-between my-4 text-black dark:text-white">
+    <div className="">
+      <div className="flex items-center justify-between mt-10 text-black dark:text-white">
         <div>
           <button
             className="btn-icon btn-ghost-primary"
@@ -76,6 +76,7 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
               onChange={(e) =>
                 setState({
                   ...state,
+                  page: 1,
                   numberPaginate: Number(e.target.value)
                 })
               }
@@ -130,6 +131,7 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
           onChange={(e) =>
             setState({
               ...state,
+              page: 1,
               numberPaginate: Number(e.target.value)
             })
           }
@@ -141,7 +143,7 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
           ))}
         </select>
       </div>
-    </>
+    </div>
   )
 }
 

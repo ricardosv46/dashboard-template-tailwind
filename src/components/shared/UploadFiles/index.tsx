@@ -6,7 +6,7 @@ import DropOrSelect from './DropOrSelect'
 import DashboardFiles from './DashboardFiles'
 import OverlayDropFiles from './OverlayDropFiles'
 import Spinner from '../Spinner/Spinner'
-
+import { toast } from 'react-toastify'
 export interface FileToUpload {
   id: string
   file: File
@@ -20,7 +20,7 @@ interface Props {
 
 const UploadFiles = ({ onUpload, isLoading }: Props) => {
   const uid = useId()
-  // const toast = useToast()
+
   const dragCounterRef = useRef(0)
   const [isDragging, setIsDragging] = useState(false)
   const [files, setFiles] = useState<FileToUpload[]>([])
@@ -65,11 +65,16 @@ const UploadFiles = ({ onUpload, isLoading }: Props) => {
     setFiles((prev) => [...prev, ...newFiles])
 
     if (hasNotImageFile) {
-      // toast({
-      //   status: 'warning',
-      //   title: 'Solo se deben seleccionar imagenes',
-      //   description: 'Se han omitido los archivos que no son imagenes.'
-      // })
+      toast.warning('Solo se deben seleccionar imagenes.', {
+        theme: 'colored',
+        position: 'bottom-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
     }
   }
 
@@ -104,7 +109,7 @@ const UploadFiles = ({ onUpload, isLoading }: Props) => {
   }
 
   return (
-    <div className="flex flex-1 max-w-[1980px] mx-auto w-full">
+    <div className="flex flex-1 max-w-[1980px] mx-auto w-full h-full">
       <input
         hidden
         multiple
@@ -117,7 +122,7 @@ const UploadFiles = ({ onUpload, isLoading }: Props) => {
         }}
       />
       <div
-        className="relative w-full p-2 border border-gray-300 rounded bg-gray-50 dark:border-gray-900 dark:bg-gray-700"
+        className="relative w-full p-2 border border-gray-300 rounded bg-gray-50 dark:text-white dark:border-gray-700 dark:bg-gray-900"
         onDrop={handleDrop}
         onDragOver={handleDrag}
         onDragLeave={handleDragLeave}
@@ -125,8 +130,8 @@ const UploadFiles = ({ onUpload, isLoading }: Props) => {
       >
         {isLoading && (
           <div className="absolute inset-0 w-full h-full bg-[rgba(250,250,250,0.95)] dark:bg-[rgba(0,0,0,0.95)] z-40">
-            <div className="flex flex-col items-center fap-3">
-              <Spinner />
+            <div className="flex flex-col items-center justify-center h-full fap-3 w-hull">
+              <Spinner className="w-10 h-10 mx-auto mb-5 border-4" />
               <p className="font-medium">
                 Subiendo archivos por favor espere...
               </p>

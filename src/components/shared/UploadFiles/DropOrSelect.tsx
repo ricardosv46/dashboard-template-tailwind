@@ -4,12 +4,12 @@ interface Props {
 
 const DropOrSelect = ({ inputId }: Props) => {
   return (
-    <div className="flex items-center justify-center w-full h-full p-8 border border-gray-300 border-dashed">
+    <div className="flex items-center justify-center w-full h-full p-8 border border-gray-300 border-dashed ">
       <p className="text-center text-lg md:text-[28px]">
         Arratra tus archivos o{' '}
         <label
           htmlFor={`input-file-${inputId}`}
-          className="cursor-pointer textblue-600 hover:underline"
+          className="text-blue-600 cursor-pointer hover:underline"
         >
           selecciona tus archivos
         </label>

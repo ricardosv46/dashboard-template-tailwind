@@ -19,7 +19,7 @@ const DashboardFiles = ({
   onUpload
 }: Props) => {
   return (
-    <div className="flex-col h-full">
+    <div className="flex flex-col h-full">
       <div className="grid items-center grid-cols-1 gap-3 pb-2 border-b border-b-gray-200 dark:border-b-gray-700 md:grid-cols-3">
         <button
           className="w-full btn btn-ghost-red sm:w-max"
@@ -30,17 +30,6 @@ const DashboardFiles = ({
         <p className="text-center font-mediumhidden md:block">
           {files?.length} archivos seleccionados
         </p>
-        {/* <Button
-          ml="auto"
-          w={{ base: 'full', md: 'max' }}
-          as="label"
-          variant="outline"
-          colorScheme="primary"
-          leftIcon={<Icon as={AddIcon} />}
-          htmlFor={`input-file-${inputId}`}
-        >
-          Añadir mas
-        </Button> */}
 
         <label
           className="w-full cursor-pointer place-self-end btn btn-outline-primary sm:w-max"
@@ -52,7 +41,7 @@ const DashboardFiles = ({
         </label>
       </div>
 
-      <div className="grid py-2 gap-2 flex-1 overflow-auto auto-rows-[64px] md:auto-rows-[188px] grid-cols-1 md:grid-cols-auto-fit2">
+      <div className="grid py-2 gap-2 flex-1 overflow-auto auto-rows-[64px]  md:auto-rows-[188px] grid-cols-1 md:grid-cols-auto-fit2">
         {files &&
           files.map(({ id, file, blob }) => (
             <div
@@ -68,21 +57,6 @@ const DashboardFiles = ({
                   {<IconClose />}
                 </button>
 
-                {/* <IconButton
-                  top={0}
-                  right={0}
-                  zIndex={20}
-                  size="xs"
-                  pos="absolute"
-                  bg="black"
-                  color="gray.300"
-                  aria-label="Eliminar archivo"
-                  _hover={{ bg: 'blackAlpha.500' }}
-                  _dark={{ bg: 'white', color: 'gray.700' }}
-                  icon={<CloseIcon />}
-                  onClick={() => onDelete(id)}
-                  display={{ base: 'none', md: 'block' }}
-                /> */}
                 <img
                   className="absolute inset-0 z-10 w-full h-full"
                   alt={file.name}
@@ -106,7 +80,7 @@ const DashboardFiles = ({
           ))}
       </div>
 
-      <div className="flex pt-2 border-t border-t-gray-200 dark:border-t-gray-700">
+      <div className="pt-2 border-t border-t-gray-200 dark:border-t-gray-700">
         <button
           className="w-full btn btn-solid-primary sm:w-max"
           onClick={onUpload}

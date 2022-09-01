@@ -1,6 +1,10 @@
+import Image from '@components/shared/Img/Image'
 import Paginator from '@components/shared/Paginator/Paginator'
+import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Spinner from '@components/shared/Spinner/Spinner'
+import { IconPlus } from '@icons'
 import { Suspense, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import UploadFiles from '../../components/shared/UploadFiles'
 import {
@@ -15,7 +19,7 @@ const ImagesPage = () => {
   const [isUploadImage, setIsUploadImage] = useState(false)
   const [createImage] = useCreateImagenMutation()
   const [state, setState] = useState({
-    page: 2,
+    page: 1,
     numberPaginate: 10
   })
 
@@ -41,19 +45,29 @@ const ImagesPage = () => {
 
     if (hasError) {
       setIsLoading(false)
-      // toast({
-      //   status: 'error',
-      //   title: 'Error en la subida de imagenes',
-      //   description: 'Ha ocurrido un error en la subida de imagenes.'
-      // })
+      toast.error('Error en la subida de imagenes', {
+        theme: 'colored',
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+
       return false
     }
-
-    // toast({
-    //   status: 'success',
-    //   title: 'Subida de imagenes exitosa',
-    //   description: 'Todas las imagenes se han subido con exito'
-    // })
+    toast.success('Subida de imagenes exitosa', {
+      theme: 'colored',
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    })
 
     setIsLoading(false)
     return true
@@ -68,15 +82,10 @@ const ImagesPage = () => {
   console.log(paginas)
 
   return (
-    <div className="flex flex-col flex-1 h-full p-10 ">
-      <div className="mb3 md:mb-8">
-        <h1 className="text-[22px]">Imagenes</h1>
-        <p className="mt-3 text-[14px] text-blue-600 dark:text-gray-400">
-          Desde aquí podrás visualizar todas tus imagenes.
-        </p>
-      </div>
-
-      <div className="flex justify-end mb-3 md:mb-8">
+    <PlantillaPage
+      title="Imagenes"
+      desc="Desde aquí podrás visualizar todas tus imagenes."
+      button={
         <button
           className="self-end w-full mb-3 btn btn-solid-primary sm:w-max"
           onClick={() => {
@@ -86,13 +95,9 @@ const ImagesPage = () => {
         >
           {isUploadImage ? 'Ver Galeria' : 'Subir Imagen'}
         </button>
-      </div>
-
-      {getLoading && (
-        <div className="mt-8 text-center">
-          <Spinner />
-        </div>
-      )}
+      }
+    >
+      {getLoading && <Spinner className="w-10 h-10 mx-auto mt-8 border-4" />}
 
       {!isUploadImage && (
         <div className="grid gap-8 auto-rows-[200px] grid-cols-auto-fit">
@@ -102,19 +107,11 @@ const ImagesPage = () => {
               className="relative transition-all duration-300 ease-linear border border-gray-300 rounded-lg cursor-pointer dark:border-gray-700 hover:shadow-sm"
               onClick={() => {}}
             >
-              <Suspense fallback={<Spinner />}>
-                <img
-                  className="absolute inset-0 object-contain w-full h-full"
-                  src={url!}
-                  alt={titulo!}
-
-                  // fallback={
-                  //   <Center>
-                  //     <Spinner colorScheme="primary" size="lg" />
-                  //   </Center>
-                  // }
-                />
-              </Suspense>
+              <Image
+                className="absolute inset-0 object-contain w-full h-full"
+                src={url!}
+                alt={titulo!}
+              />
             </button>
           ))}
         </div>
@@ -123,9 +120,10 @@ const ImagesPage = () => {
       {isUploadImage && (
         <UploadFiles isLoading={isLoading} onUpload={handleUpload} />
       )}
-
-      <Paginator state={state} setState={setState} paginas={paginas} />
-    </div>
+      {!isUploadImage && (
+        <Paginator state={state} setState={setState} paginas={paginas} />
+      )}
+    </PlantillaPage>
   )
 }
 
