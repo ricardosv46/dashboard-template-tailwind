@@ -9,7 +9,10 @@ const AuthReducer = (
 ): AuthInitialState => {
   switch (action.type) {
     case 'login':
-      return { ...state, user: action.payload, isAuth: true }
+      if (action.payload.tipoUsuario === 1) {
+        return { ...state, user: action.payload, isAuth: true }
+      }
+      return { ...state, isAuth: false }
     case 'logout':
       localStorage.removeItem('token')
       localStorage.removeItem('user')

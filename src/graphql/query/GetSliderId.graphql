@@ -1,0 +1,14 @@
+query GetSliderId($sliderId: Int) {
+  GetSliderId(sliderId: $sliderId) {
+    sliderId
+    titulo
+    tipoLink
+    link
+    estado
+    imagenPrincipal {
+      id
+      titulo
+      url
+    }
+  }
+}

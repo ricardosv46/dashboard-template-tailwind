@@ -7,7 +7,11 @@ interface Props {
 }
 
 const PublicRoute = ({ isAuth, children }: Props) => {
-  return !isAuth ? children : <Navigate to="/" />
+  return !isAuth ? (
+    children
+  ) : (
+    <Navigate to={localStorage.getItem('lastpath') ?? '/'} />
+  )
 }
 
 export default PublicRoute

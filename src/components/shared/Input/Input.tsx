@@ -27,11 +27,8 @@ const Input = (
   const uid = useId()
   const [show, setShow] = useState(false)
 
-  const hasError =
-    props.error?.toString() && !isEmpty(props.error.toString()) && touched
-  const isValueEmpty = isEmpty(
-    typeof props?.value === 'string' ? props.value : ''
-  )
+  const hasError = props.error?.toString() && !isEmpty(props.error.toString()) && touched
+  const isValueEmpty = isEmpty(typeof props?.value === 'string' ? props.value : '')
 
   return (
     <div>
@@ -43,13 +40,7 @@ const Input = (
           autoComplete="off"
           // dc2626
           //f87171
-          type={
-            props.type === 'password'
-              ? show
-                ? 'text'
-                : 'password'
-              : props.type
-          }
+          type={props.type === 'password' ? (show ? 'text' : 'password') : props.type}
           className={classNames([
             hasError
               ? 'border-red-600 focus:shadow-[0_0_0_1px_#dc2626] dark:border-red-400 dark:focus:shadow-[0_0_0_1px_#f87171] focus:border-red-500'
@@ -69,8 +60,7 @@ const Input = (
               ? 'text-red-600 dark:text-red-400'
               : 'peer-focus:text-primary-500 dark:peer-focus:text-primary-500',
             'absolute peer-focus:top-1 peer-focus:left-2 transition-all font-semibold ease-in-out duration-300'
-          ])}
-        >
+          ])}>
           {label}
         </label>
 
@@ -80,23 +70,14 @@ const Input = (
             onClick={() => setShow((prev) => !prev)}
             className={`${
               hasError ? 'btn-ghost-red' : 'btn-ghost-primary'
-            } btn-icon  absolute right-3 top-[13px]`}
-          >
+            } btn-icon  absolute right-3 top-[13px]`}>
             {show ? (
               <IconEyeSlash
-                className={`${
-                  hasError
-                    ? 'text-red-600 dark:text-red-400'
-                    : 'text-primary-500'
-                }`}
+                className={`${hasError ? 'text-red-600 dark:text-red-400' : 'text-primary-500'}`}
               />
             ) : (
               <IconEye
-                className={`${
-                  hasError
-                    ? 'text-red-600 dark:text-red-400'
-                    : 'text-primary-500'
-                }`}
+                className={`${hasError ? 'text-red-600 dark:text-red-400' : 'text-primary-500'}`}
               />
             )}
           </button>
@@ -108,13 +89,9 @@ const Input = (
           </button>
         )}
 
-        {rightElement && (
-          <div className="absolute right-3 top-[13px]">{rightElement}</div>
-        )}
+        {rightElement && <div className="absolute right-3 top-[13px]">{rightElement}</div>}
 
-        <p className="text-sm text-red-600 dark:text-red-400">
-          {hasError ? props.error : ''}
-        </p>
+        <p className="text-sm text-red-600 dark:text-red-400">{hasError ? props.error : ''}</p>
       </div>
     </div>
   )

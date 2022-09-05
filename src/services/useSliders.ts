@@ -4,6 +4,7 @@ import {
   useDeleteSliderMutation,
   useGetAllBlogsQuery,
   useGetAllSliderQuery,
+  useGetSliderIdQuery,
   useUpdateEstadoSliderMutation,
   useUpdateSliderMutation
 } from '../generated/graphql'
@@ -32,17 +33,56 @@ export interface IDeleteBlog {
   sliderId: number
 }
 
+export interface IProps {
+  estado?: string
+  sliderId?: number
+}
+
 // Obtenemos todos los sliders
-export const useSliders = (input = { estado: '' }) => {
+export const useSliders = ({ estado = '', sliderId }: IProps) => {
   const { data, loading, refetch } = useGetAllSliderQuery({
     fetchPolicy: 'network-only',
     variables: {
-      ...input
+      estado
+    }
+  })
+
+  const { data: dataSliderId, loading: loadingSliderId } = useGetSliderIdQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      sliderId
     }
   })
 
   const db = data?.GetAllSliders?.data ?? []
   const nTotal = data?.GetAllSliders?.numeroTotal ?? 0
+  const dbSliderId = dataSliderId?.GetSliderId ?? {}
+
+  // const [GetSliderId, { loading: loadingSliderId }] = useCreateSliderMutation()
+
+  // const getSliderId = async ({
+  //   titulo,
+  //   tipoLink,
+  //   link,
+  //   imagenPrincipal
+  // }: ICreateSlider) => {
+  //   try {
+  //     const res = await GetSliderId({
+  //       variables: {
+  //         input: {
+  //           titulo,
+  //           tipoLink,
+  //           link,
+  //           imagenPrincipal
+  //         }
+  //       }
+  //     })
+  //     refetch()
+  //     return { ok: true }
+  //   } catch (error: any) {
+  //     return { ok: false, error: 'No se pudo traer el slider' }
+  //   }
+  // }
 
   const [CreateSlider, { loading: loadingCreate }] = useCreateSliderMutation()
 
@@ -140,6 +180,7 @@ export const useSliders = (input = { estado: '' }) => {
   return {
     loading,
     db,
+    dbSliderId,
     nTotal,
     createSlider,
     updateSlider,
@@ -148,6 +189,7 @@ export const useSliders = (input = { estado: '' }) => {
     loadingCreate,
     loadingUpdate,
     loadingDelete,
-    loadingUpdateEstado
+    loadingUpdateEstado,
+    loadingSliderId
   }
 }

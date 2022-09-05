@@ -11,7 +11,7 @@ export const ToggleSwitch = ({ value, onClick }: IProps) => {
       <button
         type="button"
         className={classNames([
-          'flex items-center w-12 h-6 p-1 rounded-full cursor-pointer  ',
+          'flex items-center w-11 h-6 p-0.5 rounded-full cursor-pointer  ',
           !value ? 'bg-slate-200 dark:bg-slate-300' : 'bg-primary-500'
         ])}
         onClick={onClick}

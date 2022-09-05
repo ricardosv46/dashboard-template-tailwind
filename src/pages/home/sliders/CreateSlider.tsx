@@ -11,11 +11,9 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const CreateSlider = () => {
-  const [imagenPrincipal, setImagenPrincipal] = useState<Imagenes>(
-    {} as Imagenes
-  )
+  const [imagenPrincipal, setImagenPrincipal] = useState<Imagenes>({} as Imagenes)
   const router = useNavigate()
-  const { createSlider, loadingCreate } = useSliders()
+  const { createSlider, loadingCreate } = useSliders({})
 
   const onSubmit = async () => {
     createSlider({
@@ -63,14 +61,13 @@ const CreateSlider = () => {
   })
 
   return (
-    <PlantillaPage title="Crear Slider" goback>
+    <PlantillaPage title="Crear Slider" goback="/sliders">
       <div className="flex justify-center">
         <h1 className="title-9 dark:text-slate-200">Crear Slider</h1>
       </div>
       <form
         onSubmit={form.handleSubmit}
-        className="flex flex-col w-full max-w-3xl gap-5 mx-auto mt-10 md:grid sm:grid-cols-2 "
-      >
+        className="flex flex-col w-full max-w-3xl gap-5 mx-auto mt-10 md:grid sm:grid-cols-2 ">
         <Input
           type="text"
           label="Titulo"
@@ -116,8 +113,7 @@ const CreateSlider = () => {
           <button
             type="submit"
             disabled={loadingCreate}
-            className="w-full sm:w-auto xl:w-1/3 btn btn-solid-primary"
-          >
+            className="w-full md:w-1/2 btn btn-solid-primary">
             Crear Slider
             {loadingCreate && <Spinner className="w-5 h-5" />}
           </button>

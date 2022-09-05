@@ -108,7 +108,12 @@ const Select = <T extends object>({
           rightElement={
             <button
               type="button"
-              className="btn-icon btn-ghost-primary dark:btn-ghost-second"
+              className={classNames([
+                'btn-icon  ',
+                props?.error?.length && props?.touched
+                  ? 'btn-ghost-red '
+                  : 'btn-ghost-primary '
+              ])}
               onClick={() => {
                 inputRef.current?.focus()
                 setIsFiltering(false)

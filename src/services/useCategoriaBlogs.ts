@@ -2,6 +2,7 @@ import {
   useCreateCategoriaBlogMutation,
   useDeleteCategoriaBlogMutation,
   useGetAllCategoriaBlogsQuery,
+  useGetCategoriaBlogSlugQuery,
   useUpdateCategoriaBlogMutation,
   useUpdateEstadoCategoriaBlogMutation
 } from '../generated/graphql'
@@ -32,19 +33,32 @@ export interface IDeleteCategoriaBlog {
   categoriaBlogId: number
 }
 
+export interface IProps {
+  estado?: string
+  slug?: string
+}
+
 // Obtenemos todas las categorias
-export const useCategoriaBlogs = (input = { estado: '' }) => {
+export const useCategoriaBlogs = ({ estado = '', slug }: IProps) => {
   const { data, loading, refetch } = useGetAllCategoriaBlogsQuery({
     fetchPolicy: 'network-only',
     variables: {
-      ...input
+      estado
     }
   })
 
-  const db = data?.GetAllCategoriaBlogs?.data ?? []
+  const { data: dataCategoriBlogSlug, loading: loadingCategoriBlogSlug } =
+    useGetCategoriaBlogSlugQuery({
+      fetchPolicy: 'network-only',
+      variables: {
+        slug
+      }
+    })
 
-  const [CreateCategoriaBlog, { loading: loadingCreate }] =
-    useCreateCategoriaBlogMutation()
+  const db = data?.GetAllCategoriaBlogs?.data ?? []
+  const dbCategoriBlogSlug = dataCategoriBlogSlug?.GetCategoriaBlogSlug ?? {}
+
+  const [CreateCategoriaBlog, { loading: loadingCreate }] = useCreateCategoriaBlogMutation()
 
   const createCategoriaBlog = async ({
     titulo,
@@ -72,8 +86,7 @@ export const useCategoriaBlogs = (input = { estado: '' }) => {
     }
   }
 
-  const [UpdateCategoriaBlog, { loading: loadingUpdate }] =
-    useUpdateCategoriaBlogMutation()
+  const [UpdateCategoriaBlog, { loading: loadingUpdate }] = useUpdateCategoriaBlogMutation()
 
   const updateCategoriaBlog = async ({
     categoriaBlogId,
@@ -103,7 +116,8 @@ export const useCategoriaBlogs = (input = { estado: '' }) => {
     }
   }
 
-  const [UpdateEstadoCategoriaBlog, { loading: loadingUpdateEstado }] = useUpdateEstadoCategoriaBlogMutation()
+  const [UpdateEstadoCategoriaBlog, { loading: loadingUpdateEstado }] =
+    useUpdateEstadoCategoriaBlogMutation()
 
   const updateEstadoCategoriaBlog = async ({
     categoriaBlogId,
@@ -125,12 +139,9 @@ export const useCategoriaBlogs = (input = { estado: '' }) => {
     }
   }
 
-  const [DeleteCategoriaBlog, { loading: loadingDelete }] =
-    useDeleteCategoriaBlogMutation()
+  const [DeleteCategoriaBlog, { loading: loadingDelete }] = useDeleteCategoriaBlogMutation()
 
-  const deleteCategoriaBlog = async ({
-    categoriaBlogId
-  }: IDeleteCategoriaBlog) => {
+  const deleteCategoriaBlog = async ({ categoriaBlogId }: IDeleteCategoriaBlog) => {
     try {
       const res = await DeleteCategoriaBlog({
         variables: {
@@ -154,6 +165,8 @@ export const useCategoriaBlogs = (input = { estado: '' }) => {
     updateCategoriaBlog,
     loadingUpdate,
     updateEstadoCategoriaBlog,
-    loadingUpdateEstado
+    loadingUpdateEstado,
+    dbCategoriBlogSlug,
+    loadingCategoriBlogSlug
   }
 }

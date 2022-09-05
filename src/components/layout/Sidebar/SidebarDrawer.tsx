@@ -8,7 +8,7 @@ const variants = {
     transition: { ease: 'easeInOut' }
   },
   closed: {
-    opacity: 1,
+    opacity: 0,
     x: '-100%',
     transition: { ease: 'easeOut' }
   }
@@ -29,13 +29,13 @@ const SidebarDrawer = ({ isOpen, onClose }: SidebarDrawerProps) => {
         variants={fade}
         onClick={onClose}
         animate={isOpen ? 'open' : 'closed'}
-        initial={{ opacity: 1, pointerEvents: 'none' }}
+        initial={{ opacity: 0, pointerEvents: 'none' }}
         className="fixed top-0 w-full h-screen bg-black bg-opacity-50 "
       />
       <motion.div
         variants={variants}
         className="fixed top-0 left-0 z-50 h-screen "
-        initial={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
         animate={isOpen ? 'open' : 'closed'}
       >
         <Sidebar mobile onClose={onClose} onToggle={() => {}} />

@@ -1,6 +1,8 @@
 // import { Imagenes } from '../../generated/graphql'
 import useToggle from '@hooks/useToggle'
 import { IconPlus } from '@icons'
+import { classNames } from '@utils/classNames'
+import { isEmpty } from '@utils/isEmpty'
 import { useState } from 'react'
 import Image from '../Img/Image'
 import ModalImage from '../Modal/ModalImages'
@@ -14,15 +16,17 @@ interface Props {
   label: string
   value?: Imagenes
   onChange?: (image: Imagenes) => void
+  error?: any
+  touched?: boolean
 }
 
-const InputImage = ({ label, ...props }: Props) => {
+const InputImage = ({ label, touched, ...props }: Props) => {
   const { isOpen, onClose, onOpen } = useToggle()
   const [innerValue, setInnerValue] = useState<Imagenes | null>(null)
 
   const value = props.value ?? innerValue
   const handleSelect = props.onChange ?? setInnerValue
-
+  const hasError = props.error?.toString() && !isEmpty(props.error.toString()) && touched
   /**
    * Con el value podran renderizar la imagen que deberia estar seteada en el
    * formulario padre.
@@ -34,13 +38,27 @@ const InputImage = ({ label, ...props }: Props) => {
     <>
       <ModalImage {...{ isOpen, onClose }} onSelect={handleSelect} />
       <button type="button" className="w-full" onClick={onOpen}>
-        <div className="relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer max-w-96 border-slate-300">
+        <div
+          className={classNames([
+            'relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer max-w-96 ',
+            hasError ? 'border-red-600 dark:border-red-400' : 'border-slate-300'
+          ])}>
           {!hasImage && (
             <>
-              <div className="flex justify-center items-center  rounded-full w-[50px] h-[50px] bg-primary-500">
-                <IconPlus className="w-5 h-5 " />
+              <div
+                className={classNames([
+                  'flex justify-center items-center  rounded-full w-[50px] h-[50px]',
+                  hasError ? 'bg-red-500 dark:bg-red-400 text-white' : 'bg-primary-500 text-white'
+                ])}>
+                <IconPlus className="w-6 h-6 " />
               </div>
-              <p className="pt-2 font-semibold text-slate-400">{label}</p>
+              <p
+                className={classNames([
+                  hasError ? 'text-red-600 dark:text-red-400' : 'text-slate-400',
+                  'pt-2 font-semibold'
+                ])}>
+                {label}
+              </p>
             </>
           )}
 
@@ -52,6 +70,13 @@ const InputImage = ({ label, ...props }: Props) => {
             />
           )}
         </div>
+        <p
+          className={classNames([
+            hasError ? '' : 'opacity-0',
+            'text-sm text-red-600 dark:text-red-400'
+          ])}>
+          {hasError ? props.error : 'error'}
+        </p>
       </button>
     </>
   )

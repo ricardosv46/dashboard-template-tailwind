@@ -2,7 +2,7 @@ import Navbar from '@components/layout/Navbar'
 import Sidebar from '@components/layout/Sidebar'
 import WelcomePage from '@pages/home/WelcomePage'
 import { Suspense, useEffect, useMemo } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { getRoutes } from './routes'
 
 const HomeRouter = () => {
@@ -29,6 +29,7 @@ const HomeRouter = () => {
             {subRoutes.map(({ path, name, component: Component }) => {
               return <Route key={name} path={path} element={<Component />} />
             })}
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
       </div>

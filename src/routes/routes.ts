@@ -1,8 +1,8 @@
-import { IconImage, IconOptions } from '@icons'
+import { IconFile, IconImage, IconOptions } from '@icons'
 import { Route } from '@interface/index'
 import { lazy } from 'react'
 
-// const BlogsPage = lazy(() => import('../pages/home/blogs/BlogsPage'))
+const BlogsPage = lazy(() => import('../pages/home/blogs/BlogsPage'))
 const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
 // const ProductsPage = lazy(() => import('../pages/home/products/ProductsPage'))
 // const PedidosPage = lazy(() => import('../pages/home/pedidos/PedidosPage'))
@@ -12,9 +12,9 @@ const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
 // const CategoryProduct = lazy(() => import('../pages/home/products/categorys/CategoryProduct'))
 // const CreateCategoryProducto = lazy(() => import('../pages/home/products/categorys/CreateCategoryProduct'))
 // const EditCategoryProducto = lazy(() => import('../pages/home/products/categorys/EditCategoryProduct'))
-// const CategoryBlog = lazy(() => import('../pages/home/blogs/categorys/CategoryBlog'))
-// const CreateCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/CreateCategoryBlog'))
-// const EditCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/EditCategoryBlog'))
+const CategorysBlog = lazy(() => import('../pages/home/blogs/categorys/CategorysBlog'))
+const CreateCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/CreateCategoryBlog'))
+const EditCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/EditCategoryBlog'))
 // const CreateBlog = lazy(() => import('../pages/home/blogs/CreateBlog'))
 // const EditBlog = lazy(() => import('../pages/home/blogs/EditBlog'))
 // const Banks = lazy(() => import('../pages/home/banks/Banks'))
@@ -23,9 +23,9 @@ const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
 // const EfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/EfectivoMovil'))
 // const CreateEfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/CreateEfectivoMovil'))
 // const EditEfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/EditarEfectivoMovil'))
-const SlidersPage = lazy(() => import('../pages/home/Sliders/SliderPage'))
-const CreateSlider = lazy(() => import('../pages/home/Sliders/CreateSlider'))
-const EditSlider = lazy(() => import('../pages/home/Sliders/EditSlider'))
+const SlidersPage = lazy(() => import('../pages/home/sliders/SliderPage'))
+const CreateSlider = lazy(() => import('../pages/home/sliders/CreateSlider'))
+const EditSlider = lazy(() => import('../pages/home/sliders/EditSlider'))
 // const VendedoraPage = lazy(() => import('../pages/home/vendedoras/VendedoraPage'))
 // const CreateVendedora = lazy(() => import('../pages/home/vendedoras/CreateVendedora'))
 // const EditVendedora = lazy(() => import('../pages/home/vendedoras/EditVendedora'))
@@ -64,6 +64,66 @@ export const homeRoutes: Route[] = [
           component: EditSlider,
           render: false
         }
+      ]
+    }
+  },
+  {
+    icon: IconFile,
+    name: 'Blogs',
+    to: '/blogs',
+    path: 'blogs',
+    component: BlogsPage,
+    subMenu: {
+      value: true,
+      paths: [
+        {
+          icon: IconOptions,
+          name: 'Categoria',
+          path: 'blogs-category',
+          to: '/blogs-category',
+          component: CategorysBlog,
+          render: true
+        },
+        {
+          icon: IconFile,
+          name: 'Blogs',
+          path: 'blogs',
+          to: '/blogs',
+          component: BlogsPage,
+          render: true
+        },
+        {
+          icon: IconOptions,
+          name: 'Crear Categoria Blog',
+          path: '/blogs-category/create-blog-category',
+          to: '',
+          component: CreateCategoryBlog,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Categoria Blog',
+          path: '/blogs-category/edit-blog-category/:slug',
+          to: '',
+          component: EditCategoryBlog,
+          render: false
+        }
+        // {
+        // 	icon: IconOptions,
+        // 	name: 'Crear Blog',
+        // 	path: 'create-blog',
+        // 	to: '/create-blog',
+        // 	component: CreateBlog,
+        // 	render: false
+        // },
+        // {
+        // 	icon: IconOptions,
+        // 	name: 'Editar Blog',
+        // 	path: 'edit-blog/:slug',
+        // 	to: '/edit-blog/:id',
+        // 	component: EditBlog,
+        // 	render: false
+        // }
       ]
     }
   }

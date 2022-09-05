@@ -39,9 +39,14 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    const user = localStorage.getItem('user')
+    const user = JSON.parse(localStorage.getItem('user')!)
     if (token && user) {
-      login(JSON.parse(user) as User)
+      if (user?.tipoUsuario == 1) {
+        login(user)
+      } else {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+      }
     }
   }, [])
   return (

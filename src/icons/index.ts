@@ -21,6 +21,7 @@ import IconCloudUpload from './IconCloudUpload'
 import IconEdit from './IconEdit'
 import IconTrash from './IconTrash'
 import IconOptions from './IconOptions'
+import IconFile from './IconFile'
 
 export {
   IconLogo,
@@ -45,5 +46,6 @@ export {
   IconCloudUpload,
   IconEdit,
   IconTrash,
-  IconOptions
+  IconOptions,
+  IconFile
 }

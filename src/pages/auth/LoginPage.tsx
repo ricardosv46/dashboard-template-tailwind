@@ -26,9 +26,10 @@ const LoginPage = () => {
       password: values?.password
     }).then((res) => {
       if (res?.ok) {
-        login(res?.data!)
-      } else {
-        toast.error('Email o Password incorrecto.', {
+        if (res?.data?.tipoUsuario === 1) {
+          return login(res?.data!)
+        }
+        return toast.error('El usuario no tiene permisos.', {
           theme: 'colored',
           position: 'top-right',
           autoClose: 5000,
@@ -39,6 +40,17 @@ const LoginPage = () => {
           progress: undefined
         })
       }
+
+      toast.error('Email o Password incorrecto.', {
+        theme: 'colored',
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
     })
   }
 

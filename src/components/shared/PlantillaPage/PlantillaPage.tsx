@@ -8,26 +8,19 @@ interface Props {
   title: string
   button?: ReactElement
   desc?: string
-  goback?: boolean
+  goback?: string
 }
 
-const PlantillaPage = ({
-  children,
-  title,
-  button,
-  desc,
-  goback = false
-}: Props) => {
+const PlantillaPage = ({ children, title, button, desc, goback = '' }: Props) => {
   const router = useNavigate()
   return (
     <div className="flex flex-col flex-1 h-full px-10 pt-10">
       <div className="flex flex-col">
         <div className={classNames([goback ? 'flex items-center' : ''])}>
-          {goback && (
+          {goback.length > 1 && (
             <button
               className="p-1 mt-1 mr-3 rounded-full btn-icon btn-solid-primary"
-              onClick={() => router(-1)}
-            >
+              onClick={() => router(goback)}>
               <IconChevronLeft />
             </button>
           )}

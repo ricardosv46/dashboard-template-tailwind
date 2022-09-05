@@ -5,7 +5,6 @@ query GetAllImagenes($pagina: Int, $numeroPagina: Int) {
       id
       url
       titulo
-      estado
     }
   }
 }

@@ -62,6 +62,7 @@ const Sidebar = ({ onClose, mobile = false }: Props) => {
           <SidebarLink
             to="/"
             name="Home"
+            onClick={onClose}
             icon={IconHome}
             subMenu={{ value: false, paths: [] }}
           />
@@ -77,7 +78,9 @@ const Sidebar = ({ onClose, mobile = false }: Props) => {
       </div>
       <div className="absolute bottom-0 w-full p-5 bg-gray-100 dark:bg-gray-700">
         <button
-          className={`w-full px-0 text-white bg-red-600 border-red-600 dark:bg-red-400 btn dark:border-red-400 hidden ${styles.cerrar}`}
+          className={`w-full px-0 text-white bg-red-600 border-red-600 dark:bg-red-400 btn dark:border-red-400 ${
+            mobile ? '' : 'hidden'
+          }  ${styles.cerrar}`}
           onClick={logout}
         >
           <IconLogout />
