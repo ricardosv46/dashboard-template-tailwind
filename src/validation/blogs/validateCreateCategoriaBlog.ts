@@ -23,6 +23,6 @@ export const validateCreateCategoriaBlog = (values: FormikValues) => {
   if (isEmpty(values.imagenSecundaria?.url)) {
     errors.imagenSecundaria = 'La imagenSecundaria es requerida'
   }
-  console.log({ errors })
+
   return errors
 }

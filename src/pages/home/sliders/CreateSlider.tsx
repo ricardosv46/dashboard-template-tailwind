@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const CreateSlider = () => {
-  const [imagenPrincipal, setImagenPrincipal] = useState<Imagenes>({} as Imagenes)
   const router = useNavigate()
   const { createSlider, loadingCreate } = useSliders({})
 
@@ -20,7 +19,7 @@ const CreateSlider = () => {
       titulo: values.titulo,
       tipoLink: values.tipoLink,
       link: values.link,
-      imagenPrincipal: Number(imagenPrincipal?.id)
+      imagenPrincipal: Number(values.imagenPrincipal?.id)
     }).then((res) => {
       if (res.ok) {
         toast.success('Slider Creado Correctamente.', {
@@ -50,13 +49,18 @@ const CreateSlider = () => {
     })
   }
 
-  const { values, errors, touched, ...form } = useFormik({
+  const { values, errors, touched, setFieldValue, ...form } = useFormik({
     onSubmit,
     validate: validateCreateSlider,
     initialValues: {
       titulo: '',
       link: '',
-      tipoLink: ''
+      tipoLink: '',
+      imagenPrincipal: {
+        id: '',
+        titulo: '',
+        url: ''
+      }
     }
   })
 
@@ -91,7 +95,7 @@ const CreateSlider = () => {
               { value: 'externo', label: 'Enlace Externo' }
             ]}
             onChange={({ value }) => {
-              form.setFieldValue('tipoLink', value)
+              setFieldValue('tipoLink', value)
             }}
             dataExtractor={{
               label: 'label',
@@ -103,9 +107,11 @@ const CreateSlider = () => {
         </div>
         <div className="flex w-full col-span-2 mx-auto md:w-1/2">
           <InputImage
-            value={imagenPrincipal}
-            onChange={setImagenPrincipal}
+            value={values.imagenPrincipal}
+            onChange={(value) => setFieldValue('imagenPrincipal', value)}
             label=" Imagen Principal"
+            error={errors.imagenPrincipal}
+            touched={touched?.imagenPrincipal?.url ?? false}
           />
         </div>
 

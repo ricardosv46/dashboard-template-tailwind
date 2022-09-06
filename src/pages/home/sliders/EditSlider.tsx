@@ -4,16 +4,14 @@ import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Select from '@components/shared/Select/Select'
 import { Show } from '@components/shared/Show/Show'
 import Spinner from '@components/shared/Spinner/Spinner'
-import { Slider } from '@generated/graphql'
 import { useSliders } from '@services/useSliders'
 import { validateCreateSlider } from '@validation/Sliders/validateCreateSlider'
 import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const EditSlider = () => {
-  const [imagenPrincipal, setImagenPrincipal] = useState<Imagenes>()
   const { slug } = useParams()
   const router = useNavigate()
   const { updateSlider, loadingUpdate, dbSliderId, loadingSliderId } = useSliders({
@@ -26,7 +24,7 @@ const EditSlider = () => {
       titulo: values.titulo,
       tipoLink: values.tipoLink,
       link: values.link,
-      imagenPrincipal: Number(imagenPrincipal?.id)
+      imagenPrincipal: Number(values.imagenPrincipal?.id)
     }).then((res) => {
       if (res.ok) {
         toast.success('Slider Actualizado Correctamente.', {
@@ -56,13 +54,18 @@ const EditSlider = () => {
     })
   }
 
-  const { values, errors, touched, setValues, ...form } = useFormik({
+  const { values, errors, touched, setValues, setFieldValue, ...form } = useFormik({
     onSubmit,
     validate: validateCreateSlider,
     initialValues: {
       titulo: '',
       link: '',
-      tipoLink: ''
+      tipoLink: '',
+      imagenPrincipal: {
+        id: '',
+        titulo: '',
+        url: ''
+      }
     }
   })
 
@@ -72,9 +75,13 @@ const EditSlider = () => {
         setValues({
           titulo: dbSliderId?.titulo!,
           link: dbSliderId?.link!,
-          tipoLink: dbSliderId?.tipoLink!
+          tipoLink: dbSliderId?.tipoLink!,
+          imagenPrincipal: {
+            id: dbSliderId?.imagenPrincipal?.id!,
+            titulo: dbSliderId?.imagenPrincipal?.titulo!,
+            url: dbSliderId?.imagenPrincipal?.url!
+          }
         })
-        setImagenPrincipal(dbSliderId?.imagenPrincipal!)
       } else {
         router('/sliders')
       }
@@ -116,7 +123,7 @@ const EditSlider = () => {
                 { value: 'externo', label: 'Enlace Externo' }
               ]}
               onChange={({ value }) => {
-                form.setFieldValue('tipoLink', value)
+                setFieldValue('tipoLink', value)
               }}
               dataExtractor={{
                 label: 'label',
@@ -128,9 +135,11 @@ const EditSlider = () => {
           </div>
           <div className="flex w-full col-span-2 mx-auto md:w-1/2">
             <InputImage
-              value={imagenPrincipal}
-              onChange={setImagenPrincipal}
+              value={values.imagenPrincipal}
+              onChange={(value) => setFieldValue('imagenPrincipal', value)}
               label=" Imagen Principal"
+              error={errors.imagenPrincipal}
+              touched={touched?.imagenPrincipal?.url ?? false}
             />
           </div>
 
