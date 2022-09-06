@@ -1729,7 +1729,7 @@ export type GetCategoriaBlogSlugQueryVariables = Exact<{
 }>;
 
 
-export type GetCategoriaBlogSlugQuery = { __typename?: 'Query', GetCategoriaBlogSlug: { __typename?: 'CategoriaBlog', categoriaBlogId?: string | null, titulo?: string | null, slug?: string | null, keywords?: string | null, descripcion?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, numeroBlogs?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
+export type GetCategoriaBlogSlugQuery = { __typename?: 'Query', GetCategoriaBlogSlug: { __typename?: 'CategoriaBlog', categoriaBlogId?: string | null, titulo?: string | null, slug?: string | null, keywords?: string | null, descripcion?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, numeroBlogs?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, url?: string | null } | null } };
 
 export type GetBancoIdQueryVariables = Exact<{
   bancoId?: InputMaybe<Scalars['Int']>;
@@ -3977,13 +3977,11 @@ export const GetCategoriaBlogSlugDocument = gql`
     imagenPrincipal {
       id
       titulo
-      estado
       url
     }
     imagenSecundaria {
       id
       titulo
-      estado
       url
     }
     estado

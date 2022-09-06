@@ -8,13 +8,11 @@ query GetCategoriaBlogSlug($slug: String) {
     imagenPrincipal {
       id
       titulo
-      estado
       url
     }
     imagenSecundaria {
       id
       titulo
-      estado
       url
     }
     estado

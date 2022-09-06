@@ -15,7 +15,6 @@ import { toast } from 'react-toastify'
 const CreateCategoryBlog = () => {
   const router = useNavigate()
   const { createCategoriaBlog, loadingCreate } = useCategoriaBlogs({})
-
   const onSubmit = async () => {
     createCategoriaBlog({
       titulo: values.titulo,

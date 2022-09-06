@@ -13,9 +13,8 @@ import { toast } from 'react-toastify'
 const EditCategoryBlog = () => {
   const router = useNavigate()
   const { slug } = useParams()
-  const { updateCategoriaBlog, loadingCreate, dbCategoriBlogSlug, loadingCategoriBlogSlug } =
+  const { updateCategoriaBlog, loadingUpdate, dbCategoriBlogSlug, loadingCategoriBlogSlug } =
     useCategoriaBlogs({ slug })
-
   const onSubmit = async () => {
     updateCategoriaBlog({
       categoriaBlogId: dbCategoriBlogSlug?.categoriaBlogId!,
@@ -26,7 +25,7 @@ const EditCategoryBlog = () => {
       imagenSecundaria: Number(values.imagenSecundaria.id)
     }).then((res) => {
       if (res.ok) {
-        toast.success('Creado Correctamente.', {
+        toast.success('Actualizado Correctamente.', {
           theme: 'colored',
           position: 'top-right',
           autoClose: 5000,
@@ -81,12 +80,12 @@ const EditCategoryBlog = () => {
           keywords: dbCategoriBlogSlug?.keywords!,
           descripcion: dbCategoriBlogSlug?.descripcion!,
           imagenPrincipal: {
-            id: dbCategoriBlogSlug?.imagenPrincipal?.url!,
+            id: dbCategoriBlogSlug?.imagenPrincipal?.id!,
             titulo: dbCategoriBlogSlug?.imagenPrincipal?.titulo!,
             url: dbCategoriBlogSlug?.imagenPrincipal?.url!
           },
           imagenSecundaria: {
-            id: dbCategoriBlogSlug?.imagenSecundaria?.url!,
+            id: dbCategoriBlogSlug?.imagenSecundaria?.id!,
             titulo: dbCategoriBlogSlug?.imagenSecundaria?.titulo!,
             url: dbCategoriBlogSlug?.imagenSecundaria?.url!
           }
@@ -151,10 +150,10 @@ const EditCategoryBlog = () => {
           <div className="flex items-center justify-center col-span-2">
             <button
               type="submit"
-              disabled={loadingCreate}
+              disabled={loadingUpdate}
               className="w-full md:w-1/2 btn btn-solid-primary">
               Actualizar Categoría
-              {loadingCreate && <Spinner className="w-5 h-5" />}
+              {loadingUpdate && <Spinner className="w-5 h-5" />}
             </button>
           </div>
         </form>
