@@ -3,21 +3,25 @@ import InputImage from '@components/shared/Input/InputImage'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import { Show } from '@components/shared/Show/Show'
 import Spinner from '@components/shared/Spinner/Spinner'
-import { useCategoriaBlogs } from '@services/useCategoriaBlogs'
+import { useCategoriaProductos } from '@services/useCategoriaProductos'
 import { Toast } from '@utils/Toast'
-import { validateCreateCategoriaBlog } from '@validation/blogs/validateCreateCategoriaBlog'
+import { validateCreateCategoriaProducto } from '@validation/productos/validateCreateCategoriaProducto'
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-const EditCategoryBlog = () => {
+const EditCategoryProduct = () => {
   const router = useNavigate()
   const { slug } = useParams()
-  const { updateCategoriaBlog, loadingUpdate, dbCategoriBlogSlug, loadingCategoriBlogSlug } =
-    useCategoriaBlogs({ slug })
+  const {
+    updateCategoriaProducto,
+    loadingUpdate,
+    dbCategoriaProductoSlug,
+    loadingCategoriaProductoSlug
+  } = useCategoriaProductos({ slug })
   const onSubmit = async () => {
-    updateCategoriaBlog({
-      categoriaBlogId: dbCategoriBlogSlug?.categoriaBlogId!,
+    updateCategoriaProducto({
+      categoriaProductoId: dbCategoriaProductoSlug?.categoriaProductoId!,
       titulo: values.titulo,
       keywords: values.keywords,
       descripcion: values.descripcion,
@@ -26,7 +30,7 @@ const EditCategoryBlog = () => {
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Actualizado Correctamente.' })
-        router('/blogs-category')
+        router('/products-category')
       } else {
         Toast({ type: 'error', message: res?.error! })
       }
@@ -35,7 +39,7 @@ const EditCategoryBlog = () => {
 
   const { values, errors, touched, setFieldValue, setValues, ...form } = useFormik({
     onSubmit,
-    validate: validateCreateCategoriaBlog,
+    validate: validateCreateCategoriaProducto,
     initialValues: {
       titulo: '',
       keywords: '',
@@ -54,28 +58,28 @@ const EditCategoryBlog = () => {
   })
 
   useEffect(() => {
-    if (!loadingCategoriBlogSlug) {
-      if (dbCategoriBlogSlug?.slug === slug) {
+    if (!loadingCategoriaProductoSlug) {
+      if (dbCategoriaProductoSlug?.slug === slug) {
         setValues({
-          titulo: dbCategoriBlogSlug?.titulo!,
-          keywords: dbCategoriBlogSlug?.keywords!,
-          descripcion: dbCategoriBlogSlug?.descripcion!,
+          titulo: dbCategoriaProductoSlug?.titulo!,
+          keywords: dbCategoriaProductoSlug?.keywords!,
+          descripcion: dbCategoriaProductoSlug?.descripcion!,
           imagenPrincipal: {
-            id: dbCategoriBlogSlug?.imagenPrincipal?.id!,
-            titulo: dbCategoriBlogSlug?.imagenPrincipal?.titulo!,
-            url: dbCategoriBlogSlug?.imagenPrincipal?.url!
+            id: dbCategoriaProductoSlug?.imagenPrincipal?.id!,
+            titulo: dbCategoriaProductoSlug?.imagenPrincipal?.titulo!,
+            url: dbCategoriaProductoSlug?.imagenPrincipal?.url!
           },
           imagenSecundaria: {
-            id: dbCategoriBlogSlug?.imagenSecundaria?.id!,
-            titulo: dbCategoriBlogSlug?.imagenSecundaria?.titulo!,
-            url: dbCategoriBlogSlug?.imagenSecundaria?.url!
+            id: dbCategoriaProductoSlug?.imagenSecundaria?.id!,
+            titulo: dbCategoriaProductoSlug?.imagenSecundaria?.titulo!,
+            url: dbCategoriaProductoSlug?.imagenSecundaria?.url!
           }
         })
       } else {
-        router('/blogs-category')
+        router('/products-category')
       }
     }
-  }, [loadingCategoriBlogSlug])
+  }, [loadingCategoriaProductoSlug])
 
   return (
     <PlantillaPage title="Editar Categoría" goback>
@@ -83,7 +87,7 @@ const EditCategoryBlog = () => {
         <h1 className="title-9 dark:text-slate-200">Editar Categoría</h1>
       </div>
       <Show
-        condition={loadingCategoriBlogSlug}
+        condition={loadingCategoriaProductoSlug}
         loading
         isDefault={<Spinner className="w-10 h-10 mx-auto my-20 border-4" />}>
         <form
@@ -143,4 +147,4 @@ const EditCategoryBlog = () => {
   )
 }
 
-export default EditCategoryBlog
+export default EditCategoryProduct

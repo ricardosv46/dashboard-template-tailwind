@@ -4,8 +4,8 @@ import { Dispatch, ReactElement, useState } from 'react'
 import Paginator from '../Paginator/Paginator'
 import styles from './table.module.css'
 interface State {
-  page: number
-  numberPaginate: number
+  pagina: number
+  numeroPagina: number
 }
 
 interface Props {
@@ -17,18 +17,9 @@ interface Props {
   nTotal?: number
 }
 
-const Table = ({
-  className,
-  widthPaginator,
-  state,
-  setState,
-  nTotal,
-  children
-}: Props) => {
+const Table = ({ className, widthPaginator, state, setState, nTotal, children }: Props) => {
   const paginas =
-    widthPaginator && nTotal && nTotal > 0
-      ? generatedTotal(nTotal!, state?.numberPaginate!)
-      : []
+    widthPaginator && nTotal && nTotal > 0 ? generatedTotal(nTotal!, state?.numeroPagina!) : []
   return (
     <div className={classNames([styles.tableContainer, className])}>
       <table>{children}</table>

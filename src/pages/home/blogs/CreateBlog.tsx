@@ -1,27 +1,34 @@
 import Input from '@components/shared/Input/Input'
 import InputImage from '@components/shared/Input/InputImage'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
+import Select from '@components/shared/Select/Select'
 import Spinner from '@components/shared/Spinner/Spinner'
+import { useBlogs } from '@services/useBlogs'
 import { useCategoriaBlogs } from '@services/useCategoriaBlogs'
 import { Toast } from '@utils/Toast'
-import { validateCreateCategoriaBlog } from '@validation/blogs/validateCreateCategoriaBlog'
+import { validateCreateBlog } from '@validation/blogs/validateCreateBlog'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 
-const CreateCategoryBlog = () => {
+const CreateBlog = () => {
   const router = useNavigate()
-  const { createCategoriaBlog, loadingCreate } = useCategoriaBlogs({})
+  const { db: dataCategoriaBlog, loading: locadingCategoria } = useCategoriaBlogs({
+    estado: 'Activado'
+  })
+  const { createBlog, loadingCreate } = useBlogs({})
   const onSubmit = async () => {
-    createCategoriaBlog({
+    createBlog({
       titulo: values.titulo,
       keywords: values.keywords,
-      descripcion: values.descripcion,
+      descripcionCorta: values.descripcionCorta,
+      descripcionLarga: values.descripcionLarga,
+      categoriaBlogId: Number(values.categoriaBlogId),
       imagenPrincipal: Number(values.imagenPrincipal.id),
       imagenSecundaria: Number(values.imagenSecundaria.id)
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Creado Correctamente.' })
-        router('/blogs-category')
+        router('/blogs')
       } else {
         Toast({ type: 'error', message: res?.error! })
       }
@@ -30,11 +37,13 @@ const CreateCategoryBlog = () => {
 
   const { values, errors, touched, setFieldValue, ...form } = useFormik({
     onSubmit,
-    validate: validateCreateCategoriaBlog,
+    validate: validateCreateBlog,
     initialValues: {
       titulo: '',
       keywords: '',
-      descripcion: '',
+      categoriaBlogId: '',
+      descripcionCorta: '',
+      descripcionLarga: '',
       imagenPrincipal: {
         id: '',
         titulo: '',
@@ -49,9 +58,9 @@ const CreateCategoryBlog = () => {
   })
 
   return (
-    <PlantillaPage title="Crear Categoría" goback>
+    <PlantillaPage title="Crear Blog" goback>
       <div className="flex justify-center">
-        <h1 className="title-9 dark:text-slate-200">Crear Categoría</h1>
+        <h1 className="title-9 dark:text-slate-200">Crear Blog</h1>
       </div>
       <form
         onSubmit={form.handleSubmit}
@@ -70,15 +79,37 @@ const CreateCategoryBlog = () => {
           error={errors.keywords}
           touched={touched?.keywords ?? false}
         />
+        <Select
+          label="Categoria"
+          value={values.categoriaBlogId}
+          options={dataCategoriaBlog}
+          onChange={({ value }) => {
+            setFieldValue('categoriaBlogId', value)
+          }}
+          dataExtractor={{
+            label: 'titulo',
+            value: 'categoriaBlogId'
+          }}
+          error={errors.categoriaBlogId}
+          touched={touched?.categoriaBlogId ?? false}
+        />
+        <Input
+          type="text"
+          label="Descripción Corta"
+          {...form.getFieldProps('descripcionCorta')}
+          error={errors.descripcionCorta}
+          touched={touched?.descripcionCorta ?? false}
+        />
         <div className="col-span-2">
           <Input
             type="text"
-            label="Descripción"
-            {...form.getFieldProps('descripcion')}
-            error={errors.descripcion}
-            touched={touched?.descripcion ?? false}
+            label="Descripción Larga"
+            {...form.getFieldProps('descripcionLarga')}
+            error={errors.descripcionLarga}
+            touched={touched?.descripcionLarga ?? false}
           />
         </div>
+
         <InputImage
           value={values.imagenPrincipal}
           onChange={(value) => setFieldValue('imagenPrincipal', value)}
@@ -100,7 +131,7 @@ const CreateCategoryBlog = () => {
             type="submit"
             disabled={loadingCreate}
             className="w-full md:w-1/2 btn btn-solid-primary">
-            Crear Categoría
+            Crear Blog
             {loadingCreate && <Spinner className="w-5 h-5" />}
           </button>
         </div>
@@ -109,4 +140,4 @@ const CreateCategoryBlog = () => {
   )
 }
 
-export default CreateCategoryBlog
+export default CreateBlog

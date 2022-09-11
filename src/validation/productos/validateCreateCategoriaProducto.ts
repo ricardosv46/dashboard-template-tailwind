@@ -1,7 +1,7 @@
 import { isEmpty } from '@utils/isEmpty'
 import { FormikErrors, FormikValues } from 'formik'
 
-export const validateCreateCategoriaBlog = (values: FormikValues) => {
+export const validateCreateCategoriaProducto = (values: FormikValues) => {
   let errors: FormikErrors<FormikValues> = {}
 
   if (isEmpty(values.titulo)) {

@@ -1,14 +1,13 @@
 import Input from '@components/shared/Input/Input'
-import InputImage, { Imagenes } from '@components/shared/Input/InputImage'
+import InputImage from '@components/shared/Input/InputImage'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Select from '@components/shared/Select/Select'
 import Spinner from '@components/shared/Spinner/Spinner'
 import { useSliders } from '@services/useSliders'
-import { validateCreateSlider } from '@validation/Sliders/validateCreateSlider'
+import { Toast } from '@utils/Toast'
+import { validateCreateSlider } from '@validation/sliders/validateCreateSlider'
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 const CreateSlider = () => {
   const router = useNavigate()
@@ -21,30 +20,11 @@ const CreateSlider = () => {
       link: values.link,
       imagenPrincipal: Number(values.imagenPrincipal?.id)
     }).then((res) => {
-      if (res.ok) {
-        toast.success('Slider Creado Correctamente.', {
-          theme: 'colored',
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined
-        })
-
+      if (res?.ok) {
+        Toast({ type: 'success', message: 'Creado Correctamente.' })
         router('/sliders')
       } else {
-        toast.error(res?.error, {
-          theme: 'colored',
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined
-        })
+        Toast({ type: 'error', message: res?.error! })
       }
     })
   }
@@ -65,7 +45,7 @@ const CreateSlider = () => {
   })
 
   return (
-    <PlantillaPage title="Crear Slider" goback="/sliders">
+    <PlantillaPage title="Crear Slider" goback>
       <div className="flex justify-center">
         <h1 className="title-9 dark:text-slate-200">Crear Slider</h1>
       </div>

@@ -64,7 +64,7 @@ const InputImage = ({ label, touched, ...props }: Props) => {
 
           {hasImage && (
             <Image
-              className="absolute inset-0 z-10 object-contain w-full h-full"
+              className="absolute inset-0 z-0 object-contain w-full h-full"
               src={value?.url!}
               alt={value?.titulo!}
             />

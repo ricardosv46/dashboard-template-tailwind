@@ -22,6 +22,9 @@ import IconEdit from './IconEdit'
 import IconTrash from './IconTrash'
 import IconOptions from './IconOptions'
 import IconFile from './IconFile'
+import IconUserCircle from './IconUserCircle'
+import IconsNotifications from './IconsNotifications'
+import IconCart from './IconCart'
 
 export {
   IconLogo,
@@ -47,5 +50,8 @@ export {
   IconEdit,
   IconTrash,
   IconOptions,
-  IconFile
+  IconFile,
+  IconUserCircle,
+  IconsNotifications,
+  IconCart
 }

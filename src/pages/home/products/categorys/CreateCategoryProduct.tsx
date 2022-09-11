@@ -2,17 +2,17 @@ import Input from '@components/shared/Input/Input'
 import InputImage from '@components/shared/Input/InputImage'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Spinner from '@components/shared/Spinner/Spinner'
-import { useCategoriaBlogs } from '@services/useCategoriaBlogs'
+import { useCategoriaProductos } from '@services/useCategoriaProductos'
 import { Toast } from '@utils/Toast'
-import { validateCreateCategoriaBlog } from '@validation/blogs/validateCreateCategoriaBlog'
+import { validateCreateCategoriaProducto } from '@validation/productos/validateCreateCategoriaProducto'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 
-const CreateCategoryBlog = () => {
+const CreateCategoryProduct = () => {
   const router = useNavigate()
-  const { createCategoriaBlog, loadingCreate } = useCategoriaBlogs({})
+  const { createCategoriaProducto, loadingCreate } = useCategoriaProductos({})
   const onSubmit = async () => {
-    createCategoriaBlog({
+    createCategoriaProducto({
       titulo: values.titulo,
       keywords: values.keywords,
       descripcion: values.descripcion,
@@ -21,7 +21,7 @@ const CreateCategoryBlog = () => {
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Creado Correctamente.' })
-        router('/blogs-category')
+        router('/products-category')
       } else {
         Toast({ type: 'error', message: res?.error! })
       }
@@ -30,7 +30,7 @@ const CreateCategoryBlog = () => {
 
   const { values, errors, touched, setFieldValue, ...form } = useFormik({
     onSubmit,
-    validate: validateCreateCategoriaBlog,
+    validate: validateCreateCategoriaProducto,
     initialValues: {
       titulo: '',
       keywords: '',
@@ -109,4 +109,4 @@ const CreateCategoryBlog = () => {
   )
 }
 
-export default CreateCategoryBlog
+export default CreateCategoryProduct

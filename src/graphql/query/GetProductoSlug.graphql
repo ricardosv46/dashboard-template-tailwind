@@ -1,0 +1,39 @@
+query GetProductoSlug($slug: String) {
+  GetProductoSlug(slug: $slug) {
+    productoId
+    titulo
+    slug
+    estado
+    descripcionCorta
+    descripcionLarga
+    precioReal
+    precioOferta
+    stockMinimo
+    stockReal
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+    galeria {
+      id
+      titulo
+      estado
+      url
+    }
+    keywords
+    destacado
+    estado
+    categoriaProductoId
+    CategoriaProducto {
+      titulo
+    }
+  }
+}

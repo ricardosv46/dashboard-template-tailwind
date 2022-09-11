@@ -2,6 +2,7 @@ import {
   useCreateCategoriaProductoMutation,
   useDeleteCategoriaProductoMutation,
   useGetAllCategoriaProductosQuery,
+  useGetCategoriaProductoSlugQuery,
   useUpdateCategoriaProductoMutation,
   useUpdateEstadoCategoriaProductoMutation
 } from '../generated/graphql'
@@ -31,19 +32,32 @@ export interface IDeleteCategoriaProducto {
   categoriaProductoId: number
 }
 
+export interface IProps {
+  estado?: string
+  slug?: string
+}
+
 // Obtenemos todas las categorias
-export const useCategoriaProductos = (input = { estado: '' }) => {
+export const useCategoriaProductos = ({ estado = '', slug }: IProps) => {
   const { data, loading, refetch } = useGetAllCategoriaProductosQuery({
     fetchPolicy: 'network-only',
     variables: {
-      ...input
+      estado
     }
   })
 
-  const db = data?.GetAllCategoriaProductos?.data ?? []
+  const { data: dataCategoriaProductoSlug, loading: loadingCategoriaProductoSlug } =
+    useGetCategoriaProductoSlugQuery({
+      fetchPolicy: 'network-only',
+      variables: {
+        slug
+      }
+    })
 
-  const [CreateCategoriaProducto, { loading: loadingCreate }] =
-    useCreateCategoriaProductoMutation()
+  const db = data?.GetAllCategoriaProductos?.data ?? []
+  const dbCategoriaProductoSlug = dataCategoriaProductoSlug?.GetCategoriaProductoSlug ?? {}
+
+  const [CreateCategoriaProducto, { loading: loadingCreate }] = useCreateCategoriaProductoMutation()
 
   const createCategoriaProducto = async ({
     titulo,
@@ -71,9 +85,7 @@ export const useCategoriaProductos = (input = { estado: '' }) => {
     }
   }
 
-
-  const [UpdateCategoriaProducto, { loading: loadingUpdate }] =
-    useUpdateCategoriaProductoMutation()
+  const [UpdateCategoriaProducto, { loading: loadingUpdate }] = useUpdateCategoriaProductoMutation()
 
   const updateCategoriaProducto = async ({
     categoriaProductoId,
@@ -126,12 +138,9 @@ export const useCategoriaProductos = (input = { estado: '' }) => {
     }
   }
 
-
   const [DeleteCategoriaProducto, { loading: loadingDelete }] = useDeleteCategoriaProductoMutation()
 
-  const deleteCategoriaProducto = async ({
-    categoriaProductoId
-  }: IDeleteCategoriaProducto) => {
+  const deleteCategoriaProducto = async ({ categoriaProductoId }: IDeleteCategoriaProducto) => {
     try {
       const res = await DeleteCategoriaProducto({
         variables: {
@@ -155,6 +164,8 @@ export const useCategoriaProductos = (input = { estado: '' }) => {
     updateCategoriaProducto,
     loadingUpdate,
     updateEstadoCategoriaProducto,
-    loadingUpdateEstado
+    loadingUpdateEstado,
+    dbCategoriaProductoSlug,
+    loadingCategoriaProductoSlug
   }
 }

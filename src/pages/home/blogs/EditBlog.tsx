@@ -1,32 +1,38 @@
 import Input from '@components/shared/Input/Input'
 import InputImage from '@components/shared/Input/InputImage'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
+import Select from '@components/shared/Select/Select'
 import { Show } from '@components/shared/Show/Show'
 import Spinner from '@components/shared/Spinner/Spinner'
+import { useBlogs } from '@services/useBlogs'
 import { useCategoriaBlogs } from '@services/useCategoriaBlogs'
 import { Toast } from '@utils/Toast'
-import { validateCreateCategoriaBlog } from '@validation/blogs/validateCreateCategoriaBlog'
+import { validateCreateBlog } from '@validation/blogs/validateCreateBlog'
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-const EditCategoryBlog = () => {
+const EditBlog = () => {
   const router = useNavigate()
   const { slug } = useParams()
-  const { updateCategoriaBlog, loadingUpdate, dbCategoriBlogSlug, loadingCategoriBlogSlug } =
-    useCategoriaBlogs({ slug })
+  const { db: dataCategoriaBlog, loading: locadingCategoria } = useCategoriaBlogs({
+    estado: 'Activado'
+  })
+  const { dbBlogSlug, updateBlog, loadingUpdate, loadingBlogSlug } = useBlogs({ slug })
   const onSubmit = async () => {
-    updateCategoriaBlog({
-      categoriaBlogId: dbCategoriBlogSlug?.categoriaBlogId!,
+    updateBlog({
+      blogId: dbBlogSlug?.blogId!,
       titulo: values.titulo,
       keywords: values.keywords,
-      descripcion: values.descripcion,
+      descripcionCorta: values.descripcionCorta,
+      descripcionLarga: values.descripcionLarga,
+      categoriaBlogId: Number(values.categoriaBlogId),
       imagenPrincipal: Number(values.imagenPrincipal.id),
       imagenSecundaria: Number(values.imagenSecundaria.id)
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Actualizado Correctamente.' })
-        router('/blogs-category')
+        router('/blogs')
       } else {
         Toast({ type: 'error', message: res?.error! })
       }
@@ -35,11 +41,13 @@ const EditCategoryBlog = () => {
 
   const { values, errors, touched, setFieldValue, setValues, ...form } = useFormik({
     onSubmit,
-    validate: validateCreateCategoriaBlog,
+    validate: validateCreateBlog,
     initialValues: {
       titulo: '',
       keywords: '',
-      descripcion: '',
+      categoriaBlogId: '',
+      descripcionCorta: '',
+      descripcionLarga: '',
       imagenPrincipal: {
         id: '',
         titulo: '',
@@ -54,36 +62,38 @@ const EditCategoryBlog = () => {
   })
 
   useEffect(() => {
-    if (!loadingCategoriBlogSlug) {
-      if (dbCategoriBlogSlug?.slug === slug) {
+    if (!loadingBlogSlug) {
+      if (dbBlogSlug?.slug === slug) {
         setValues({
-          titulo: dbCategoriBlogSlug?.titulo!,
-          keywords: dbCategoriBlogSlug?.keywords!,
-          descripcion: dbCategoriBlogSlug?.descripcion!,
+          titulo: dbBlogSlug?.titulo!,
+          keywords: dbBlogSlug?.keywords!,
+          descripcionCorta: dbBlogSlug?.descripcionCorta!,
+          descripcionLarga: dbBlogSlug?.descripcionLarga!,
+          categoriaBlogId: String(dbBlogSlug?.categoriaBlogId!),
           imagenPrincipal: {
-            id: dbCategoriBlogSlug?.imagenPrincipal?.id!,
-            titulo: dbCategoriBlogSlug?.imagenPrincipal?.titulo!,
-            url: dbCategoriBlogSlug?.imagenPrincipal?.url!
+            id: dbBlogSlug?.imagenPrincipal?.id!,
+            titulo: dbBlogSlug?.imagenPrincipal?.titulo!,
+            url: dbBlogSlug?.imagenPrincipal?.url!
           },
           imagenSecundaria: {
-            id: dbCategoriBlogSlug?.imagenSecundaria?.id!,
-            titulo: dbCategoriBlogSlug?.imagenSecundaria?.titulo!,
-            url: dbCategoriBlogSlug?.imagenSecundaria?.url!
+            id: dbBlogSlug?.imagenSecundaria?.id!,
+            titulo: dbBlogSlug?.imagenSecundaria?.titulo!,
+            url: dbBlogSlug?.imagenSecundaria?.url!
           }
         })
       } else {
         router('/blogs-category')
       }
     }
-  }, [loadingCategoriBlogSlug])
+  }, [loadingBlogSlug])
 
   return (
-    <PlantillaPage title="Editar Categoría" goback>
+    <PlantillaPage title="Editar Blog" goback>
       <div className="flex justify-center">
-        <h1 className="title-9 dark:text-slate-200">Editar Categoría</h1>
+        <h1 className="title-9 dark:text-slate-200">Editar Blog</h1>
       </div>
       <Show
-        condition={loadingCategoriBlogSlug}
+        condition={loadingBlogSlug}
         loading
         isDefault={<Spinner className="w-10 h-10 mx-auto my-20 border-4" />}>
         <form
@@ -103,15 +113,38 @@ const EditCategoryBlog = () => {
             error={errors.keywords}
             touched={touched?.keywords ?? false}
           />
+          <Select
+            label="Categoria"
+            value={values.categoriaBlogId}
+            options={dataCategoriaBlog}
+            onChange={({ value }) => {
+              setFieldValue('categoriaBlogId', value)
+            }}
+            dataExtractor={{
+              label: 'titulo',
+              value: 'categoriaBlogId'
+            }}
+            error={errors.categoriaBlogId}
+            touched={touched?.categoriaBlogId ?? false}
+          />
+          <Input
+            type="text"
+            label="Descripción Corta"
+            {...form.getFieldProps('descripcionCorta')}
+            error={errors.descripcionCorta}
+            touched={touched?.descripcionCorta ?? false}
+          />
+
           <div className="col-span-2">
             <Input
               type="text"
-              label="Descripción"
-              {...form.getFieldProps('descripcion')}
-              error={errors.descripcion}
-              touched={touched?.descripcion ?? false}
+              label="Descripción Larga"
+              {...form.getFieldProps('descripcionLarga')}
+              error={errors.descripcionLarga}
+              touched={touched?.descripcionLarga ?? false}
             />
           </div>
+
           <InputImage
             value={values.imagenPrincipal}
             onChange={(value) => setFieldValue('imagenPrincipal', value)}
@@ -133,7 +166,7 @@ const EditCategoryBlog = () => {
               type="submit"
               disabled={loadingUpdate}
               className="w-full md:w-1/2 btn btn-solid-primary">
-              Actualizar Categoría
+              Actualizar Blog
               {loadingUpdate && <Spinner className="w-5 h-5" />}
             </button>
           </div>
@@ -143,4 +176,4 @@ const EditCategoryBlog = () => {
   )
 }
 
-export default EditCategoryBlog
+export default EditBlog

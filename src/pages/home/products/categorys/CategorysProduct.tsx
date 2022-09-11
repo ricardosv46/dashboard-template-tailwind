@@ -7,19 +7,24 @@ import Table from '@components/shared/Table/Table'
 import { ToggleSwitch } from '@components/shared/ToggleSwitch/ToggleSwitch'
 import useToggle from '@hooks/useToggle'
 import { IconEdit, IconPlus, IconTrash } from '@icons'
-import { useSliders } from '@services/useSliders'
+import { useCategoriaProductos } from '@services/useCategoriaProductos'
 import { Toast } from '@utils/Toast'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const SliderPage = () => {
+const CategorysProduct = () => {
   const router = useNavigate()
   const { isOpen, onOpen, onClose } = useToggle()
   const [selectId, setSelectId] = useState<string | null | undefined>(null)
-  const { db: dataSliders, deleteSlider, updateEstadoSlider, loading } = useSliders({})
+  const {
+    db: dataCategoriaProducto,
+    loading,
+    deleteCategoriaProducto,
+    updateEstadoCategoriaProducto
+  } = useCategoriaProductos({ estado: '' })
 
   const handleDelete = () => {
-    deleteSlider({ sliderId: Number(selectId) }).then((res) => {
+    deleteCategoriaProducto({ categoriaProductoId: Number(selectId) }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Eliminado Correctamente.' })
       } else {
@@ -29,8 +34,8 @@ const SliderPage = () => {
   }
 
   const handleUpdateEstado = (id: string, estado: string) => {
-    updateEstadoSlider({
-      sliderId: id,
+    updateEstadoCategoriaProducto({
+      categoriaProductoId: id,
       estado: estado === 'Activado' ? 'Desactivado' : 'Activado'
     }).then((res) => {
       if (res?.ok) {
@@ -40,18 +45,17 @@ const SliderPage = () => {
       }
     })
   }
-
   return (
     <>
       <PlantillaPage
-        title="Sliders"
-        desc="Desde aqui podras visualizar la informacion de todas los sliders"
+        title="Categoría Productos"
+        desc="Desde aqui podras visualizar todas las categorías de los productos"
         button={
           <button
-            className="self-end w-full mb-3 btn btn-solid-primary sm:w-max"
-            onClick={() => router('create-slider')}>
+            onClick={() => router('create-product-category')}
+            className="self-end w-full mb-3 btn btn-solid-primary sm:w-max">
             <IconPlus />
-            Crear Slider
+            Crear Categoría
           </button>
         }>
         <Show
@@ -64,15 +68,14 @@ const SliderPage = () => {
                 <th className="text-center">Imagen</th>
                 <th className="text-center">Titulo</th>
                 <th className="text-center">Estado</th>
-                <th className="text-center">Link</th>
-                <th className="text-center">Tipo Link</th>
+                <th className="text-center">Descripción</th>
                 <th className="text-center">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {dataSliders.map((item) => (
+              {dataCategoriaProducto.map((item) => (
                 <tr
-                  key={item.sliderId}
+                  key={item.categoriaProductoId}
                   className="dark:bg-transparent dark:text-slate-50 dark:hover:bg-slate-900 dark:border-b-slate-700">
                   <td className="text-center">
                     <Image
@@ -86,21 +89,19 @@ const SliderPage = () => {
                     <div className="flex justify-center ">
                       <ToggleSwitch
                         onClick={() => {
-                          handleUpdateEstado(item?.sliderId!, item?.estado!)
+                          handleUpdateEstado(item?.categoriaProductoId!, item?.estado!)
                         }}
                         value={item.estado === 'Activado'}
                       />
                     </div>
                   </td>
-                  <td className="text-center ">{item?.link}</td>
-                  <td className="text-center ">
-                    {item?.tipoLink === 'interno' ? 'Interno' : 'Externo'}
-                  </td>
+                  <td className="text-center ">{item?.descripcion}</td>
+
                   <td>
                     <div className="flex justify-center gap-x-3">
                       <button
                         className="btn-icon btn-ghost-primary"
-                        onClick={() => router(`edit-slider/${item.sliderId}`)}>
+                        onClick={() => router(`edit-product-category/${item.slug}`)}>
                         <IconEdit />
                       </button>
 
@@ -108,7 +109,7 @@ const SliderPage = () => {
                         className="btn-icon btn-ghost-primary"
                         onClick={() => {
                           onOpen()
-                          setSelectId(item?.sliderId)
+                          setSelectId(item?.categoriaProductoId)
                         }}>
                         <IconTrash />
                       </button>
@@ -124,11 +125,11 @@ const SliderPage = () => {
         isOpen={isOpen}
         onClick={handleDelete}
         onClose={onClose}
-        header="Eliminar slider"
-        body="¿Estas seguro que deseas eliminar este slider?"
+        header="Eliminar categoría"
+        body="¿Estas seguro que deseas eliminar esta categoría?"
       />
     </>
   )
 }
 
-export default SliderPage
+export default CategorysProduct

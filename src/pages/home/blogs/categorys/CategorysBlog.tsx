@@ -8,9 +8,9 @@ import { ToggleSwitch } from '@components/shared/ToggleSwitch/ToggleSwitch'
 import useToggle from '@hooks/useToggle'
 import { IconEdit, IconPlus, IconTrash } from '@icons'
 import { useCategoriaBlogs } from '@services/useCategoriaBlogs'
+import { Toast } from '@utils/Toast'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 const CategorysBlog = () => {
   const router = useNavigate()
@@ -26,27 +26,9 @@ const CategorysBlog = () => {
   const handleDelete = () => {
     deleteCategoriaBlog({ categoriaBlogId: Number(selectId) }).then((res) => {
       if (res?.ok) {
-        toast.success('Eliminado Correctamente.', {
-          theme: 'colored',
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined
-        })
+        Toast({ type: 'success', message: 'Eliminado Correctamente.' })
       } else {
-        toast.error(res?.error, {
-          theme: 'colored',
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined
-        })
+        Toast({ type: 'error', message: res?.error! })
       }
     })
   }
@@ -57,27 +39,9 @@ const CategorysBlog = () => {
       estado: estado === 'Activado' ? 'Desactivado' : 'Activado'
     }).then((res) => {
       if (res?.ok) {
-        toast.success('Estado Actualizado Correctamente.', {
-          theme: 'colored',
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined
-        })
+        Toast({ type: 'success', message: 'Estado Actualizado Correctamente.' })
       } else {
-        toast.error(res?.error, {
-          theme: 'colored',
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined
-        })
+        Toast({ type: 'error', message: res?.error! })
       }
     })
   }
@@ -161,8 +125,8 @@ const CategorysBlog = () => {
         isOpen={isOpen}
         onClick={handleDelete}
         onClose={onClose}
-        header="Eliminar categoria"
-        body="¿Estas seguro que deseas eliminar esta categoria?"
+        header="Eliminar categoría"
+        body="¿Estas seguro que deseas eliminar esta categoría?"
       />
     </>
   )

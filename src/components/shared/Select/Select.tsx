@@ -53,9 +53,7 @@ const Select = <T extends object>({
 
   useEffect(() => {
     if (Array.isArray(options)) {
-      const i = options?.findIndex(
-        (o: any) => String(o[keyValue]) === String(props.value)
-      )
+      const i = options?.findIndex((o: any) => String(o[keyValue]) === String(props.value))
       setInnerData({
         label: i === -1 ? '' : (options as any)[i][keyLabel],
         value: i === -1 ? '' : (options as any)[i][keyValue]
@@ -65,8 +63,7 @@ const Select = <T extends object>({
 
   const filterOptions = useMemo(() => {
     if (withFilter) {
-      const _label =
-        typeof innerData.value === 'string' ? innerData.value.toLowerCase() : ''
+      const _label = typeof innerData.value === 'string' ? innerData.value.toLowerCase() : ''
       return options?.filter((option) => {
         return (option as any)[keyLabel].toLowerCase().includes(_label)
       })
@@ -110,16 +107,13 @@ const Select = <T extends object>({
               type="button"
               className={classNames([
                 'btn-icon  ',
-                props?.error?.length && props?.touched
-                  ? 'btn-ghost-red '
-                  : 'btn-ghost-primary '
+                props?.error?.length && props?.touched ? 'btn-ghost-red ' : 'btn-ghost-primary '
               ])}
               onClick={() => {
                 inputRef.current?.focus()
                 setIsFiltering(false)
                 setIsOpen((prev) => !prev)
-              }}
-            >
+              }}>
               <IconChevronDown
                 className={classNames([
                   isOpen ? 'rotate-180' : 'rotate-0',
@@ -133,9 +127,8 @@ const Select = <T extends object>({
         <div
           className={classNames([
             isOpen ? 'max-h-[300px]' : 'max-h-0',
-            'absolute z-40 w-full overflow-y-auto bg-white dark:bg-slate-700 dark:text-white rounded shadow top-[105%]'
-          ])}
-        >
+            'absolute z-10 w-full overflow-y-auto bg-white dark:bg-slate-700 dark:text-white rounded shadow top-[105%]'
+          ])}>
           <div className="flex flex-col w-full">
             {isOpen &&
               isFiltering &&

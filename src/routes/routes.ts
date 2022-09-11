@@ -1,22 +1,26 @@
-import { IconFile, IconImage, IconOptions } from '@icons'
+import { IconCart, IconFile, IconImage, IconOptions } from '@icons'
 import { Route } from '@interface/index'
 import { lazy } from 'react'
 
 const BlogsPage = lazy(() => import('../pages/home/blogs/BlogsPage'))
 const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
-// const ProductsPage = lazy(() => import('../pages/home/products/ProductsPage'))
+const ProductsPage = lazy(() => import('../pages/home/products/ProductsPage'))
 // const PedidosPage = lazy(() => import('../pages/home/pedidos/PedidosPage'))
 // const VerPedidos = lazy(() => import('../pages/home/pedidos/VerPedidos'))
-// const CreateProduct = lazy(() => import('../pages/home/products/CreateProduct'))
-// const EditProduct = lazy(() => import('../pages/home/products/EditProduct'))
-// const CategoryProduct = lazy(() => import('../pages/home/products/categorys/CategoryProduct'))
-// const CreateCategoryProducto = lazy(() => import('../pages/home/products/categorys/CreateCategoryProduct'))
-// const EditCategoryProducto = lazy(() => import('../pages/home/products/categorys/EditCategoryProduct'))
+const CreateProduct = lazy(() => import('../pages/home/products/CreateProduct'))
+const EditProduct = lazy(() => import('../pages/home/products/EditProduct'))
+const CategorysProduct = lazy(() => import('../pages/home/products/categorys/CategorysProduct'))
+const CreateCategoryProducto = lazy(
+  () => import('../pages/home/products/categorys/CreateCategoryProduct')
+)
+const EditCategoryProducto = lazy(
+  () => import('../pages/home/products/categorys/EditCategoryProduct')
+)
 const CategorysBlog = lazy(() => import('../pages/home/blogs/categorys/CategorysBlog'))
 const CreateCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/CreateCategoryBlog'))
 const EditCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/EditCategoryBlog'))
-// const CreateBlog = lazy(() => import('../pages/home/blogs/CreateBlog'))
-// const EditBlog = lazy(() => import('../pages/home/blogs/EditBlog'))
+const CreateBlog = lazy(() => import('../pages/home/blogs/CreateBlog'))
+const EditBlog = lazy(() => import('../pages/home/blogs/EditBlog'))
 // const Banks = lazy(() => import('../pages/home/banks/Banks'))
 // const CreateBank = lazy(() => import('../pages/home/banks/CreateBank'))
 // const EditBank = lazy(() => import('../pages/home/banks/EditarBank'))
@@ -107,65 +111,88 @@ export const homeRoutes: Route[] = [
           to: '',
           component: EditCategoryBlog,
           render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Crear Blog',
+          path: 'blogs/create-blog',
+          to: '',
+          component: CreateBlog,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Blog',
+          path: 'blogs/edit-blog/:slug',
+          to: '',
+          component: EditBlog,
+          render: false
         }
-        // {
-        // 	icon: IconOptions,
-        // 	name: 'Crear Blog',
-        // 	path: 'create-blog',
-        // 	to: '/create-blog',
-        // 	component: CreateBlog,
-        // 	render: false
-        // },
-        // {
-        // 	icon: IconOptions,
-        // 	name: 'Editar Blog',
-        // 	path: 'edit-blog/:slug',
-        // 	to: '/edit-blog/:id',
-        // 	component: EditBlog,
-        // 	render: false
-        // }
+      ]
+    }
+  },
+  {
+    icon: IconCart,
+    name: 'Productos',
+    to: '/products',
+    path: 'products',
+    component: ProductsPage,
+    subMenu: {
+      value: true,
+      paths: [
+        {
+          icon: IconOptions,
+          name: 'Categoria',
+          path: 'products-category',
+          to: '/products-category',
+          component: CategorysProduct,
+          render: true
+        },
+        {
+          icon: IconCart,
+          name: 'Productos',
+          path: 'products',
+          to: '/products',
+          component: ProductsPage,
+          render: true
+        },
+        {
+          icon: IconOptions,
+          name: 'Crear Categoria Producto',
+          path: 'products-category/create-product-category',
+          to: '',
+          component: CreateCategoryProducto,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Categoria Producto',
+          path: 'products-category/edit-product-category/:slug',
+          to: '',
+          component: EditCategoryProducto,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Crear Product',
+          path: 'products/create-product',
+          to: '',
+          component: CreateProduct,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Product',
+          path: 'products/edit-product/:slug',
+          to: '',
+          component: EditProduct,
+          render: false
+        }
       ]
     }
   }
 ]
 
-// [
-// 	{
-// 		icon: IconImage,
-// 		path: 'images',
-// 		name: 'Imagenes',
-// 		to: '/images',
-// 		component: ImagesPage,
-// 		subMenu: { value: false, paths: [] }
-// 	},
-// 	{
-// 		icon: IconImage,
-// 		name: 'Sliders',
-// 		to: '/sliders',
-// 		path: 'sliders',
-// 		component: SlidersPage,
-// 		subMenu: {
-// 			value: false,
-// 			paths: [
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Crear Slider',
-// 					path: 'create-slider',
-// 					to: '/create-slider',
-// 					component: CreateSlider,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Editar Slider',
-// 					path: 'edit-slider/:slug',
-// 					to: '/edit-slider/:id',
-// 					component: EditSlider,
-// 					render: false
-// 				}
-// 			]
-// 		}
-// 	},
 // 	{
 // 		icon: IconPedidos,
 // 		name: 'Pedidos',
@@ -186,66 +213,7 @@ export const homeRoutes: Route[] = [
 // 			]
 // 		}
 // 	},
-// 	{
-// 		icon: IconFile,
-// 		name: 'Blogs',
-// 		to: '/blogs',
-// 		path: 'blogs',
-// 		component: BlogsPage,
-// 		subMenu: {
-// 			value: true,
-// 			paths: [
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Categoria',
-// 					path: 'blogs-category',
-// 					to: '/blogs-category',
-// 					component: CategoryBlog,
-// 					render: true
-// 				},
-// 				{
-// 					icon: IconFile,
-// 					name: 'Blogs',
-// 					path: 'blogs',
-// 					to: '/blogs',
-// 					component: BlogsPage,
-// 					render: true
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Crear Categoria Blog',
-// 					path: 'create-blog-category',
-// 					to: '/create-blog-category',
-// 					component: CreateCategoryBlog,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Editar Categoria Blog',
-// 					path: 'edit-blog-category/:id',
-// 					to: '/edit-blog-category/:id',
-// 					component: EditCategoryBlog,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Crear Blog',
-// 					path: 'create-blog',
-// 					to: '/create-blog',
-// 					component: CreateBlog,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Editar Blog',
-// 					path: 'edit-blog/:slug',
-// 					to: '/edit-blog/:id',
-// 					component: EditBlog,
-// 					render: false
-// 				}
-// 			]
-// 		}
-// 	},
+
 // 	{
 // 		icon: IconCart,
 // 		name: 'Productos',

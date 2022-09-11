@@ -2,6 +2,7 @@ import {
   useCreateBlogMutation,
   useDeleteBlogMutation,
   useGetAllBlogsQuery,
+  useGetBlogSlugQuery,
   useUpdateBlogMutation,
   useUpdateDestacadoBlogMutation,
   useUpdateEstadoBlogMutation
@@ -42,18 +43,33 @@ export interface IDeleteBlog {
   blogId: number
 }
 
+export interface IProps {
+  estado?: string
+  slug?: string
+  pagina?: number
+  numeroPagina?: number
+}
+
 // Obtenemos todas los blogs
-export const useBlogs = (
-  input = { pagina: 1, estado: '', numeroPagina: 10 }
-) => {
+export const useBlogs = ({ estado = '', pagina = 1, numeroPagina = 10, slug }: IProps) => {
   const { data, loading, refetch } = useGetAllBlogsQuery({
     fetchPolicy: 'network-only',
     variables: {
-      ...input
+      estado,
+      pagina,
+      numeroPagina
+    }
+  })
+
+  const { data: dataBlogSlug, loading: loadingBlogSlug } = useGetBlogSlugQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      slug
     }
   })
 
   const db = data?.GetAllBlogs?.data ?? []
+  const dbBlogSlug = dataBlogSlug?.GetBlogSlug ?? {}
   const nTotal = data?.GetAllBlogs?.numeroTotal ?? 0
 
   const [CreateBlog, { loading: loadingCreate }] = useCreateBlogMutation()
@@ -122,8 +138,7 @@ export const useBlogs = (
     }
   }
 
-  const [UpdateEstadoBlog, { loading: loadingUpdateEstado }] =
-    useUpdateEstadoBlogMutation()
+  const [UpdateEstadoBlog, { loading: loadingUpdateEstado }] = useUpdateEstadoBlogMutation()
 
   const updateEstadoBlog = async ({ blogId, estado }: IUpdateEstadoBlog) => {
     try {
@@ -145,10 +160,7 @@ export const useBlogs = (
   const [UpdateDestacadoBlog, { loading: loadingUpdateDestacado }] =
     useUpdateDestacadoBlogMutation()
 
-  const updateDestacadoBlog = async ({
-    blogId,
-    destacado
-  }: IUpdateDestacadoBlog) => {
+  const updateDestacadoBlog = async ({ blogId, destacado }: IUpdateDestacadoBlog) => {
     try {
       const res = await UpdateDestacadoBlog({
         variables: {
@@ -184,6 +196,7 @@ export const useBlogs = (
   return {
     loading,
     db,
+    dbBlogSlug,
     nTotal,
     createBlog,
     loadingCreate,
@@ -194,6 +207,7 @@ export const useBlogs = (
     updateEstadoBlog,
     loadingUpdateEstado,
     updateDestacadoBlog,
-    loadingUpdateDestacado
+    loadingUpdateDestacado,
+    loadingBlogSlug
   }
 }

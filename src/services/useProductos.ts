@@ -2,6 +2,7 @@ import {
   useCreateProductoMutation,
   useDeleteProductoMutation,
   useGetAllProductosQuery,
+  useGetProductoSlugQuery,
   useUpdateDestacadoProductoMutation,
   useUpdateEstadoProductoMutation,
   useUpdateProductoMutation
@@ -23,18 +24,18 @@ interface ICreateProducto {
 }
 
 interface IUpdateProducto {
-  productoId: string,
-  titulo: string,
-  descripcionCorta: string,
-  descripcionLarga: string,
-  precioReal: number,
-  precioOferta: number,
-  stockMinimo: number,
-  stockReal: number,
-  imagenPrincipal: number,
-  imagenSecundaria: number,
-  galeria: string[],
-  keywords: string,
+  productoId: string
+  titulo: string
+  descripcionCorta: string
+  descripcionLarga: string
+  precioReal: number
+  precioOferta: number
+  stockMinimo: number
+  stockReal: number
+  imagenPrincipal: number
+  imagenSecundaria: number
+  galeria: string[]
+  keywords: string
   categoriaProductoId: number
 }
 
@@ -52,15 +53,30 @@ export interface IDeleteProducto {
   productoId: number
 }
 
-export const useProductos = (
-  input = { pagina: 1, estado: '', numeroPagina: 10 }
-) => {
+export interface IProps {
+  estado?: string
+  slug?: string
+  pagina?: number
+  numeroPagina?: number
+}
+
+export const useProductos = ({ estado = '', pagina = 1, numeroPagina = 10, slug }: IProps) => {
   const { data, loading, refetch } = useGetAllProductosQuery({
     fetchPolicy: 'network-only',
     variables: {
-      ...input
+      estado,
+      pagina,
+      numeroPagina
     }
   })
+  const { data: dataProductoSlug, loading: loadingProductoSlug } = useGetProductoSlugQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      slug
+    }
+  })
+
+  const dbProductoSlug = dataProductoSlug?.GetProductoSlug ?? {}
 
   const db = data?.GetAllProductos?.data ?? []
   const nTotal = data?.GetAllProductos?.numeroTotal ?? 0
@@ -151,12 +167,10 @@ export const useProductos = (
     }
   }
 
-  const [UpdateDestacadoProducto, { loading: loadingUpdateDestacado }] = useUpdateDestacadoProductoMutation()
+  const [UpdateDestacadoProducto, { loading: loadingUpdateDestacado }] =
+    useUpdateDestacadoProductoMutation()
 
-  const updateDestacadoProducto = async ({
-    productoId,
-    destacado
-  }: IUpdateDestacadoProducto) => {
+  const updateDestacadoProducto = async ({ productoId, destacado }: IUpdateDestacadoProducto) => {
     try {
       await UpdateDestacadoProducto({
         variables: {
@@ -221,6 +235,8 @@ export const useProductos = (
     updateDestacadoProducto,
     loadingUpdateDestacado,
     updateProducto,
-    loadingUpdate
+    loadingUpdate,
+    dbProductoSlug,
+    loadingProductoSlug
   }
 }

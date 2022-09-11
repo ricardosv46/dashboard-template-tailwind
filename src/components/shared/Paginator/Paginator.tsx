@@ -1,14 +1,9 @@
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronsLeft,
-  IconChevronsRight
-} from '@icons'
+import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@icons'
 import React, { Dispatch } from 'react'
 
 interface State {
-  page: number
-  numberPaginate: number
+  pagina: number
+  numeroPagina: number
 }
 
 interface IProps {
@@ -18,15 +13,15 @@ interface IProps {
 }
 
 const Paginator = ({ state, setState, paginas }: IProps) => {
-  const { page, numberPaginate } = state
+  const { pagina, numeroPagina } = state
 
   const increment = () => {
-    if (paginas.length === page) return
-    setState({ ...state, page: page + 1 })
+    if (paginas.length === pagina) return
+    setState({ ...state, pagina: pagina + 1 })
   }
   const decrement = () => {
-    if (page === 1) return
-    setState({ ...state, page: page - 1 })
+    if (pagina === 1) return
+    setState({ ...state, pagina: pagina - 1 })
   }
 
   return (
@@ -35,8 +30,7 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
         <div>
           <button
             className="btn-icon btn-ghost-primary"
-            onClick={() => setState({ ...state, page: 1 })}
-          >
+            onClick={() => setState({ ...state, pagina: 1 })}>
             <IconChevronsLeft className="w-4 h-4" />
           </button>
           <button className="btn-icon btn-ghost-primary" onClick={decrement}>
@@ -46,7 +40,7 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
 
         <div className="text-[12px] md:text-base flex items-center gap-5 px-5">
           <p className="text-sm">
-            Pagina <span className="font-bold ">{page}</span> de{' '}
+            Pagina <span className="font-bold ">{pagina}</span> de{' '}
             <span className="font-bold">{paginas.length}</span>
           </p>
 
@@ -54,14 +48,11 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
             <p className="text-sm">Ir a la página :</p>{' '}
             <select
               className="p-1 ml-1 text-sm text-center text-gray-600 border border-gray-300 rounded-lg w-14"
-              value={page}
-              onChange={(e) =>
-                setState({ ...state, page: Number(e.target.value) })
-              }
-            >
-              {paginas.map((page) => (
-                <option className="text-center" key={page} value={page}>
-                  {page}
+              value={pagina}
+              onChange={(e) => setState({ ...state, pagina: Number(e.target.value) })}>
+              {paginas.map((pagina) => (
+                <option className="text-center" key={pagina} value={pagina}>
+                  {pagina}
                 </option>
               ))}
             </select>
@@ -72,18 +63,17 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
 
             <select
               className="p-1 ml-1 text-sm text-center text-gray-600 border border-gray-300 rounded-lg w-14"
-              value={numberPaginate}
+              value={numeroPagina}
               onChange={(e) =>
                 setState({
                   ...state,
-                  page: 1,
-                  numberPaginate: Number(e.target.value)
+                  pagina: 1,
+                  numeroPagina: Number(e.target.value)
                 })
-              }
-            >
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <option className="text-center" key={pageSize} value={pageSize}>
-                  {pageSize}
+              }>
+              {[10, 20, 30, 40, 50].map((paginaSize) => (
+                <option className="text-center" key={paginaSize} value={paginaSize}>
+                  {paginaSize}
                 </option>
               ))}
             </select>
@@ -99,10 +89,9 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
             onClick={() =>
               setState({
                 ...state,
-                page: paginas.length
+                pagina: paginas.length
               })
-            }
-          >
+            }>
             <IconChevronsRight className="w-4 h-4" />
           </button>
         </div>
@@ -111,12 +100,11 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
         <p className="text-sm">Ir a la página :</p>{' '}
         <select
           className="p-1 ml-1 text-sm text-center text-gray-600 border border-gray-300 rounded-lg w-14"
-          value={page}
-          onChange={(e) => setState({ ...state, page: Number(e.target.value) })}
-        >
-          {paginas.map((page) => (
-            <option className="text-center" key={page} value={page}>
-              {page}
+          value={pagina}
+          onChange={(e) => setState({ ...state, pagina: Number(e.target.value) })}>
+          {paginas.map((pagina) => (
+            <option className="text-center" key={pagina} value={pagina}>
+              {pagina}
             </option>
           ))}
         </select>
@@ -127,18 +115,17 @@ const Paginator = ({ state, setState, paginas }: IProps) => {
 
         <select
           className="p-1 ml-1 text-sm text-center text-gray-600 border border-gray-300 rounded-lg w-14"
-          value={numberPaginate}
+          value={numeroPagina}
           onChange={(e) =>
             setState({
               ...state,
-              page: 1,
-              numberPaginate: Number(e.target.value)
+              pagina: 1,
+              numeroPagina: Number(e.target.value)
             })
-          }
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option className="text-center" key={pageSize} value={pageSize}>
-              {pageSize}
+          }>
+          {[10, 20, 30, 40, 50].map((paginaSize) => (
+            <option className="text-center" key={paginaSize} value={paginaSize}>
+              {paginaSize}
             </option>
           ))}
         </select>

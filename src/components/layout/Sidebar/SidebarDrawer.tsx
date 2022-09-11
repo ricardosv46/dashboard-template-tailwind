@@ -36,8 +36,7 @@ const SidebarDrawer = ({ isOpen, onClose }: SidebarDrawerProps) => {
         variants={variants}
         className="fixed top-0 left-0 z-50 h-screen "
         initial={{ opacity: 0 }}
-        animate={isOpen ? 'open' : 'closed'}
-      >
+        animate={isOpen ? 'open' : 'closed'}>
         <Sidebar mobile onClose={onClose} onToggle={() => {}} />
       </motion.div>
     </div>

@@ -122,19 +122,16 @@ const UploadFiles = ({ onUpload, isLoading }: Props) => {
         }}
       />
       <div
-        className="relative w-full p-2 border border-gray-300 rounded bg-gray-50 dark:text-white dark:border-gray-700 dark:bg-gray-900"
+        className="relative w-full h-[420px] p-2 border border-gray-300 rounded bg-gray-50 dark:text-white dark:border-gray-700 dark:bg-gray-900"
         onDrop={handleDrop}
         onDragOver={handleDrag}
         onDragLeave={handleDragLeave}
-        onDragEnter={handleDragEnter}
-      >
+        onDragEnter={handleDragEnter}>
         {isLoading && (
           <div className="absolute inset-0 w-full h-full bg-[rgba(250,250,250,0.95)] dark:bg-[rgba(0,0,0,0.95)] z-40">
             <div className="flex flex-col items-center justify-center h-full fap-3 w-hull">
               <Spinner className="w-10 h-10 mx-auto mb-5 border-4" />
-              <p className="font-medium">
-                Subiendo archivos por favor espere...
-              </p>
+              <p className="font-medium">Subiendo archivos por favor espere...</p>
             </div>
           </div>
         )}

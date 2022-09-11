@@ -2,33 +2,22 @@ import Image from '@components/shared/Img/Image'
 import Paginator from '@components/shared/Paginator/Paginator'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Spinner from '@components/shared/Spinner/Spinner'
-import { IconPlus } from '@icons'
-import { Suspense, useState } from 'react'
-import { toast } from 'react-toastify'
-
+import { Toast } from '@utils/Toast'
+import { useState } from 'react'
 import UploadFiles from '../../components/shared/UploadFiles'
-import {
-  useCreateImagenMutation
-  // useGetAllImagenesQuery
-} from '../../generated/graphql'
+import { useCreateImagenMutation } from '../../generated/graphql'
 import useImagenes from '../../services/useImagenes'
 
 const ImagesPage = () => {
-  // const toast = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [isUploadImage, setIsUploadImage] = useState(false)
   const [createImage] = useCreateImagenMutation()
   const [state, setState] = useState({
-    page: 1,
-    numberPaginate: 10
+    pagina: 1,
+    numeroPagina: 10
   })
 
-  const {
-    db: images,
-    refetch,
-    loading: getLoading,
-    nTotal
-  } = useImagenes({ pagina: state.page, numeroPagina: state.numberPaginate })
+  const { db: images, refetch, loading: getLoading, nTotal } = useImagenes(state)
 
   const handleUpload = async (files: File[]) => {
     let hasError = false
@@ -45,29 +34,10 @@ const ImagesPage = () => {
 
     if (hasError) {
       setIsLoading(false)
-      toast.error('Error en la subida de imagenes', {
-        theme: 'colored',
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      })
-
+      Toast({ type: 'error', message: 'Error en la subida de imagenes.' })
       return false
     }
-    toast.success('Subida de imagenes exitosa', {
-      theme: 'colored',
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    })
+    Toast({ type: 'success', message: 'Subida de imagenes exitosa.' })
 
     setIsLoading(false)
     return true
@@ -78,7 +48,7 @@ const ImagesPage = () => {
       .fill(null)
       .map((_, i) => i + 1)
   }
-  const paginas = generatedTotal(nTotal, state.numberPaginate)
+  const paginas = generatedTotal(nTotal, state.numeroPagina)
   console.log(paginas)
 
   return (
@@ -91,12 +61,10 @@ const ImagesPage = () => {
           onClick={() => {
             refetch()
             setIsUploadImage((prev) => !prev)
-          }}
-        >
+          }}>
           {isUploadImage ? 'Ver Galeria' : 'Subir Imagen'}
         </button>
-      }
-    >
+      }>
       {getLoading && <Spinner className="w-10 h-10 mx-auto mt-8 border-4" />}
 
       {!isUploadImage && (
@@ -105,8 +73,7 @@ const ImagesPage = () => {
             <button
               key={id}
               className="relative transition-all duration-300 ease-linear border border-gray-300 rounded-lg cursor-pointer dark:border-gray-700 hover:shadow-sm"
-              onClick={() => {}}
-            >
+              onClick={() => {}}>
               <Image
                 className="absolute inset-0 object-contain w-full h-full"
                 src={url!}
@@ -117,12 +84,8 @@ const ImagesPage = () => {
         </div>
       )}
 
-      {isUploadImage && (
-        <UploadFiles isLoading={isLoading} onUpload={handleUpload} />
-      )}
-      {!isUploadImage && (
-        <Paginator state={state} setState={setState} paginas={paginas} />
-      )}
+      {isUploadImage && <UploadFiles isLoading={isLoading} onUpload={handleUpload} />}
+      {!isUploadImage && <Paginator state={state} setState={setState} paginas={paginas} />}
     </PlantillaPage>
   )
 }
