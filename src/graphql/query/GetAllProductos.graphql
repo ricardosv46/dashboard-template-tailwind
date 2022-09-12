@@ -1,5 +1,10 @@
-query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String) {
-  GetAllProductos(pagina: $pagina, numeroPagina: $numeroPagina, estado: $estado)  {
+query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String, $destacado: String) {
+  GetAllProductos(
+    pagina: $pagina
+    numeroPagina: $numeroPagina
+    estado: $estado
+    destacado: $destacado
+  ) {
     numeroTotal
     data {
       productoId

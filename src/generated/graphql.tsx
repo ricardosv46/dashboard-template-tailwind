@@ -929,6 +929,7 @@ export type ProductoInput = {
   precioOferta?: InputMaybe<Scalars['Float']>;
   precioReal?: InputMaybe<Scalars['Float']>;
   productoId?: InputMaybe<Scalars['ID']>;
+  relacionado?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   slug?: InputMaybe<Scalars['String']>;
   stockMinimo?: InputMaybe<Scalars['Float']>;
   stockReal?: InputMaybe<Scalars['Float']>;
@@ -1078,6 +1079,7 @@ export type QueryGetAllPedidosArgs = {
 
 
 export type QueryGetAllProductosArgs = {
+  destacado?: InputMaybe<Scalars['String']>;
   estado?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
@@ -1085,6 +1087,7 @@ export type QueryGetAllProductosArgs = {
 
 
 export type QueryGetAllProductosCategoriaSlugArgs = {
+  destacado?: InputMaybe<Scalars['String']>;
   estado?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
@@ -1106,8 +1109,6 @@ export type QueryGetAllProductosPalabraClaveArgs = {
 
 
 export type QueryGetAllProductosRelacionadosArgs = {
-  numeroPagina?: InputMaybe<Scalars['Int']>;
-  pagina?: InputMaybe<Scalars['Int']>;
   slug?: InputMaybe<Scalars['String']>;
 };
 
@@ -1705,6 +1706,7 @@ export type GetAllProductosQueryVariables = Exact<{
   pagina?: InputMaybe<Scalars['Int']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   estado?: InputMaybe<Scalars['String']>;
+  destacado?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -1716,6 +1718,13 @@ export type GetAllSliderQueryVariables = Exact<{
 
 
 export type GetAllSliderQuery = { __typename?: 'Query', GetAllSliders: { __typename?: 'GetAllSliders', numeroTotal?: number | null, data?: Array<{ __typename?: 'Slider', sliderId?: string | null, titulo?: string | null, tipoLink?: string | null, link?: string | null, estado?: string | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, url?: string | null } | null }> | null } };
+
+export type GetBancoIdQueryVariables = Exact<{
+  bancoId?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetBancoIdQuery = { __typename?: 'Query', GetBancoId: { __typename?: 'Banco', bancoId?: string | null, titulo?: string | null, estado?: string | null, numeroCuenta?: string | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
 
 export type GetBlogSlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
@@ -1737,13 +1746,6 @@ export type GetCategoriaProductoSlugQueryVariables = Exact<{
 
 
 export type GetCategoriaProductoSlugQuery = { __typename?: 'Query', GetCategoriaProductoSlug: { __typename?: 'CategoriaProducto', categoriaProductoId?: string | null, titulo?: string | null, slug?: string | null, estado?: string | null, keywords?: string | null, descripcion?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
-
-export type GetBancoIdQueryVariables = Exact<{
-  bancoId?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type GetBancoIdQuery = { __typename?: 'Query', GetBancoId: { __typename?: 'Banco', bancoId?: string | null, titulo?: string | null, estado?: string | null, numeroCuenta?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', url?: string | null, titulo?: string | null, id?: string | null, estado?: string | null } | null } };
 
 export type GetProductoSlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
@@ -1809,6 +1811,13 @@ export type GetAllVendedorasQueryVariables = Exact<{
 
 
 export type GetAllVendedorasQuery = { __typename?: 'Query', GetAllVendedoras: { __typename?: 'GetAllVendedoras', numeroTotal?: number | null, data?: Array<{ __typename?: 'Vendedora', vendedoraId?: string | null, nombres?: string | null, apellidos?: string | null, link?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null }> | null } };
+
+export type GetVendedoraIdQueryVariables = Exact<{
+  vendedoraId?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetVendedoraIdQuery = { __typename?: 'Query', GetVendedoraId: { __typename?: 'Vendedora', vendedoraId?: string | null, nombres?: string | null, apellidos?: string | null, link?: string | null, estado?: string | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
 
 
 export const DeleteSliderDocument = gql`
@@ -3797,8 +3806,13 @@ export type GetAllCategoriaProductosQueryHookResult = ReturnType<typeof useGetAl
 export type GetAllCategoriaProductosLazyQueryHookResult = ReturnType<typeof useGetAllCategoriaProductosLazyQuery>;
 export type GetAllCategoriaProductosQueryResult = Apollo.QueryResult<GetAllCategoriaProductosQuery, GetAllCategoriaProductosQueryVariables>;
 export const GetAllProductosDocument = gql`
-    query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String) {
-  GetAllProductos(pagina: $pagina, numeroPagina: $numeroPagina, estado: $estado) {
+    query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String, $destacado: String) {
+  GetAllProductos(
+    pagina: $pagina
+    numeroPagina: $numeroPagina
+    estado: $estado
+    destacado: $destacado
+  ) {
     numeroTotal
     data {
       productoId
@@ -3858,6 +3872,7 @@ export const GetAllProductosDocument = gql`
  *      pagina: // value for 'pagina'
  *      numeroPagina: // value for 'numeroPagina'
  *      estado: // value for 'estado'
+ *      destacado: // value for 'destacado'
  *   },
  * });
  */
@@ -3919,6 +3934,50 @@ export function useGetAllSliderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllSliderQueryHookResult = ReturnType<typeof useGetAllSliderQuery>;
 export type GetAllSliderLazyQueryHookResult = ReturnType<typeof useGetAllSliderLazyQuery>;
 export type GetAllSliderQueryResult = Apollo.QueryResult<GetAllSliderQuery, GetAllSliderQueryVariables>;
+export const GetBancoIdDocument = gql`
+    query GetBancoId($bancoId: Int) {
+  GetBancoId(bancoId: $bancoId) {
+    bancoId
+    titulo
+    estado
+    numeroCuenta
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBancoIdQuery__
+ *
+ * To run a query within a React component, call `useGetBancoIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBancoIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBancoIdQuery({
+ *   variables: {
+ *      bancoId: // value for 'bancoId'
+ *   },
+ * });
+ */
+export function useGetBancoIdQuery(baseOptions?: Apollo.QueryHookOptions<GetBancoIdQuery, GetBancoIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBancoIdQuery, GetBancoIdQueryVariables>(GetBancoIdDocument, options);
+      }
+export function useGetBancoIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBancoIdQuery, GetBancoIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBancoIdQuery, GetBancoIdQueryVariables>(GetBancoIdDocument, options);
+        }
+export type GetBancoIdQueryHookResult = ReturnType<typeof useGetBancoIdQuery>;
+export type GetBancoIdLazyQueryHookResult = ReturnType<typeof useGetBancoIdLazyQuery>;
+export type GetBancoIdQueryResult = Apollo.QueryResult<GetBancoIdQuery, GetBancoIdQueryVariables>;
 export const GetBlogSlugDocument = gql`
     query GetBlogSlug($slug: String) {
   GetBlogSlug(slug: $slug) {
@@ -4087,52 +4146,6 @@ export function useGetCategoriaProductoSlugLazyQuery(baseOptions?: Apollo.LazyQu
 export type GetCategoriaProductoSlugQueryHookResult = ReturnType<typeof useGetCategoriaProductoSlugQuery>;
 export type GetCategoriaProductoSlugLazyQueryHookResult = ReturnType<typeof useGetCategoriaProductoSlugLazyQuery>;
 export type GetCategoriaProductoSlugQueryResult = Apollo.QueryResult<GetCategoriaProductoSlugQuery, GetCategoriaProductoSlugQueryVariables>;
-export const GetBancoIdDocument = gql`
-    query GetBancoId($bancoId: Int) {
-  GetBancoId(bancoId: $bancoId) {
-    bancoId
-    titulo
-    estado
-    numeroCuenta
-    imagenPrincipal {
-      url
-      titulo
-      id
-      estado
-    }
-    created_at
-    updated_at
-  }
-}
-    `;
-
-/**
- * __useGetBancoIdQuery__
- *
- * To run a query within a React component, call `useGetBancoIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetBancoIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetBancoIdQuery({
- *   variables: {
- *      bancoId: // value for 'bancoId'
- *   },
- * });
- */
-export function useGetBancoIdQuery(baseOptions?: Apollo.QueryHookOptions<GetBancoIdQuery, GetBancoIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetBancoIdQuery, GetBancoIdQueryVariables>(GetBancoIdDocument, options);
-      }
-export function useGetBancoIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBancoIdQuery, GetBancoIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetBancoIdQuery, GetBancoIdQueryVariables>(GetBancoIdDocument, options);
-        }
-export type GetBancoIdQueryHookResult = ReturnType<typeof useGetBancoIdQuery>;
-export type GetBancoIdLazyQueryHookResult = ReturnType<typeof useGetBancoIdLazyQuery>;
-export type GetBancoIdQueryResult = Apollo.QueryResult<GetBancoIdQuery, GetBancoIdQueryVariables>;
 export const GetProductoSlugDocument = gql`
     query GetProductoSlug($slug: String) {
   GetProductoSlug(slug: $slug) {
@@ -4614,3 +4627,48 @@ export function useGetAllVendedorasLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetAllVendedorasQueryHookResult = ReturnType<typeof useGetAllVendedorasQuery>;
 export type GetAllVendedorasLazyQueryHookResult = ReturnType<typeof useGetAllVendedorasLazyQuery>;
 export type GetAllVendedorasQueryResult = Apollo.QueryResult<GetAllVendedorasQuery, GetAllVendedorasQueryVariables>;
+export const GetVendedoraIdDocument = gql`
+    query GetVendedoraId($vendedoraId: Int) {
+  GetVendedoraId(vendedoraId: $vendedoraId) {
+    vendedoraId
+    nombres
+    apellidos
+    link
+    estado
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetVendedoraIdQuery__
+ *
+ * To run a query within a React component, call `useGetVendedoraIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVendedoraIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVendedoraIdQuery({
+ *   variables: {
+ *      vendedoraId: // value for 'vendedoraId'
+ *   },
+ * });
+ */
+export function useGetVendedoraIdQuery(baseOptions?: Apollo.QueryHookOptions<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>(GetVendedoraIdDocument, options);
+      }
+export function useGetVendedoraIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>(GetVendedoraIdDocument, options);
+        }
+export type GetVendedoraIdQueryHookResult = ReturnType<typeof useGetVendedoraIdQuery>;
+export type GetVendedoraIdLazyQueryHookResult = ReturnType<typeof useGetVendedoraIdLazyQuery>;
+export type GetVendedoraIdQueryResult = Apollo.QueryResult<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>;

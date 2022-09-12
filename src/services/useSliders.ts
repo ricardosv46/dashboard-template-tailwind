@@ -38,7 +38,6 @@ export interface IProps {
   sliderId?: number
 }
 
-// Obtenemos todos los sliders
 export const useSliders = ({ estado = '', sliderId }: IProps) => {
   const { data, loading, refetch } = useGetAllSliderQuery({
     fetchPolicy: 'network-only',
@@ -58,40 +57,9 @@ export const useSliders = ({ estado = '', sliderId }: IProps) => {
   const nTotal = data?.GetAllSliders?.numeroTotal ?? 0
   const dbSliderId = dataSliderId?.GetSliderId ?? {}
 
-  // const [GetSliderId, { loading: loadingSliderId }] = useCreateSliderMutation()
-
-  // const getSliderId = async ({
-  //   titulo,
-  //   tipoLink,
-  //   link,
-  //   imagenPrincipal
-  // }: ICreateSlider) => {
-  //   try {
-  //     const res = await GetSliderId({
-  //       variables: {
-  //         input: {
-  //           titulo,
-  //           tipoLink,
-  //           link,
-  //           imagenPrincipal
-  //         }
-  //       }
-  //     })
-  //     refetch()
-  //     return { ok: true }
-  //   } catch (error: any) {
-  //     return { ok: false, error: 'No se pudo traer el slider' }
-  //   }
-  // }
-
   const [CreateSlider, { loading: loadingCreate }] = useCreateSliderMutation()
 
-  const createSlider = async ({
-    titulo,
-    tipoLink,
-    link,
-    imagenPrincipal
-  }: ICreateSlider) => {
+  const createSlider = async ({ titulo, tipoLink, link, imagenPrincipal }: ICreateSlider) => {
     try {
       const res = await CreateSlider({
         variables: {
@@ -138,13 +106,9 @@ export const useSliders = ({ estado = '', sliderId }: IProps) => {
     }
   }
 
-  const [UpdateEstadoSlider, { loading: loadingUpdateEstado }] =
-    useUpdateEstadoSliderMutation()
+  const [UpdateEstadoSlider, { loading: loadingUpdateEstado }] = useUpdateEstadoSliderMutation()
 
-  const updateEstadoSlider = async ({
-    sliderId,
-    estado
-  }: IUpdateEstadoSlider) => {
+  const updateEstadoSlider = async ({ sliderId, estado }: IUpdateEstadoSlider) => {
     try {
       const res = await UpdateEstadoSlider({
         variables: {

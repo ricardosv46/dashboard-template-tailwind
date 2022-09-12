@@ -7,7 +7,7 @@ import Spinner from '@components/shared/Spinner/Spinner'
 import { useCategoriaProductos } from '@services/useCategoriaProductos'
 import { useProductos } from '@services/useProductos'
 import { Toast } from '@utils/Toast'
-import { validateCreateProducto } from '@validation/productos/validateCreateProducto'
+import { validateCreateProducto } from '@validation/products/validateCreateProducto'
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -18,7 +18,7 @@ const EditProduct = () => {
   const { db: dataCategoriaProducto, loading: locadingCategoria } = useCategoriaProductos({
     estado: 'Activado'
   })
-  const { updateProducto, loadingCreate, loadingProductoSlug, dbProductoSlug } = useProductos({
+  const { updateProducto, loadingUpdate, loadingProductoSlug, dbProductoSlug } = useProductos({
     slug
   })
 
@@ -208,10 +208,10 @@ const EditProduct = () => {
           <div className="flex items-center justify-center col-span-2">
             <button
               type="submit"
-              disabled={loadingCreate}
+              disabled={loadingUpdate}
               className="w-full md:w-1/2 btn btn-solid-primary">
               Actualizar Producto
-              {loadingCreate && <Spinner className="w-5 h-5" />}
+              {loadingUpdate && <Spinner className="w-5 h-5" />}
             </button>
           </div>
         </form>

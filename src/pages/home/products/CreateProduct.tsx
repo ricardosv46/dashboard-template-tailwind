@@ -6,7 +6,7 @@ import Spinner from '@components/shared/Spinner/Spinner'
 import { useCategoriaProductos } from '@services/useCategoriaProductos'
 import { useProductos } from '@services/useProductos'
 import { Toast } from '@utils/Toast'
-import { validateCreateProducto } from '@validation/productos/validateCreateProducto'
+import { validateCreateProducto } from '@validation/products/validateCreateProducto'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 

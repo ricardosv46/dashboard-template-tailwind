@@ -2,26 +2,25 @@ import Input from '@components/shared/Input/Input'
 import InputImage from '@components/shared/Input/InputImage'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Spinner from '@components/shared/Spinner/Spinner'
-import { useCategoriaProductos } from '@services/useCategoriaProductos'
+import { useEfectivoMovil } from '@services/useEfectivoMovil'
 import { Toast } from '@utils/Toast'
-import { validateCreateCategoriaProducto } from '@validation/products/validateCreateCategoriaProducto'
+import { validateCreateCash } from '@validation/finance/validateCreateCash'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 
-const CreateCategoryProduct = () => {
+const CreateCash = () => {
   const router = useNavigate()
-  const { createCategoriaProducto, loadingCreate } = useCategoriaProductos({})
+  const { createEfectivoMovil, loadingCreate } = useEfectivoMovil({})
   const onSubmit = async () => {
-    createCategoriaProducto({
+    createEfectivoMovil({
       titulo: values.titulo,
-      keywords: values.keywords,
-      descripcion: values.descripcion,
+      numeroCelular: values.numeroCelular,
       imagenPrincipal: Number(values.imagenPrincipal.id),
-      imagenSecundaria: Number(values.imagenSecundaria.id)
+      imagenQr: Number(values.imagenQr.id)
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Creado Correctamente.' })
-        router('/products-category')
+        router('/cash-mobile')
       } else {
         Toast({ type: 'error', message: res?.error! })
       }
@@ -30,17 +29,16 @@ const CreateCategoryProduct = () => {
 
   const { values, errors, touched, setFieldValue, ...form } = useFormik({
     onSubmit,
-    validate: validateCreateCategoriaProducto,
+    validate: validateCreateCash,
     initialValues: {
       titulo: '',
-      keywords: '',
-      descripcion: '',
+      numeroCelular: '',
       imagenPrincipal: {
         id: '',
         titulo: '',
         url: ''
       },
-      imagenSecundaria: {
+      imagenQr: {
         id: '',
         titulo: '',
         url: ''
@@ -49,9 +47,9 @@ const CreateCategoryProduct = () => {
   })
 
   return (
-    <PlantillaPage title="Crear Categoría" goback>
+    <PlantillaPage title="Crear Efectivo Movil" goback>
       <div className="flex justify-center">
-        <h1 className="title-9 dark:text-slate-200">Crear Categoría</h1>
+        <h1 className="title-9 dark:text-slate-200">Crear Efectivo Movil</h1>
       </div>
       <form
         onSubmit={form.handleSubmit}
@@ -63,22 +61,15 @@ const CreateCategoryProduct = () => {
           error={errors.titulo}
           touched={touched?.titulo ?? false}
         />
+
         <Input
           type="text"
-          label="Keywords"
-          {...form.getFieldProps('keywords')}
-          error={errors.keywords}
-          touched={touched?.keywords ?? false}
+          label="N° Celular"
+          {...form.getFieldProps('numeroCelular')}
+          error={errors.numeroCelular}
+          touched={touched?.numeroCelular ?? false}
         />
-        <div className="col-span-2">
-          <Input
-            type="text"
-            label="Descripción"
-            {...form.getFieldProps('descripcion')}
-            error={errors.descripcion}
-            touched={touched?.descripcion ?? false}
-          />
-        </div>
+
         <InputImage
           value={values.imagenPrincipal}
           onChange={(value) => setFieldValue('imagenPrincipal', value)}
@@ -86,13 +77,12 @@ const CreateCategoryProduct = () => {
           error={errors.imagenPrincipal}
           touched={touched?.imagenPrincipal?.url ?? false}
         />
-
         <InputImage
-          value={values.imagenSecundaria}
-          onChange={(value) => setFieldValue('imagenSecundaria', value)}
-          label=" Imagen Secundaria"
-          error={errors.imagenSecundaria}
-          touched={touched?.imagenSecundaria?.url ?? false}
+          value={values.imagenQr}
+          onChange={(value) => setFieldValue('imagenQr', value)}
+          label=" Imagen Qr"
+          error={errors.imagenQr}
+          touched={touched?.imagenQr?.url ?? false}
         />
 
         <div className="flex items-center justify-center col-span-2">
@@ -100,7 +90,7 @@ const CreateCategoryProduct = () => {
             type="submit"
             disabled={loadingCreate}
             className="w-full md:w-1/2 btn btn-solid-primary">
-            Crear Categoría
+            Crear Efectivo Movil
             {loadingCreate && <Spinner className="w-5 h-5" />}
           </button>
         </div>
@@ -109,4 +99,4 @@ const CreateCategoryProduct = () => {
   )
 }
 
-export default CreateCategoryProduct
+export default CreateCash

@@ -25,6 +25,9 @@ import IconFile from './IconFile'
 import IconUserCircle from './IconUserCircle'
 import IconsNotifications from './IconsNotifications'
 import IconCart from './IconCart'
+import IconBank from './IconBank'
+import IconMoney from './IconMoney'
+import IconUser from './IconUser'
 
 export {
   IconLogo,
@@ -53,5 +56,8 @@ export {
   IconFile,
   IconUserCircle,
   IconsNotifications,
-  IconCart
+  IconCart,
+  IconBank,
+  IconMoney,
+  IconUser
 }

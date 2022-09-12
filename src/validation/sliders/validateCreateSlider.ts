@@ -17,7 +17,7 @@ export const validateCreateSlider = (values: FormikValues) => {
   }
 
   if (isEmpty(values.imagenPrincipal?.url)) {
-    errors.imagenPrincipal = 'La imagenPrincipal es requerida'
+    errors.imagenPrincipal = 'La imagen principal es requerida'
   }
 
   return errors

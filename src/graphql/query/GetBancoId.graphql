@@ -5,12 +5,10 @@ query GetBancoId($bancoId: Int) {
     estado
     numeroCuenta
     imagenPrincipal {
-      url
-      titulo
       id
+      titulo
       estado
+      url
     }
-    created_at
-    updated_at
   }
 }

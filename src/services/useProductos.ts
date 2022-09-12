@@ -55,17 +55,25 @@ export interface IDeleteProducto {
 
 export interface IProps {
   estado?: string
+  destacado?: string
   slug?: string
   pagina?: number
   numeroPagina?: number
 }
 
-export const useProductos = ({ estado = '', pagina = 1, numeroPagina = 10, slug }: IProps) => {
+export const useProductos = ({
+  estado = '',
+  destacado = '',
+  pagina = 1,
+  numeroPagina = 10,
+  slug
+}: IProps) => {
   const { data, loading, refetch } = useGetAllProductosQuery({
     fetchPolicy: 'network-only',
     variables: {
       estado,
       pagina,
+      destacado,
       numeroPagina
     }
   })

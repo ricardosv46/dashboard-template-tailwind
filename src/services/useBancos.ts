@@ -2,152 +2,144 @@ import {
   useCreateBancosMutation,
   useDeleteBancosMutation,
   useGetAllBancosQuery,
+  useGetBancoIdQuery,
   useUpdateBancosMutation,
   useUpdateEstadoBancoMutation
 } from '../generated/graphql'
 
-interface CrearBanco {
+interface ICreateBanco {
   titulo: string
+  imagenPrincipal: number
   numeroCuenta: string
-  imagenPrincipal: number | null
 }
 
-interface ActualizarEstadoBanco {
+interface IUpdateBanco {
+  bancoId: string
+  titulo: string
+  imagenPrincipal: number
+  numeroCuenta: string
+}
+
+export interface IUpdateEstadoBanco {
   bancoId: string
   estado: string
 }
-export const useBancos = () => {
+
+export interface IDeleteBanco {
+  bancoId: number
+}
+
+export interface IProps {
+  estado?: string
+  bancoId?: string
+}
+
+export const useBancos = ({ estado = '', bancoId }: IProps) => {
   const { data, loading, refetch } = useGetAllBancosQuery({
     fetchPolicy: 'network-only',
     variables: {
-      estado: ''
+      estado
     }
   })
+
+  const { data: dataBancoId, loading: loadingBancoId } = useGetBancoIdQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      bancoId: Number(bancoId)
+    }
+  })
+
   const db = data?.GetAllBancos?.data ?? []
+  const dbBancoId = dataBancoId?.GetBancoId ?? {}
 
-  // actualizar estado banco
+  const [CreateBanco, { loading: loadingCreate }] = useCreateBancosMutation()
 
-  const [updateEstadoBancoMutation] = useUpdateEstadoBancoMutation({
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message)
-    }
-  })
-
-  const actualizarEstadoBanco = async (datos: ActualizarEstadoBanco) => {
+  const createBanco = async ({ titulo, numeroCuenta, imagenPrincipal }: ICreateBanco) => {
     try {
-      const resp = await updateEstadoBancoMutation({
+      const res = await CreateBanco({
         variables: {
-          input: datos
-        }
-      })
-      if (resp.data?.UpdateEstadoBanco) {
-        refetch()
-        return {
-          ok: true,
-          error: null
-        }
-      }
-    } catch (error) {
-      console.log(error)
-      return {
-        ok: false,
-        error: 'Error al actualizar el banco'
-      }
-    }
-  }
-
-  // actualizar banco
-
-  const [updateBancoMutation] = useUpdateBancosMutation({
-    onError: (err) => console.log(err.graphQLErrors[0].message)
-  })
-
-  const actualizarBanco = async (datos: any) => {
-    try {
-      const resp = await updateBancoMutation({
-        variables: {
-          input: { ...datos }
-        }
-      })
-      if (resp.data?.UpdateBancos) {
-        refetch()
-        return {
-          ok: true,
-          error: null
-        }
-      }
-    } catch (error) {
-      return {
-        ok: false,
-        error: 'Error al actualizar el banco'
-      }
-    }
-  }
-
-  // eliminar un banco
-  const [deleteBancoMutation, { loading: loadingDelete }] = useDeleteBancosMutation()
-
-  const eliminarBanco = async (id: number) => {
-    try {
-      await deleteBancoMutation({
-        variables: {
-          bancoId: id
+          input: {
+            titulo,
+            numeroCuenta,
+            imagenPrincipal
+          }
         }
       })
       refetch()
-      return {
-        ok: true,
-        error: null
-      }
-    } catch (err: any) {
-      return {
-        ok: false,
-        error: 'Error al eliminar el banco'
-      }
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo crear el banco' }
     }
   }
 
-  // crear un banco
+  const [UpdateBanco, { loading: loadingUpdate }] = useUpdateBancosMutation()
 
-  const [createBancoMutation, { loading: loadingCreate }] = useCreateBancosMutation({
-    onError: (err) => {
-      console.log('Error al crear el banco', err.graphQLErrors[0].message)
-    }
-  })
-
-  const crearBanco = async (
-    datos: CrearBanco
-  ): Promise<{ ok: boolean; error: null | string } | undefined> => {
+  const updateBanco = async ({ bancoId, titulo, numeroCuenta, imagenPrincipal }: IUpdateBanco) => {
     try {
-      const resp = await createBancoMutation({
+      const res = await UpdateBanco({
         variables: {
-          input: datos
+          input: {
+            bancoId,
+            titulo,
+            numeroCuenta,
+            imagenPrincipal
+          }
         }
       })
-      if (resp.data?.CreateBancos) {
-        refetch()
-        return {
-          ok: true,
-          error: null
-        }
-      }
+      refetch()
+      return { ok: true }
     } catch (error: any) {
-      return {
-        ok: false,
-        error: 'Error al crear el banco'
-      }
+      return { ok: false, error: 'Error no se pudo actualizar el banco' }
+    }
+  }
+
+  const [UpdateEstadoBanco, { loading: loadingUpdateEstado }] = useUpdateEstadoBancoMutation()
+
+  const updateEstadoBanco = async ({ bancoId, estado }: IUpdateEstadoBanco) => {
+    try {
+      const res = await UpdateEstadoBanco({
+        variables: {
+          input: {
+            bancoId,
+            estado
+          }
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo actualizar el estado' }
+    }
+  }
+
+  const [DeleteBanco, { loading: loadingDelete }] = useDeleteBancosMutation()
+
+  const deleteBanco = async ({ bancoId }: IDeleteBanco) => {
+    try {
+      const res = await DeleteBanco({
+        variables: {
+          bancoId
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo eliminar el banco' }
     }
   }
 
   return {
-    db,
     loading,
-    loadingDelete,
+    db,
+    createBanco,
     loadingCreate,
-    eliminarBanco,
-    actualizarEstadoBanco,
-    actualizarBanco,
-    crearBanco,
-    refetch
+    deleteBanco,
+    loadingDelete,
+    updateEstadoBanco,
+    loadingUpdate,
+    updateBanco,
+    loadingUpdateEstado,
+    dbBancoId,
+    loadingBancoId
   }
 }

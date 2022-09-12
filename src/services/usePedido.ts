@@ -1,5 +1,7 @@
 import {
-  useGetAllPedidosQuery, useUpdateEstadoPedidoMutation, useUpdateVistoPedidoMutation
+  useGetAllPedidosQuery,
+  useUpdateEstadoPedidoMutation,
+  useUpdateVistoPedidoMutation
 } from '../generated/graphql'
 
 /* interface ICreateProducto {
@@ -46,9 +48,7 @@ export interface IUpdateEstadoPedido {
   pedidoId: string
   estado: string
 }
-export const usePedidos = (
-  input = { pagina: 1, numeroPagina: 10 }
-) => {
+export const usePedidos = (input = { pagina: 1, numeroPagina: 10 }) => {
   const { data, loading, refetch } = useGetAllPedidosQuery({
     fetchPolicy: 'network-only',
     variables: {

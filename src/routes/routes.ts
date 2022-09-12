@@ -1,4 +1,4 @@
-import { IconCart, IconFile, IconImage, IconOptions } from '@icons'
+import { IconBank, IconCart, IconFile, IconImage, IconMoney, IconOptions, IconUser } from '@icons'
 import { Route } from '@interface/index'
 import { lazy } from 'react'
 
@@ -21,18 +21,18 @@ const CreateCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/Crea
 const EditCategoryBlog = lazy(() => import('../pages/home/blogs/categorys/EditCategoryBlog'))
 const CreateBlog = lazy(() => import('../pages/home/blogs/CreateBlog'))
 const EditBlog = lazy(() => import('../pages/home/blogs/EditBlog'))
-// const Banks = lazy(() => import('../pages/home/banks/Banks'))
-// const CreateBank = lazy(() => import('../pages/home/banks/CreateBank'))
-// const EditBank = lazy(() => import('../pages/home/banks/EditarBank'))
-// const EfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/EfectivoMovil'))
-// const CreateEfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/CreateEfectivoMovil'))
-// const EditEfectivoMovil = lazy(() => import('../pages/home/efectivoMovil/EditarEfectivoMovil'))
+const BanksPage = lazy(() => import('../pages/home/finance/banks/BanksPage'))
+const CreateBank = lazy(() => import('../pages/home/finance/banks/CreateBank'))
+const EditBank = lazy(() => import('../pages/home/finance/banks/EditBank'))
+const CashMobile = lazy(() => import('../pages/home/finance/cash/CashPage'))
+const CreateCashMobile = lazy(() => import('../pages/home/finance/cash/CreateCash'))
+const EditCashMobile = lazy(() => import('../pages/home/finance/cash/EditCash'))
 const SlidersPage = lazy(() => import('../pages/home/sliders/SliderPage'))
 const CreateSlider = lazy(() => import('../pages/home/sliders/CreateSlider'))
 const EditSlider = lazy(() => import('../pages/home/sliders/EditSlider'))
-// const VendedoraPage = lazy(() => import('../pages/home/vendedoras/VendedoraPage'))
-// const CreateVendedora = lazy(() => import('../pages/home/vendedoras/CreateVendedora'))
-// const EditVendedora = lazy(() => import('../pages/home/vendedoras/EditVendedora'))
+const SellersPage = lazy(() => import('../pages/home/finance/sellers/SellersPage'))
+const EditSeller = lazy(() => import('../pages/home/finance/sellers/EditSeller'))
+const CreateSeller = lazy(() => import('../pages/home/finance/sellers/CreateSeller'))
 
 export const homeRoutes: Route[] = [
   {
@@ -190,6 +190,92 @@ export const homeRoutes: Route[] = [
         }
       ]
     }
+  },
+
+  {
+    icon: IconBank,
+    name: 'Finanzas',
+    to: '/vendedora',
+    path: 'banks',
+    component: BanksPage,
+    subMenu: {
+      value: true,
+      paths: [
+        {
+          icon: IconBank,
+          name: 'Bancos',
+          path: 'banks',
+          to: '/banks',
+          component: BanksPage,
+          render: true
+        },
+        {
+          icon: IconOptions,
+          name: 'Crear Banco',
+          path: 'banks/create-bank',
+          to: '',
+          component: CreateBank,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Banco',
+          path: 'banks/edit-bank/:id',
+          to: '',
+          component: EditBank,
+          render: false
+        },
+        {
+          icon: IconMoney,
+          name: 'Efectivo movil',
+          path: 'cash-mobile',
+          to: '/cash-mobile',
+          component: CashMobile,
+          render: true
+        },
+        {
+          icon: IconBank,
+          name: 'crear efectivo movil',
+          path: 'cash-mobile/create-cash-mobile',
+          to: '',
+          component: CreateCashMobile,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Banco',
+          path: 'cash-mobile/edit-cash-mobile/:id',
+          to: '',
+          component: EditCashMobile,
+          render: false
+        },
+
+        {
+          icon: IconUser,
+          name: 'Vendedores',
+          path: 'sellers',
+          to: '/sellers',
+          component: SellersPage,
+          render: true
+        },
+        {
+          icon: IconUser,
+          name: 'Crear Vendedora',
+          path: 'sellers/create-seller',
+          to: '',
+          component: CreateSeller,
+          render: false
+        },
+        {
+          icon: IconUser,
+          name: 'Editar Vendedora',
+          path: 'sellers/edit-seller/:id',
+          to: '',
+          component: EditSeller,
+          render: false
+        }
+      ]
+    }
   }
 ]
 
@@ -274,90 +360,7 @@ export const homeRoutes: Route[] = [
 // 			]
 // 		}
 // 	},
-// 	{
-// 		icon: IconBank,
-// 		name: 'Finanzas',
-// 		to: '/vendedora',
-// 		path: 'bancos',
-// 		component: Banks,
-// 		subMenu: {
-// 			value: true,
-// 			paths: [
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Crear Banco',
-// 					path: 'create-bank',
-// 					to: '/create-bank',
-// 					component: CreateBank,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Editar Banco',
-// 					path: 'edit-bank/:id',
-// 					to: '/edit-bank/:id',
-// 					component: EditBank,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconBank,
-// 					name: 'Bancos',
-// 					path: 'bancos',
-// 					to: '/bancos',
-// 					component: Banks,
-// 					render: true
-// 				},
-// 				{
-// 					icon: IconMoney,
-// 					name: 'Efectivo movil',
-// 					path: 'efectivo-movil',
-// 					to: '/efectivo-movil',
-// 					component: EfectivoMovil,
-// 					render: true
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Editar Banco',
-// 					path: 'edit-efectivo-movil/:id',
-// 					to: '/edit-efectivo-movil/:id',
-// 					component: EditEfectivoMovil,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconBank,
-// 					name: 'crear efectivo movil',
-// 					path: 'create-efectivo-movil',
-// 					to: '/create-efectivo-movil',
-// 					component: CreateEfectivoMovil,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconUser,
-// 					name: 'Vendedoras',
-// 					path: 'vendedora',
-// 					to: '/vendedora',
-// 					component: VendedoraPage,
-// 					render: true
-// 				},
-// 				{
-// 					icon: IconUser,
-// 					name: 'editar Vendedora',
-// 					path: 'edit-vendedora/:id',
-// 					to: '/edit-vendedora/:id',
-// 					component: EditVendedora,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconUser,
-// 					name: 'crear efectivo movil',
-// 					path: 'create-vendedora',
-// 					to: '/create-vendedora',
-// 					component: CreateVendedora,
-// 					render: false
-// 				}
-// 			]
-// 		}
-// 	}
+
 // ]
 
 export const getRoutes = () => {

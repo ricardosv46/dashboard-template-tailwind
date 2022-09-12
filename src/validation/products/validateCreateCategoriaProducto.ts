@@ -17,11 +17,11 @@ export const validateCreateCategoriaProducto = (values: FormikValues) => {
   }
 
   if (isEmpty(values.imagenPrincipal?.url)) {
-    errors.imagenPrincipal = 'La imagenPrincipal es requerida'
+    errors.imagenPrincipal = 'La imagen principal es requerida'
   }
 
   if (isEmpty(values.imagenSecundaria?.url)) {
-    errors.imagenSecundaria = 'La imagenSecundaria es requerida'
+    errors.imagenSecundaria = 'La imagen secundaria es requerida'
   }
 
   return errors

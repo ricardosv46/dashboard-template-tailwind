@@ -1,0 +1,15 @@
+query GetVendedoraId($vendedoraId: Int) {
+  GetVendedoraId(vendedoraId: $vendedoraId) {
+    vendedoraId
+    nombres
+    apellidos
+    link
+    estado
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+  }
+}

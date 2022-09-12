@@ -2,153 +2,165 @@ import {
   useCreateEfectivoMovilMutation,
   useDeleteEfectivoMovilMutation,
   useGetAllEfectivoMovilQuery,
+  useGetBancoIdQuery,
+  useGetEfectivoMovilIdQuery,
   useUpdateEfectivoMovilMutation,
+  useUpdateEstadoBancoMutation,
   useUpdateEstadoEfectivoMovilMutation
 } from '../generated/graphql'
 
-interface CrearEfectivoMovil {
+interface ICrearEfectivoMovil {
   titulo: string
   numeroCelular: string
-  imagenPrincipal: number | null
-  imagenQr: number | null
+  imagenPrincipal: number
+  imagenQr: number
 }
 
-interface ActualizarEstadoEfectivoMovil {
+interface IUpdateEfectivoMovil {
+  efectivoMovilId: string
+  titulo: string
+  numeroCelular: string
+  imagenPrincipal: number
+  imagenQr: number
+}
+
+export interface IUpdateEstadoEfectivoMovil {
   efectivoMovilId: string
   estado: string
 }
-export const useEfectivoMovil = () => {
+
+export interface IDeleteEfectivoMovil {
+  efectivoMovilId: number
+}
+
+export interface IProps {
+  estado?: string
+  efectivoMovilId?: string
+}
+
+export const useEfectivoMovil = ({ estado = '', efectivoMovilId }: IProps) => {
   const { data, loading, refetch } = useGetAllEfectivoMovilQuery({
     fetchPolicy: 'network-only',
     variables: {
-      estado: ''
-    }
-  })
-  const db = data?.GetAllEfectivoMovil.data ?? []
-
-  // actualizar estado del efectivo movil
-
-  const [updateEstadoEfectivoMovil] = useUpdateEstadoEfectivoMovilMutation({
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message)
+      estado
     }
   })
 
-  const actualizarEstadoEfectivoMovil = async (datos: ActualizarEstadoEfectivoMovil) => {
-    try {
-      const resp = await updateEstadoEfectivoMovil({
-        variables: {
-          input: datos
-        }
-      })
-      if (resp.data?.UpdateEstadoEfectivoMovil) {
-        refetch()
-        return {
-          ok: true,
-          error: null
-        }
-      }
-    } catch (error) {
-      console.log(error)
-      return {
-        ok: false,
-        error: 'Error al actualizar el banco'
-      }
+  const { data: dataBancoId, loading: loadingEfectivoMovilId } = useGetEfectivoMovilIdQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      efectivoMovilId: Number(efectivoMovilId)
     }
-  }
-
-  // actualizar efectivo movil
-
-  const [updateEfectivoMovilMutation] = useUpdateEfectivoMovilMutation({
-    onError: (err) => console.log(err.graphQLErrors[0].message)
   })
 
-  const actualizarEfectivoMovil = async (datos: any) => {
-    try {
-      const resp = await updateEfectivoMovilMutation({
-        variables: {
-          input: { ...datos }
-        }
-      })
-      if (resp.data?.UpdateEfectivoMovil) {
-        refetch()
-        return {
-          ok: true,
-          error: null
-        }
-      }
-    } catch (error) {
-      return {
-        ok: false,
-        error: 'Error al actualizar el efectivo movil'
-      }
-    }
-  }
+  const db = data?.GetAllEfectivoMovil?.data ?? []
+  const dbEfectivoMovilId = dataBancoId?.GetEfectivoMovilId ?? {}
 
-  // eliminar efectivo movil
-  const [deleteEfectivoMutation, { loading: loadingDelete }] = useDeleteEfectivoMovilMutation()
+  const [CreateEfectivoMovil, { loading: loadingCreate }] = useCreateEfectivoMovilMutation()
 
-  const eliminarEfectivoMovil = async (id: number) => {
+  const createEfectivoMovil = async ({
+    titulo,
+    imagenQr,
+    numeroCelular,
+    imagenPrincipal
+  }: ICrearEfectivoMovil) => {
     try {
-      await deleteEfectivoMutation({
+      const res = await CreateEfectivoMovil({
         variables: {
-          efectivoMovilId: id
+          input: {
+            titulo,
+            imagenQr,
+            numeroCelular,
+            imagenPrincipal
+          }
         }
       })
       refetch()
-      return {
-        ok: true,
-        error: null
-      }
-    } catch (err: any) {
-      return {
-        ok: false,
-        error: 'Error al eliminar el efectivo movil'
-      }
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo crear el efectivo movil' }
     }
   }
 
-  // crear efectivo movil
+  const [UpdateEfectivoMovil, { loading: loadingUpdate }] = useUpdateEfectivoMovilMutation()
 
-  const [createEfectivoMovilMutation, { loading: loadingCreate }] = useCreateEfectivoMovilMutation({
-    onError: (err) => {
-      console.log('Error al crear el efectivo movil', err.graphQLErrors[0].message)
-    }
-  })
-
-  const crearEfectivoMovil = async (
-    datos: CrearEfectivoMovil
-  ): Promise<{ ok: boolean; error: null | string } | undefined> => {
+  const updateEfectivoMovil = async ({
+    efectivoMovilId,
+    titulo,
+    imagenQr,
+    numeroCelular,
+    imagenPrincipal
+  }: IUpdateEfectivoMovil) => {
     try {
-      const resp = await createEfectivoMovilMutation({
+      const res = await UpdateEfectivoMovil({
         variables: {
-          input: datos
+          input: {
+            efectivoMovilId,
+            titulo,
+            imagenQr,
+            numeroCelular,
+            imagenPrincipal
+          }
         }
       })
-      if (resp.data?.CreateEfectivoMovil) {
-        refetch()
-        return {
-          ok: true,
-          error: null
-        }
-      }
+      refetch()
+      return { ok: true }
     } catch (error: any) {
-      return {
-        ok: false,
-        error: 'Error al crear el efectivo movil'
-      }
+      return { ok: false, error: 'Error no se pudo actualizar el efectivo movil' }
+    }
+  }
+
+  const [UpdateEstadoEfectivoMovil, { loading: loadingUpdateEstado }] =
+    useUpdateEstadoEfectivoMovilMutation()
+
+  const updateEstadoEfectivoMovil = async ({
+    efectivoMovilId,
+    estado
+  }: IUpdateEstadoEfectivoMovil) => {
+    try {
+      const res = await UpdateEstadoEfectivoMovil({
+        variables: {
+          input: {
+            efectivoMovilId,
+            estado
+          }
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo actualizar el estado' }
+    }
+  }
+
+  const [DeleteEfectivoMovil, { loading: loadingDelete }] = useDeleteEfectivoMovilMutation()
+
+  const deleteEfectivoMovil = async ({ efectivoMovilId }: IDeleteEfectivoMovil) => {
+    try {
+      const res = await DeleteEfectivoMovil({
+        variables: {
+          efectivoMovilId
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo eliminar el efectivo movil' }
     }
   }
 
   return {
-    db,
     loading,
-    loadingDelete,
+    db,
+    createEfectivoMovil,
     loadingCreate,
-    eliminarEfectivoMovil,
-    actualizarEstadoEfectivoMovil,
-    actualizarEfectivoMovil,
-    crearEfectivoMovil,
-    refetch
+    deleteEfectivoMovil,
+    loadingDelete,
+    updateEstadoEfectivoMovil,
+    loadingUpdate,
+    updateEfectivoMovil,
+    loadingUpdateEstado,
+    loadingEfectivoMovilId,
+    dbEfectivoMovilId
   }
 }
