@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context'
 import { createUploadLink } from 'apollo-upload-client'
 
 const httpLink = createUploadLink({
-  uri: 'https://plantilla.rongqian.pe/public/graphql'
+  uri: 'https://electrodomesticos.rongqian.pe/public/graphql'
 })
 
 const authLink = setContext((_, { headers }) => {

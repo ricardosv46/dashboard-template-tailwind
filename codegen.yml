@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'https://plantilla.rongqian.pe/public/graphql'
+schema: 'https://electrodomesticos.rongqian.pe/public/graphql'
 documents: 'src/**/*.graphql'
 generates:
   src/generated/graphql.tsx:
