@@ -7,9 +7,9 @@ const Navbar = () => {
   const { isOpen, onClose, onOpen } = useToggle()
 
   return (
-    <header className="sticky top-0 z-50 shadow">
+    <header className="sticky top-0 z-40 shadow">
       <SidebarDrawer isOpen={isOpen} onClose={onClose} />
-      <nav className="flex justify-end gap-3 px-8 py-2 text-center  bg-gray-100 dark:bg-gray-700">
+      <nav className="flex justify-end gap-3 px-8 py-2 text-center bg-gray-100 dark:bg-gray-700">
         <div className="flex gap-2">
           <ToggleTheme />
           <button className="btn-icon btn-ghost-slate">
@@ -18,7 +18,7 @@ const Navbar = () => {
           <button className=" text-gray-500 p-[7.5px]">
             <IconUserCircle className="w-5 h-5" />
           </button>
-          <button className="btn-icon btn-solid-primary  block lg:hidden" onClick={onOpen}>
+          <button className="block btn-icon btn-solid-primary lg:hidden" onClick={onOpen}>
             <IconBars className="w-4 h-4 text-white" />
           </button>
         </div>

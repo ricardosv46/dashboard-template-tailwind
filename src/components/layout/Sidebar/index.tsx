@@ -5,6 +5,7 @@ import { homeRoutes } from '@routes/routes'
 import { useAuthContext } from '@store/auth/AuthState'
 import SidebarLink from './SidebarLink'
 import styles from './sidebar.module.css'
+import { classNames } from '@utils/classNames'
 interface Props {
   onClose: () => void
   onToggle: () => void
@@ -18,11 +19,11 @@ const Sidebar = ({ onClose, mobile = false }: Props) => {
 
   return (
     <div
-      className={`relative h-full ease-out transition-all duration-300 overflow-hidden hover:w-[300px] z-50 shadow  hover:opacity-100 ${
-        mobile ? '' : styles.sidebar
-      } ${mobile ? '' : isOpen ? styles.anchor : ''} ${
-        mobile ? 'w-[300px]' : isOpen ? 'w-[300px]' : 'w-[72px]'
-      }`}>
+      className={classNames([
+        'relative h-full ease-out transition-all duration-300 overflow-hidden hover:w-[300px] z-50 shadow  hover:opacity-100',
+        mobile ? '' : styles.sidebar,
+        mobile ? 'w-[300px]' : isOpen ? `w-[300px] ${styles.anchor} ` : 'w-[72px]'
+      ])}>
       <div className="h-screen pb-20 overflow-scroll bg-gray-100 dark:bg-gray-700 scroll-smooth no-scrollbar ">
         <div className="flex items-center justify-center pt-10 h-28">
           <div className={`px-5 flex  w-full justify-between`}>
@@ -49,6 +50,7 @@ const Sidebar = ({ onClose, mobile = false }: Props) => {
           <SidebarLink
             to="/"
             name="Home"
+            mobile={mobile}
             onClick={onClose}
             icon={IconHome}
             subMenu={{ value: false, paths: [] }}
