@@ -1,5 +1,6 @@
 import Input from '@components/shared/Input/Input'
 import InputImage from '@components/shared/Input/InputImage'
+import InputSelectImages from '@components/shared/Input/InputSelectImages'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Select from '@components/shared/Select/Select'
 import Spinner from '@components/shared/Spinner/Spinner'
@@ -63,7 +64,8 @@ const CreateProduct = () => {
         id: '',
         titulo: '',
         url: ''
-      }
+      },
+      galeria: []
     }
   })
 
@@ -164,6 +166,15 @@ const CreateProduct = () => {
           error={errors.imagenSecundaria}
           touched={touched?.imagenSecundaria?.url ?? false}
         />
+        <div className="col-span-2">
+          <InputSelectImages
+            label="Galeria de imágenes"
+            onChange={(values) => setFieldValue('galeria', values)}
+            value={values.galeria}
+            error={errors.galeria}
+            touched={touched?.imagenSecundaria?.url ?? false}
+          />
+        </div>
 
         <div className="flex items-center justify-center col-span-2">
           <button

@@ -4,8 +4,7 @@ import Modal from './Modal'
 
 import {
   // useGetAllImagenesQuery,
-  useCreateImagenMutation,
-  useDeleteImagenMutation
+  useCreateImagenMutation
 } from '../../../generated/graphql'
 import useImagenes from '../../../services/useImagenes'
 import { IconCheckbox, IconClose } from '@icons'
@@ -13,8 +12,8 @@ import UploadFiles from '../UploadFiles'
 import { classNames } from '@utils/classNames'
 import Image from '../Img/Image'
 import { toast } from 'react-toastify'
-import ModalDelete from './ModalDelete'
 import useToggle from '@hooks/useToggle'
+
 export interface Imagenes {
   id?: string | null | undefined
   titulo?: string | null | undefined
@@ -23,18 +22,16 @@ export interface Imagenes {
 interface Props {
   isOpen: boolean
   onClose: () => void
-  onSelect?: (imagen: Imagenes) => void
+  onSelect?: (imagen: Imagenes[]) => void
 }
 
-const ModalImage = ({ isOpen, onClose, onSelect }: Props) => {
+const ModalSelectedImages = ({ isOpen, onClose, onSelect }: Props) => {
   const [createImage] = useCreateImagenMutation()
-  const [deleteImage, { loading: deleteLoading }] = useDeleteImagenMutation()
   const { db: images, refetch } = useImagenes({ pagina: 1, numeroPagina: 999 })
 
-  const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useToggle()
   const [isLoading, setIsLoading] = useState(false)
   const [isUploadImage, setIsUploadImage] = useState(false)
-  const [selectedImage, setSelectedImage] = useState<Imagenes | null>(null)
+  const [selectedImages, setSelectedImages] = useState<Imagenes[]>([])
 
   const handleUpload = async (files: File[]) => {
     let hasError = false
@@ -81,75 +78,38 @@ const ModalImage = ({ isOpen, onClose, onSelect }: Props) => {
     return true
   }
 
-  const handleDelete = async () => {
-    let hasError = false
-
-    try {
-      await deleteImage({ variables: { deleteImagenId: +selectedImage?.id! } })
-    } catch (error) {
-      hasError = true
-      console.log('Error al subir imagenes: ', error)
-    }
-
-    if (hasError) {
-      toast.error('Error al eliminar la imagen.', {
-        theme: 'colored',
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      })
-
-      return false
-    }
-
-    refetch()
-    toast.success('La imagen ha sido eliminada.', {
-      theme: 'colored',
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    })
-
-    onCloseDelete()
-  }
-
   const handleClose = () => {
     onClose()
     setIsLoading(false)
-    setSelectedImage(null)
+    setSelectedImages([])
     setIsUploadImage(false)
   }
 
   const handleSelect = () => {
     if (typeof onSelect === 'function') {
-      onSelect(selectedImage!)
+      onSelect(selectedImages)
     }
     handleClose()
   }
 
   return (
     <>
-      <ModalDelete
-        loading={deleteLoading}
-        isOpen={isOpenDelete}
-        onClick={handleDelete}
-        onClose={onCloseDelete}
-        header="Eliminar slider"
-        body="¿Estas seguro que deseas eliminar este slider?"
-      />
-      <Modal isOpen={isOpen} onClose={onClose} hasOverlay>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose()
+          setSelectedImages([])
+        }}
+        hasOverlay>
         <div className="w-[90vw] h-[90vh] px-8 py-5 bg-white rounded-lg flex flex-col  dark:bg-gray-800 dark:text-white ">
           {/* HEADER MODAL */}
           <div className="flex justify-end">
-            <button className="btn-icon btn-ghost-primary" onClick={onClose}>
+            <button
+              className="btn-icon btn-ghost-primary"
+              onClick={() => {
+                onClose()
+                setSelectedImages([])
+              }}>
               <IconClose />
             </button>
           </div>
@@ -168,21 +128,26 @@ const ModalImage = ({ isOpen, onClose, onSelect }: Props) => {
               <div className="grid w-full gap-8 auto-rows-[200px] grid-cols-auto-fit py-5">
                 {images &&
                   images.map((image) => {
-                    const isActive = selectedImage?.id === image.id
-
+                    const isSelected = selectedImages.find((resp) => resp?.id === image?.id)
                     return (
                       <button
                         className={classNames([
-                          isActive ? 'border-primary-500' : 'border-gray-300 dark:border-gray-700',
+                          isSelected
+                            ? 'border-primary-500'
+                            : 'border-gray-300 dark:border-gray-700',
                           'rounded-lg relative border cursor-pointer overflow-hidden hover:shadow-md transition-shadow duration-300 ease-linear'
                         ])}
                         key={image?.id}
                         onClick={() => {
-                          setSelectedImage((actualImage) =>
-                            actualImage?.id === image.id ? null : image
-                          )
+                          const value = selectedImages.find((img) => img?.id === image?.id)
+                          if (value) {
+                            const newArray = selectedImages.filter((value) => value.id !== image.id)
+                            setSelectedImages([...newArray])
+                          } else {
+                            setSelectedImages([...selectedImages, image])
+                          }
                         }}>
-                        {isActive && (
+                        {isSelected && (
                           <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-5 h-5 text-black bg-primary-500">
                             <IconCheckbox className="w-3" />
                           </div>
@@ -205,24 +170,20 @@ const ModalImage = ({ isOpen, onClose, onSelect }: Props) => {
 
           {/* FOOTER MODAL */}
           <div className="flex items-center justify-end gap-3 mt-8 ">
-            <button type="button" className="w-full btn btn-ghost-red sm:w-max" onClick={onClose}>
-              Cerrar
-            </button>
             <button
               type="button"
-              disabled={selectedImage === null}
-              className="w-full btn btn-outline-red sm:w-max"
+              className="w-full btn btn-ghost-red sm:w-max"
               onClick={() => {
-                onOpenDelete()
                 onClose()
+                setSelectedImages([])
               }}>
-              Eliminar
+              Cerrar
             </button>
             <button
               type="button"
               className="w-full btn btn-solid-primary sm:w-max"
               onClick={handleSelect}
-              disabled={selectedImage === null}>
+              disabled={selectedImages.length === 0}>
               Seleccionar
             </button>
           </div>
@@ -232,4 +193,4 @@ const ModalImage = ({ isOpen, onClose, onSelect }: Props) => {
   )
 }
 
-export default ModalImage
+export default ModalSelectedImages
