@@ -3,7 +3,7 @@ import useToggle from '@hooks/useToggle'
 import { IconPlus } from '@icons'
 import { classNames } from '@utils/classNames'
 import { isEmpty } from '@utils/isEmpty'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from '../Img/Image'
 import ModalSelectedImages from '../Modal/ModalSelectedImages'
 export interface Imagenes {
@@ -22,10 +22,16 @@ interface Props {
 
 const InputSelectImages = ({ label, touched, ...props }: Props) => {
   const { isOpen, onClose, onOpen } = useToggle()
+
+  const [imgs, setImgs] = useState<Imagenes[]>([])
+
   const handleSelect = (resp: Imagenes[]) => {
-    props.onChange(resp)
+    setImgs(resp)
   }
 
+  useEffect(() => {
+    props.onChange(imgs)
+  }, [imgs])
   const hasError = props.error?.toString() && !isEmpty(props.error.toString()) && touched
   /**
    * Con el value podran renderizar la imagen que deberia estar seteada en el
@@ -34,8 +40,8 @@ const InputSelectImages = ({ label, touched, ...props }: Props) => {
 
   return (
     <div>
-      <ModalSelectedImages {...{ isOpen, onClose }} onSelect={handleSelect} />
-      {props.value?.length === 0 && (
+      <ModalSelectedImages {...{ isOpen, onClose }} onSelect={handleSelect} imgs={imgs} />
+      {imgs?.length === 0 && (
         <button type="button" className="relative w-full" onClick={onOpen}>
           <div
             className={classNames([
@@ -71,16 +77,26 @@ const InputSelectImages = ({ label, touched, ...props }: Props) => {
         </button>
       )}
 
-      {!(props.value?.length === 0) && (
+      {!(imgs?.length === 0) && (
         <div className="grid w-full grid-cols-1 gap-2 p-2 border-2 border-dashed rounded-lg sm:grid-cols-2 md:grid-cols-3 lg:grid-flow-col-4 xl:grid-flow-col-5 border-slate-300">
-          {props.value?.map((img) => (
-            <Image
-              onClick={onOpen}
-              key={img.id}
-              className="inset-0 z-10 object-cover w-full cursor-pointer h-44"
-              src={img?.url!}
-              alt={img?.titulo!}
-            />
+          {imgs?.map((img) => (
+            <div className="relative">
+              <p
+                className="absolute top-0 right-0 w-6 flex justify-center items-center text-2xl cursor-pointer bg-primary-600 text-white z-50 h-6"
+                onClick={() => {
+                  const arrayNew = imgs.filter((value) => value.id !== img.id)
+                  setImgs(arrayNew)
+                }}>
+                x
+              </p>
+              <Image
+                onClick={onOpen}
+                key={img.id}
+                className="inset-0 z-10 object-cover w-full cursor-pointer h-44"
+                src={img?.url!}
+                alt={img?.titulo!}
+              />
+            </div>
           ))}
         </div>
       )}

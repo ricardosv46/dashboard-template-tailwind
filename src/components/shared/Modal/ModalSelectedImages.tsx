@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Modal from './Modal'
 // import { FocusableElement } from '@chakra-ui/utils'
 
@@ -23,9 +23,10 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   onSelect?: (imagen: Imagenes[]) => void
+  imgs: Imagenes[]
 }
 
-const ModalSelectedImages = ({ isOpen, onClose, onSelect }: Props) => {
+const ModalSelectedImages = ({ isOpen, onClose, onSelect, imgs }: Props) => {
   const [createImage] = useCreateImagenMutation()
   const { db: images, refetch } = useImagenes({ pagina: 1, numeroPagina: 999 })
 
@@ -81,7 +82,6 @@ const ModalSelectedImages = ({ isOpen, onClose, onSelect }: Props) => {
   const handleClose = () => {
     onClose()
     setIsLoading(false)
-    setSelectedImages([])
     setIsUploadImage(false)
   }
 
@@ -91,6 +91,9 @@ const ModalSelectedImages = ({ isOpen, onClose, onSelect }: Props) => {
     }
     handleClose()
   }
+  useEffect(() => {
+    setSelectedImages(imgs)
+  }, [imgs])
 
   return (
     <>
@@ -98,7 +101,6 @@ const ModalSelectedImages = ({ isOpen, onClose, onSelect }: Props) => {
         isOpen={isOpen}
         onClose={() => {
           onClose()
-          setSelectedImages([])
         }}
         hasOverlay>
         <div className="w-[90vw] h-[90vh] px-8 py-5 bg-white rounded-lg flex flex-col  dark:bg-gray-800 dark:text-white ">
@@ -108,7 +110,6 @@ const ModalSelectedImages = ({ isOpen, onClose, onSelect }: Props) => {
               className="btn-icon btn-ghost-primary"
               onClick={() => {
                 onClose()
-                setSelectedImages([])
               }}>
               <IconClose />
             </button>
@@ -175,7 +176,6 @@ const ModalSelectedImages = ({ isOpen, onClose, onSelect }: Props) => {
               className="w-full btn btn-ghost-red sm:w-max"
               onClick={() => {
                 onClose()
-                setSelectedImages([])
               }}>
               Cerrar
             </button>
