@@ -1,6 +1,7 @@
 import Image from '@components/shared/Img/Image'
 import ModalDelete from '@components/shared/Modal/ModalDelete'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
+import Select from '@components/shared/Select/Select'
 import { Show } from '@components/shared/Show/Show'
 import Spinner from '@components/shared/Spinner/Spinner'
 import Table from '@components/shared/Table/Table'
@@ -9,20 +10,34 @@ import useToggle from '@hooks/useToggle'
 import { IconEdit, IconPlus, IconTrash } from '@icons'
 import { useCategoriaBlogs } from '@services/useCategoriaBlogs'
 import { Toast } from '@utils/Toast'
+import { useFormik } from 'formik'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+const estados = [
+  { label: 'Todos', value: '' },
+  { label: 'Activado', value: 'Activado' },
+  { label: 'Desactivado', value: 'Desactivado' }
+]
 
 const CategorysBlog = () => {
   const router = useNavigate()
   const { isOpen, onOpen, onClose } = useToggle()
   const [selectId, setSelectId] = useState<string | null | undefined>(null)
+  const { values, errors, touched, setFieldValue, ...form } = useFormik({
+    onSubmit: () => {},
+    initialValues: {
+      estado: '',
+      destacado: ''
+    }
+  })
   const {
     db: dataCategoriaBlog,
     deleteCategoriaBlog,
     updateEstadoCategoriaBlog,
     updateDestacadoCategoriaBlog,
     loading
-  } = useCategoriaBlogs({ estado: '', destacado: '' })
+  } = useCategoriaBlogs({ ...values })
 
   const handleDelete = () => {
     deleteCategoriaBlog({ categoriaBlogId: Number(selectId) }).then((res) => {
@@ -72,6 +87,32 @@ const CategorysBlog = () => {
             Crear Categoría
           </button>
         }>
+        <div className="flex flex-col gap-5 mb-5 md:w-4/6 xl:w-1/2 sm:flex-row">
+          <Select
+            label="Estado"
+            value={values.estado}
+            options={estados}
+            onChange={({ value }) => {
+              setFieldValue('estado', value)
+            }}
+            dataExtractor={{
+              label: 'label',
+              value: 'value'
+            }}
+          />
+          <Select
+            label="Destacado"
+            value={values.destacado}
+            options={estados}
+            onChange={({ value }) => {
+              setFieldValue('destacado', value)
+            }}
+            dataExtractor={{
+              label: 'label',
+              value: 'value'
+            }}
+          />
+        </div>
         <Show
           condition={loading}
           loading

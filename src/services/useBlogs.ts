@@ -44,6 +44,7 @@ export interface IDeleteBlog {
 }
 
 export interface IProps {
+  destacado?: string
   estado?: string
   slug?: string
   pagina?: number
@@ -51,11 +52,18 @@ export interface IProps {
 }
 
 // Obtenemos todas los blogs
-export const useBlogs = ({ estado = '', pagina = 1, numeroPagina = 10, slug }: IProps) => {
+export const useBlogs = ({
+  estado = '',
+  destacado = '',
+  pagina = 1,
+  numeroPagina = 10,
+  slug
+}: IProps) => {
   const { data, loading, refetch } = useGetAllBlogsQuery({
     fetchPolicy: 'network-only',
     variables: {
       estado,
+      destacado,
       pagina,
       numeroPagina
     }
