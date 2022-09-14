@@ -37,7 +37,7 @@ const InputImage = ({ label, touched, ...props }: Props) => {
   return (
     <>
       <ModalImage {...{ isOpen, onClose }} onSelect={handleSelect} />
-      <button type="button" className="w-full" onClick={onOpen}>
+      <button type="button" className="relative w-full" onClick={onOpen}>
         <div
           className={classNames([
             'relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer max-w-96 ',
@@ -70,13 +70,15 @@ const InputImage = ({ label, touched, ...props }: Props) => {
             />
           )}
         </div>
-        <p
-          className={classNames([
-            hasError ? '' : 'opacity-0',
-            'text-sm text-red-600 dark:text-red-400'
-          ])}>
-          {hasError ? props.error : 'error'}
-        </p>
+        <div className="absolute w-full -bottom-5">
+          <p
+            className={classNames([
+              hasError ? '' : 'opacity-0',
+              'text-sm text-red-600 dark:text-red-400  '
+            ])}>
+            {hasError ? props.error : 'error'}
+          </p>
+        </div>
       </button>
     </>
   )

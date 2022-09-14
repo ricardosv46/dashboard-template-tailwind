@@ -20,8 +20,9 @@ const CategorysProduct = () => {
     db: dataCategoriaProducto,
     loading,
     deleteCategoriaProducto,
-    updateEstadoCategoriaProducto
-  } = useCategoriaProductos({ estado: '' })
+    updateEstadoCategoriaProducto,
+    updateDestacadoCategoriaProducto
+  } = useCategoriaProductos({ estado: '', destacado: '' })
 
   const handleDelete = () => {
     deleteCategoriaProducto({ categoriaProductoId: Number(selectId) }).then((res) => {
@@ -40,6 +41,19 @@ const CategorysProduct = () => {
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Estado Actualizado Correctamente.' })
+      } else {
+        Toast({ type: 'error', message: res?.error! })
+      }
+    })
+  }
+
+  const handleUpdateDestacado = (id: string, destacado: string) => {
+    updateDestacadoCategoriaProducto({
+      categoriaProductoId: id,
+      destacado: destacado === 'Activado' ? 'Desactivado' : 'Activado'
+    }).then((res) => {
+      if (res?.ok) {
+        Toast({ type: 'success', message: 'Destacado Actualizado Correctamente.' })
       } else {
         Toast({ type: 'error', message: res?.error! })
       }
@@ -68,6 +82,7 @@ const CategorysProduct = () => {
                 <th className="text-center">Imagen</th>
                 <th className="text-center">Titulo</th>
                 <th className="text-center">Estado</th>
+                <th className="text-center">Destacado</th>
                 <th className="text-center">Descripción</th>
                 <th className="text-center">Acciones</th>
               </tr>
@@ -85,6 +100,7 @@ const CategorysProduct = () => {
                     />
                   </td>
                   <td className="text-center ">{item?.titulo}</td>
+
                   <td>
                     <div className="flex justify-center ">
                       <ToggleSwitch
@@ -95,8 +111,18 @@ const CategorysProduct = () => {
                       />
                     </div>
                   </td>
-                  <td className="text-center ">{item?.descripcion}</td>
 
+                  <td>
+                    <div className="flex justify-center ">
+                      <ToggleSwitch
+                        onClick={() => {
+                          handleUpdateDestacado(item?.categoriaProductoId!, item?.destacado!)
+                        }}
+                        value={item.destacado === 'Activado'}
+                      />
+                    </div>
+                  </td>
+                  <td className="text-center ">{item?.descripcion}</td>
                   <td>
                     <div className="flex justify-center gap-x-3">
                       <button

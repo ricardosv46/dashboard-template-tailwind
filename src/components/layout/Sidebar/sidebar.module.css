@@ -10,6 +10,15 @@
   @apply inline-block opacity-100;
 }
 
+.sidebar .oculto2 {
+  @apply hidden;
+}
+
+.sidebar:hover .oculto2,
+.sidebar.anchor .oculto2 {
+  @apply flex opacity-100;
+}
+
 .cerrar {
   @apply hidden;
 }

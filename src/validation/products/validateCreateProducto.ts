@@ -51,6 +51,17 @@ export const validateCreateProducto = (values: FormikValues) => {
     errors.imagenSecundaria = 'La imagen secundaria es requerida'
   }
 
-  console.log({ errors })
+  if (isEmpty(values.imagenSecundaria?.url)) {
+    errors.imagenSecundaria = 'La imagen secundaria es requerida'
+  }
+
+  if (isEmpty(values.galeria[0]?.url)) {
+    errors.galeria = 'La galeria debe tener al menos una imagen'
+  }
+
+  // if (values.galeria?.length > 0) {
+  //   errors?.galeria[0]?.url = ''
+  // }
+
   return errors
 }

@@ -1,0 +1,22 @@
+mutation UpdateDestacadoCategoriaProducto($input: UpdateDestacadoCategoriaProductoInput!) {
+  UpdateDestacadoCategoriaProducto(input: $input) {
+    categoriaProductoId
+    titulo
+    slug
+    estado
+    keywords
+    descripcion
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+  }
+}

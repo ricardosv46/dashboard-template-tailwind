@@ -34,8 +34,8 @@ const SidebarLink = ({ icon: Icon, name, to, onClick, subMenu, mobile }: Props) 
         {subMenu.value && (
           <div
             className={`transition-all duration-500 ease-in-out flex justify-center items-center ${
-              styles.oculto
-            }  ${isOpen ? '' : 'rotate-180'}`}>
+              styles.oculto2
+            }   ${isOpen ? '' : 'rotate-180'}`}>
             <IconChevronUp />
           </div>
         )}

@@ -1,20 +1,21 @@
-query GetAllCategoriaProductos($estado: String) {
-  GetAllCategoriaProductos(estado: $estado) {
+query GetAllCategoriaProductos($estado: String, $destacado: String) {
+  GetAllCategoriaProductos(estado: $estado, destacado: $destacado) {
     numeroTotal
-    data{
+    data {
       categoriaProductoId
       titulo
       slug
       estado
+      destacado
       keywords
       descripcion
-      imagenPrincipal{
+      imagenPrincipal {
         id
         titulo
         estado
         url
       }
-      imagenSecundaria{
+      imagenSecundaria {
         id
         titulo
         estado

@@ -75,6 +75,7 @@ export type CategoriaBlog = {
   categoriaBlogId?: Maybe<Scalars['ID']>;
   created_at?: Maybe<Scalars['DateTime']>;
   descripcion?: Maybe<Scalars['String']>;
+  destacado?: Maybe<Scalars['String']>;
   estado?: Maybe<Scalars['String']>;
   imagenPrincipal?: Maybe<Imagen>;
   imagenSecundaria?: Maybe<Imagen>;
@@ -951,9 +952,7 @@ export type Query = {
   GetAllBlogsCategoriaSlug: GetAllBlogs;
   GetAllBlogsDestacados: GetAllBlogs;
   GetAllCategoriaBlogs: GetAllCategoriaBlogs;
-  GetAllCategoriaBlogsDestacados: GetAllCategoriaBlogs;
   GetAllCategoriaProductos: GetAllCategoriaProductos;
-  GetAllCategoriaProductosDestacados: GetAllCategoriaProductos;
   GetAllContactos: GetAllContactos;
   GetAllDepartamentos?: Maybe<Array<Departamento>>;
   GetAllDireccionUsuarios: GetAllDireccionesUsuarios;
@@ -1022,11 +1021,13 @@ export type QueryGetAllBlogsDestacadosArgs = {
 
 
 export type QueryGetAllCategoriaBlogsArgs = {
+  destacado?: InputMaybe<Scalars['String']>;
   estado?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryGetAllCategoriaProductosArgs = {
+  destacado?: InputMaybe<Scalars['String']>;
   estado?: InputMaybe<Scalars['String']>;
 };
 
@@ -1277,7 +1278,7 @@ export type UpdateDestacadoCategoriaBlogInput = {
 
 export type UpdateDestacadoCategoriaProductoInput = {
   categoriaProductoId?: InputMaybe<Scalars['ID']>;
-  estado?: InputMaybe<Scalars['String']>;
+  destacado?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateDestacadoProductoInput = {
@@ -1525,6 +1526,20 @@ export type UpdateDestacadoBlogMutationVariables = Exact<{
 
 export type UpdateDestacadoBlogMutation = { __typename?: 'Mutation', UpdateDestacadoBlog: { __typename?: 'Blog', blogId?: string | null, titulo?: string | null, destacado?: string | null } };
 
+export type UpdateDestacadoCategoriaBlogMutationVariables = Exact<{
+  input: UpdateDestacadoCategoriaBlogInput;
+}>;
+
+
+export type UpdateDestacadoCategoriaBlogMutation = { __typename?: 'Mutation', UpdateDestacadoCategoriaBlog: { __typename?: 'CategoriaBlog', categoriaBlogId?: string | null, titulo?: string | null, slug?: string | null, keywords?: string | null, descripcion?: string | null, estado?: string | null, numeroBlogs?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
+
+export type UpdateDestacadoCategoriaProductoMutationVariables = Exact<{
+  input: UpdateDestacadoCategoriaProductoInput;
+}>;
+
+
+export type UpdateDestacadoCategoriaProductoMutation = { __typename?: 'Mutation', UpdateDestacadoCategoriaProducto: { __typename?: 'CategoriaProducto', categoriaProductoId?: string | null, titulo?: string | null, slug?: string | null, estado?: string | null, keywords?: string | null, descripcion?: string | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
+
 export type UpdateDestacadoProductoMutationVariables = Exact<{
   input: UpdateDestacadoProductoInput;
 }>;
@@ -1690,17 +1705,19 @@ export type GetAllBlogsQuery = { __typename?: 'Query', GetAllBlogs: { __typename
 
 export type GetAllCategoriaBlogsQueryVariables = Exact<{
   estado?: InputMaybe<Scalars['String']>;
+  destacado?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetAllCategoriaBlogsQuery = { __typename?: 'Query', GetAllCategoriaBlogs: { __typename?: 'GetAllCategoriaBlogs', numeroTotal?: number | null, data?: Array<{ __typename?: 'CategoriaBlog', categoriaBlogId?: string | null, titulo?: string | null, slug?: string | null, keywords?: string | null, descripcion?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, numeroBlogs?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null }> | null } };
+export type GetAllCategoriaBlogsQuery = { __typename?: 'Query', GetAllCategoriaBlogs: { __typename?: 'GetAllCategoriaBlogs', numeroTotal?: number | null, data?: Array<{ __typename?: 'CategoriaBlog', categoriaBlogId?: string | null, titulo?: string | null, slug?: string | null, keywords?: string | null, descripcion?: string | null, estado?: string | null, destacado?: string | null, created_at?: any | null, updated_at?: any | null, numeroBlogs?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null }> | null } };
 
 export type GetAllCategoriaProductosQueryVariables = Exact<{
   estado?: InputMaybe<Scalars['String']>;
+  destacado?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetAllCategoriaProductosQuery = { __typename?: 'Query', GetAllCategoriaProductos: { __typename?: 'GetAllCategoriaProductos', numeroTotal?: number | null, data?: Array<{ __typename?: 'CategoriaProducto', categoriaProductoId?: string | null, titulo?: string | null, slug?: string | null, estado?: string | null, keywords?: string | null, descripcion?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null }> | null } };
+export type GetAllCategoriaProductosQuery = { __typename?: 'Query', GetAllCategoriaProductos: { __typename?: 'GetAllCategoriaProductos', numeroTotal?: number | null, data?: Array<{ __typename?: 'CategoriaProducto', categoriaProductoId?: string | null, titulo?: string | null, slug?: string | null, estado?: string | null, destacado?: string | null, keywords?: string | null, descripcion?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null }> | null } };
 
 export type GetAllProductosQueryVariables = Exact<{
   pagina?: InputMaybe<Scalars['Int']>;
@@ -2526,6 +2543,107 @@ export function useUpdateDestacadoBlogMutation(baseOptions?: Apollo.MutationHook
 export type UpdateDestacadoBlogMutationHookResult = ReturnType<typeof useUpdateDestacadoBlogMutation>;
 export type UpdateDestacadoBlogMutationResult = Apollo.MutationResult<UpdateDestacadoBlogMutation>;
 export type UpdateDestacadoBlogMutationOptions = Apollo.BaseMutationOptions<UpdateDestacadoBlogMutation, UpdateDestacadoBlogMutationVariables>;
+export const UpdateDestacadoCategoriaBlogDocument = gql`
+    mutation UpdateDestacadoCategoriaBlog($input: UpdateDestacadoCategoriaBlogInput!) {
+  UpdateDestacadoCategoriaBlog(input: $input) {
+    categoriaBlogId
+    titulo
+    slug
+    keywords
+    descripcion
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+    estado
+    numeroBlogs
+  }
+}
+    `;
+export type UpdateDestacadoCategoriaBlogMutationFn = Apollo.MutationFunction<UpdateDestacadoCategoriaBlogMutation, UpdateDestacadoCategoriaBlogMutationVariables>;
+
+/**
+ * __useUpdateDestacadoCategoriaBlogMutation__
+ *
+ * To run a mutation, you first call `useUpdateDestacadoCategoriaBlogMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDestacadoCategoriaBlogMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDestacadoCategoriaBlogMutation, { data, loading, error }] = useUpdateDestacadoCategoriaBlogMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateDestacadoCategoriaBlogMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDestacadoCategoriaBlogMutation, UpdateDestacadoCategoriaBlogMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDestacadoCategoriaBlogMutation, UpdateDestacadoCategoriaBlogMutationVariables>(UpdateDestacadoCategoriaBlogDocument, options);
+      }
+export type UpdateDestacadoCategoriaBlogMutationHookResult = ReturnType<typeof useUpdateDestacadoCategoriaBlogMutation>;
+export type UpdateDestacadoCategoriaBlogMutationResult = Apollo.MutationResult<UpdateDestacadoCategoriaBlogMutation>;
+export type UpdateDestacadoCategoriaBlogMutationOptions = Apollo.BaseMutationOptions<UpdateDestacadoCategoriaBlogMutation, UpdateDestacadoCategoriaBlogMutationVariables>;
+export const UpdateDestacadoCategoriaProductoDocument = gql`
+    mutation UpdateDestacadoCategoriaProducto($input: UpdateDestacadoCategoriaProductoInput!) {
+  UpdateDestacadoCategoriaProducto(input: $input) {
+    categoriaProductoId
+    titulo
+    slug
+    estado
+    keywords
+    descripcion
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+  }
+}
+    `;
+export type UpdateDestacadoCategoriaProductoMutationFn = Apollo.MutationFunction<UpdateDestacadoCategoriaProductoMutation, UpdateDestacadoCategoriaProductoMutationVariables>;
+
+/**
+ * __useUpdateDestacadoCategoriaProductoMutation__
+ *
+ * To run a mutation, you first call `useUpdateDestacadoCategoriaProductoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDestacadoCategoriaProductoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDestacadoCategoriaProductoMutation, { data, loading, error }] = useUpdateDestacadoCategoriaProductoMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateDestacadoCategoriaProductoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDestacadoCategoriaProductoMutation, UpdateDestacadoCategoriaProductoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDestacadoCategoriaProductoMutation, UpdateDestacadoCategoriaProductoMutationVariables>(UpdateDestacadoCategoriaProductoDocument, options);
+      }
+export type UpdateDestacadoCategoriaProductoMutationHookResult = ReturnType<typeof useUpdateDestacadoCategoriaProductoMutation>;
+export type UpdateDestacadoCategoriaProductoMutationResult = Apollo.MutationResult<UpdateDestacadoCategoriaProductoMutation>;
+export type UpdateDestacadoCategoriaProductoMutationOptions = Apollo.BaseMutationOptions<UpdateDestacadoCategoriaProductoMutation, UpdateDestacadoCategoriaProductoMutationVariables>;
 export const UpdateDestacadoProductoDocument = gql`
     mutation UpdateDestacadoProducto($input: UpdateDestacadoProductoInput!) {
   UpdateDestacadoProducto(input: $input) {
@@ -3691,8 +3809,8 @@ export type GetAllBlogsQueryHookResult = ReturnType<typeof useGetAllBlogsQuery>;
 export type GetAllBlogsLazyQueryHookResult = ReturnType<typeof useGetAllBlogsLazyQuery>;
 export type GetAllBlogsQueryResult = Apollo.QueryResult<GetAllBlogsQuery, GetAllBlogsQueryVariables>;
 export const GetAllCategoriaBlogsDocument = gql`
-    query GetAllCategoriaBlogs($estado: String) {
-  GetAllCategoriaBlogs(estado: $estado) {
+    query GetAllCategoriaBlogs($estado: String, $destacado: String) {
+  GetAllCategoriaBlogs(estado: $estado, destacado: $destacado) {
     numeroTotal
     data {
       categoriaBlogId
@@ -3713,6 +3831,7 @@ export const GetAllCategoriaBlogsDocument = gql`
         url
       }
       estado
+      destacado
       created_at
       updated_at
       numeroBlogs
@@ -3734,6 +3853,7 @@ export const GetAllCategoriaBlogsDocument = gql`
  * const { data, loading, error } = useGetAllCategoriaBlogsQuery({
  *   variables: {
  *      estado: // value for 'estado'
+ *      destacado: // value for 'destacado'
  *   },
  * });
  */
@@ -3749,14 +3869,15 @@ export type GetAllCategoriaBlogsQueryHookResult = ReturnType<typeof useGetAllCat
 export type GetAllCategoriaBlogsLazyQueryHookResult = ReturnType<typeof useGetAllCategoriaBlogsLazyQuery>;
 export type GetAllCategoriaBlogsQueryResult = Apollo.QueryResult<GetAllCategoriaBlogsQuery, GetAllCategoriaBlogsQueryVariables>;
 export const GetAllCategoriaProductosDocument = gql`
-    query GetAllCategoriaProductos($estado: String) {
-  GetAllCategoriaProductos(estado: $estado) {
+    query GetAllCategoriaProductos($estado: String, $destacado: String) {
+  GetAllCategoriaProductos(estado: $estado, destacado: $destacado) {
     numeroTotal
     data {
       categoriaProductoId
       titulo
       slug
       estado
+      destacado
       keywords
       descripcion
       imagenPrincipal {
@@ -3791,6 +3912,7 @@ export const GetAllCategoriaProductosDocument = gql`
  * const { data, loading, error } = useGetAllCategoriaProductosQuery({
  *   variables: {
  *      estado: // value for 'estado'
+ *      destacado: // value for 'destacado'
  *   },
  * });
  */

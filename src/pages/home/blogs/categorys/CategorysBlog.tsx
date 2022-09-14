@@ -20,8 +20,9 @@ const CategorysBlog = () => {
     db: dataCategoriaBlog,
     deleteCategoriaBlog,
     updateEstadoCategoriaBlog,
+    updateDestacadoCategoriaBlog,
     loading
-  } = useCategoriaBlogs({ estado: '' })
+  } = useCategoriaBlogs({ estado: '', destacado: '' })
 
   const handleDelete = () => {
     deleteCategoriaBlog({ categoriaBlogId: Number(selectId) }).then((res) => {
@@ -40,6 +41,19 @@ const CategorysBlog = () => {
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Estado Actualizado Correctamente.' })
+      } else {
+        Toast({ type: 'error', message: res?.error! })
+      }
+    })
+  }
+
+  const handleUpdateDestacado = (id: string, destacado: string) => {
+    updateDestacadoCategoriaBlog({
+      categoriaBlogId: id,
+      destacado: destacado === 'Activado' ? 'Desactivado' : 'Activado'
+    }).then((res) => {
+      if (res?.ok) {
+        Toast({ type: 'success', message: 'Destacado Actualizado Correctamente.' })
       } else {
         Toast({ type: 'error', message: res?.error! })
       }
@@ -68,6 +82,7 @@ const CategorysBlog = () => {
                 <th className="text-center">Imagen</th>
                 <th className="text-center">Titulo</th>
                 <th className="text-center">Estado</th>
+                <th className="text-center">Destacado</th>
                 <th className="text-center">Descripción</th>
                 <th className="text-center">Acciones</th>
               </tr>
@@ -92,6 +107,16 @@ const CategorysBlog = () => {
                           handleUpdateEstado(item?.categoriaBlogId!, item?.estado!)
                         }}
                         value={item.estado === 'Activado'}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="flex justify-center ">
+                      <ToggleSwitch
+                        onClick={() => {
+                          handleUpdateDestacado(item?.categoriaBlogId!, item?.destacado!)
+                        }}
+                        value={item.destacado === 'Activado'}
                       />
                     </div>
                   </td>

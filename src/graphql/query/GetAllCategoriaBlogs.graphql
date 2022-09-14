@@ -1,5 +1,5 @@
-query GetAllCategoriaBlogs($estado: String) {
-  GetAllCategoriaBlogs(estado: $estado) {
+query GetAllCategoriaBlogs($estado: String, $destacado: String) {
+  GetAllCategoriaBlogs(estado: $estado, destacado: $destacado) {
     numeroTotal
     data {
       categoriaBlogId
@@ -20,6 +20,7 @@ query GetAllCategoriaBlogs($estado: String) {
         url
       }
       estado
+      destacado
       created_at
       updated_at
       numeroBlogs

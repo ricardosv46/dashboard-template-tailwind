@@ -9,6 +9,7 @@ import { useProductos } from '@services/useProductos'
 import { Toast } from '@utils/Toast'
 import { validateCreateProducto } from '@validation/products/validateCreateProducto'
 import { useFormik } from 'formik'
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const CreateProduct = () => {
@@ -29,7 +30,7 @@ const CreateProduct = () => {
       precioReal: Number(values.precioReal),
       stockMinimo: Number(values.stockMinimo),
       stockReal: Number(values.stockReal),
-      galeria: [],
+      galeria: galeriaIds,
       imagenPrincipal: Number(values.imagenPrincipal.id),
       imagenSecundaria: Number(values.imagenSecundaria.id)
     }).then((res) => {
@@ -68,6 +69,12 @@ const CreateProduct = () => {
       galeria: []
     }
   })
+
+  const galeriaIds = useMemo(() => {
+    return values.galeria.map(({ id }: any) => id)
+  }, [values.galeria])
+
+  console.log({ galeriaIds })
 
   return (
     <PlantillaPage title="Crear Producto" goback>

@@ -4,6 +4,7 @@ import {
   useGetAllCategoriaProductosQuery,
   useGetCategoriaProductoSlugQuery,
   useUpdateCategoriaProductoMutation,
+  useUpdateDestacadoCategoriaProductoMutation,
   useUpdateEstadoCategoriaProductoMutation
 } from '../generated/graphql'
 
@@ -28,21 +29,28 @@ export interface IUpdateEstadoCategoriaProducto {
   categoriaProductoId: string
   estado: string
 }
+
+export interface IUpdateDestacadoCategoriaProducto {
+  categoriaProductoId: string
+  destacado: string
+}
 export interface IDeleteCategoriaProducto {
   categoriaProductoId: number
 }
 
 export interface IProps {
+  destacado?: string
   estado?: string
   slug?: string
 }
 
 // Obtenemos todas las categorias
-export const useCategoriaProductos = ({ estado = '', slug }: IProps) => {
+export const useCategoriaProductos = ({ estado = '', destacado = '', slug }: IProps) => {
   const { data, loading, refetch } = useGetAllCategoriaProductosQuery({
     fetchPolicy: 'network-only',
     variables: {
-      estado
+      estado,
+      destacado
     }
   })
 
@@ -138,6 +146,29 @@ export const useCategoriaProductos = ({ estado = '', slug }: IProps) => {
     }
   }
 
+  const [UpdateDestacadoCategoriaProducto, { loading: loadingUpdateDestacado }] =
+    useUpdateDestacadoCategoriaProductoMutation()
+
+  const updateDestacadoCategoriaProducto = async ({
+    categoriaProductoId,
+    destacado
+  }: IUpdateDestacadoCategoriaProducto) => {
+    try {
+      const res = await UpdateDestacadoCategoriaProducto({
+        variables: {
+          input: {
+            categoriaProductoId,
+            destacado
+          }
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo actualizar el destacado' }
+    }
+  }
+
   const [DeleteCategoriaProducto, { loading: loadingDelete }] = useDeleteCategoriaProductoMutation()
 
   const deleteCategoriaProducto = async ({ categoriaProductoId }: IDeleteCategoriaProducto) => {
@@ -164,6 +195,8 @@ export const useCategoriaProductos = ({ estado = '', slug }: IProps) => {
     updateCategoriaProducto,
     loadingUpdate,
     updateEstadoCategoriaProducto,
+    loadingUpdateDestacado,
+    updateDestacadoCategoriaProducto,
     loadingUpdateEstado,
     dbCategoriaProductoSlug,
     loadingCategoriaProductoSlug

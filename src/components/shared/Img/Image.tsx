@@ -1,18 +1,18 @@
 import { classNames } from '@utils/classNames'
-import React, { useState } from 'react'
+import React, { ImgHTMLAttributes, useState } from 'react'
 import Spinner from '../Spinner/Spinner'
 
-interface Props {
+interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   src: string
   alt: string
   className?: string
 }
 
-const Image = ({ src, alt, className }: Props) => {
+const Image = ({ src, alt, className, ...props }: Props) => {
   const [loading, setLoading] = useState(true)
 
   return (
-    <div>
+    <>
       <img
         className={classNames([loading ? 'hidden' : '', className])}
         src={src}
@@ -20,15 +20,13 @@ const Image = ({ src, alt, className }: Props) => {
         onLoad={() => {
           setLoading(false)
         }}
+        {...props}
       />
 
       <Spinner
-        className={classNames([
-          loading ? 'block' : 'hidden',
-          'w-10 h-10 mx-auto border-4'
-        ])}
+        className={classNames([loading ? 'block' : 'hidden', 'w-10 h-10 mx-auto border-4'])}
       />
-    </div>
+    </>
   )
 }
 

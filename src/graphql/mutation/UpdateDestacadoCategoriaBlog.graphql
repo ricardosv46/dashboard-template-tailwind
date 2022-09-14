@@ -1,0 +1,24 @@
+mutation UpdateDestacadoCategoriaBlog($input: UpdateDestacadoCategoriaBlogInput!) {
+  UpdateDestacadoCategoriaBlog(input: $input) {
+    categoriaBlogId
+    titulo
+    slug
+    keywords
+    descripcion
+    imagenPrincipal {
+      id
+      titulo
+      estado
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      estado
+      url
+    }
+    estado
+    destacado
+    numeroBlogs
+  }
+}

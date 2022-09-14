@@ -4,6 +4,7 @@ import {
   useGetAllCategoriaBlogsQuery,
   useGetCategoriaBlogSlugQuery,
   useUpdateCategoriaBlogMutation,
+  useUpdateDestacadoCategoriaBlogMutation,
   useUpdateEstadoCategoriaBlogMutation
 } from '../generated/graphql'
 
@@ -29,21 +30,28 @@ export interface IUpdateEstadoCategoriaBlog {
   estado: string
 }
 
+export interface IUpdateDestacadoCategoriaBlog {
+  categoriaBlogId: string
+  destacado: string
+}
+
 export interface IDeleteCategoriaBlog {
   categoriaBlogId: number
 }
 
 export interface IProps {
+  destacado?: string
   estado?: string
   slug?: string
 }
 
 // Obtenemos todas las categorias
-export const useCategoriaBlogs = ({ estado = '', slug }: IProps) => {
+export const useCategoriaBlogs = ({ estado = '', destacado = '', slug }: IProps) => {
   const { data, loading, refetch } = useGetAllCategoriaBlogsQuery({
     fetchPolicy: 'network-only',
     variables: {
-      estado
+      estado,
+      destacado
     }
   })
 
@@ -139,6 +147,29 @@ export const useCategoriaBlogs = ({ estado = '', slug }: IProps) => {
     }
   }
 
+  const [UpdateDestacadoCategoriaBlog, { loading: loadingUpdateDestacado }] =
+    useUpdateDestacadoCategoriaBlogMutation()
+
+  const updateDestacadoCategoriaBlog = async ({
+    categoriaBlogId,
+    destacado
+  }: IUpdateDestacadoCategoriaBlog) => {
+    try {
+      const res = await UpdateDestacadoCategoriaBlog({
+        variables: {
+          input: {
+            categoriaBlogId,
+            destacado
+          }
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo actualizar el destacado' }
+    }
+  }
+
   const [DeleteCategoriaBlog, { loading: loadingDelete }] = useDeleteCategoriaBlogMutation()
 
   const deleteCategoriaBlog = async ({ categoriaBlogId }: IDeleteCategoriaBlog) => {
@@ -167,6 +198,8 @@ export const useCategoriaBlogs = ({ estado = '', slug }: IProps) => {
     updateEstadoCategoriaBlog,
     loadingUpdateEstado,
     dbCategoriBlogSlug,
-    loadingCategoriBlogSlug
+    loadingCategoriBlogSlug,
+    updateDestacadoCategoriaBlog,
+    loadingUpdateDestacado
   }
 }
