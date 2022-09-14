@@ -1,10 +1,5 @@
-query GetAllBlogs($pagina: Int, $numeroPagina: Int, $estado: String, $destacado: String) {
-  GetAllBlogs(
-    pagina: $pagina
-    numeroPagina: $numeroPagina
-    estado: $estado
-    destacado: $destacado
-  ) {
+query GetAllBlogs($pagina: Int, $numeroPagina: Int, $estado: String) {
+  GetAllBlogs(pagina: $pagina, numeroPagina: $numeroPagina, estado: $estado) {
     numeroTotal
     data {
       blogId

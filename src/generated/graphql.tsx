@@ -1531,7 +1531,7 @@ export type UpdateDestacadoCategoriaBlogMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDestacadoCategoriaBlogMutation = { __typename?: 'Mutation', UpdateDestacadoCategoriaBlog: { __typename?: 'CategoriaBlog', categoriaBlogId?: string | null, titulo?: string | null, slug?: string | null, keywords?: string | null, descripcion?: string | null, estado?: string | null, numeroBlogs?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
+export type UpdateDestacadoCategoriaBlogMutation = { __typename?: 'Mutation', UpdateDestacadoCategoriaBlog: { __typename?: 'CategoriaBlog', categoriaBlogId?: string | null, titulo?: string | null, slug?: string | null, keywords?: string | null, descripcion?: string | null, estado?: string | null, destacado?: string | null, numeroBlogs?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
 
 export type UpdateDestacadoCategoriaProductoMutationVariables = Exact<{
   input: UpdateDestacadoCategoriaProductoInput;
@@ -1574,6 +1574,13 @@ export type UpdateEstadoProductoMutationVariables = Exact<{
 
 
 export type UpdateEstadoProductoMutation = { __typename?: 'Mutation', UpdateEstadoProducto: { __typename?: 'Producto', productoId?: string | null, titulo?: string | null, slug?: string | null, descripcionCorta?: string | null, descripcionLarga?: string | null, precioReal?: number | null, precioOferta?: number | null, stockMinimo?: number | null, stockReal?: number | null, keywords?: string | null, destacado?: string | null, estado?: string | null, categoriaProductoId?: number | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, galeria?: Array<{ __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null> | null } };
+
+export type UpdatePasswordUsuarioMutationVariables = Exact<{
+  input: UpdatePasswordInput;
+}>;
+
+
+export type UpdatePasswordUsuarioMutation = { __typename?: 'Mutation', UpdatePasswordUsuario: { __typename?: 'User', id?: string | null, tipoUsuario?: number | null, tipoDocumento?: string | null, numeroDocumento?: string | null, genero?: number | null, nombres?: string | null, apellidos?: string | null, celular?: string | null, fechaNacimiento?: any | null, foto?: string | null, email?: string | null, apiToken?: string | null, customer_id?: string | null } };
 
 export type UpdateProductoMutationVariables = Exact<{
   input: ProductoInput;
@@ -2564,6 +2571,7 @@ export const UpdateDestacadoCategoriaBlogDocument = gql`
       url
     }
     estado
+    destacado
     numeroBlogs
   }
 }
@@ -2914,6 +2922,51 @@ export function useUpdateEstadoProductoMutation(baseOptions?: Apollo.MutationHoo
 export type UpdateEstadoProductoMutationHookResult = ReturnType<typeof useUpdateEstadoProductoMutation>;
 export type UpdateEstadoProductoMutationResult = Apollo.MutationResult<UpdateEstadoProductoMutation>;
 export type UpdateEstadoProductoMutationOptions = Apollo.BaseMutationOptions<UpdateEstadoProductoMutation, UpdateEstadoProductoMutationVariables>;
+export const UpdatePasswordUsuarioDocument = gql`
+    mutation UpdatePasswordUsuario($input: UpdatePasswordInput!) {
+  UpdatePasswordUsuario(input: $input) {
+    id
+    tipoUsuario
+    tipoDocumento
+    numeroDocumento
+    genero
+    nombres
+    apellidos
+    celular
+    fechaNacimiento
+    foto
+    email
+    apiToken
+    customer_id
+  }
+}
+    `;
+export type UpdatePasswordUsuarioMutationFn = Apollo.MutationFunction<UpdatePasswordUsuarioMutation, UpdatePasswordUsuarioMutationVariables>;
+
+/**
+ * __useUpdatePasswordUsuarioMutation__
+ *
+ * To run a mutation, you first call `useUpdatePasswordUsuarioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePasswordUsuarioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePasswordUsuarioMutation, { data, loading, error }] = useUpdatePasswordUsuarioMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdatePasswordUsuarioMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePasswordUsuarioMutation, UpdatePasswordUsuarioMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePasswordUsuarioMutation, UpdatePasswordUsuarioMutationVariables>(UpdatePasswordUsuarioDocument, options);
+      }
+export type UpdatePasswordUsuarioMutationHookResult = ReturnType<typeof useUpdatePasswordUsuarioMutation>;
+export type UpdatePasswordUsuarioMutationResult = Apollo.MutationResult<UpdatePasswordUsuarioMutation>;
+export type UpdatePasswordUsuarioMutationOptions = Apollo.BaseMutationOptions<UpdatePasswordUsuarioMutation, UpdatePasswordUsuarioMutationVariables>;
 export const UpdateProductoDocument = gql`
     mutation UpdateProducto($input: ProductoInput!) {
   UpdateProducto(input: $input) {

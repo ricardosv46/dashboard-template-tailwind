@@ -74,8 +74,6 @@ const CreateProduct = () => {
     return values.galeria.map(({ id }: any) => id)
   }, [values.galeria])
 
-  console.log({ galeriaIds })
-
   return (
     <PlantillaPage title="Crear Producto" goback>
       <div className="flex justify-center">

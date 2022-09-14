@@ -33,6 +33,8 @@ const EditSlider = lazy(() => import('../pages/home/sliders/EditSlider'))
 const SellersPage = lazy(() => import('../pages/home/finance/sellers/SellersPage'))
 const EditSeller = lazy(() => import('../pages/home/finance/sellers/EditSeller'))
 const CreateSeller = lazy(() => import('../pages/home/finance/sellers/CreateSeller'))
+const EditPassword = lazy(() => import('../pages/home/account/EditPassword'))
+const EditProfile = lazy(() => import('../pages/home/account/EditProfile'))
 
 export const homeRoutes: Route[] = [
   {
@@ -273,6 +275,34 @@ export const homeRoutes: Route[] = [
           to: '',
           component: EditSeller,
           render: false
+        }
+      ]
+    }
+  },
+  {
+    icon: IconUser,
+    name: 'Cuenta',
+    to: '/account',
+    path: 'account',
+    component: ProductsPage,
+    subMenu: {
+      value: true,
+      paths: [
+        {
+          icon: IconUser,
+          name: 'Password',
+          path: 'edit-paasword',
+          to: '/edit-paasword',
+          component: EditPassword,
+          render: true
+        },
+        {
+          icon: IconUser,
+          name: 'Profile',
+          path: 'edit-profile',
+          to: '/edit-profile',
+          component: EditProfile,
+          render: true
         }
       ]
     }

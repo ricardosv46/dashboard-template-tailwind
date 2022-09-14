@@ -1,6 +1,6 @@
 // import { Imagenes } from '../../generated/graphql'
 import useToggle from '@hooks/useToggle'
-import { IconPlus } from '@icons'
+import { IconClose, IconPlus } from '@icons'
 import { classNames } from '@utils/classNames'
 import { isEmpty } from '@utils/isEmpty'
 import { useEffect, useState } from 'react'
@@ -80,19 +80,20 @@ const InputSelectImages = ({ label, touched, ...props }: Props) => {
       {!(imgs?.length === 0) && (
         <div className="grid w-full grid-cols-1 gap-2 p-2 border-2 border-dashed rounded-lg sm:grid-cols-2 md:grid-cols-3 lg:grid-flow-col-4 xl:grid-flow-col-5 border-slate-300">
           {imgs?.map((img) => (
-            <div className="relative">
-              <p
-                className="absolute top-0 right-0 w-6 flex justify-center items-center text-2xl cursor-pointer bg-primary-600 text-white z-50 h-6"
+            <div className="relative overflow-hidden border border-gray-300 rounded-lg dark:border-gray-700">
+              <button
+                type="button"
+                className="absolute top-0 right-0 z-50 btn-icon btn-solid-red "
                 onClick={() => {
                   const arrayNew = imgs.filter((value) => value.id !== img.id)
-                  setImgs(arrayNew)
+                  setImgs((prev) => [...arrayNew])
                 }}>
-                x
-              </p>
+                <IconClose className="w-3 h-3" />
+              </button>
               <Image
                 onClick={onOpen}
                 key={img.id}
-                className="inset-0 z-10 object-cover w-full cursor-pointer h-44"
+                className="inset-0 z-10 object-cover w-full cursor-pointer h-[170px]"
                 src={img?.url!}
                 alt={img?.titulo!}
               />
