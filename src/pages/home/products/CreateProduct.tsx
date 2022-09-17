@@ -11,6 +11,7 @@ import { validateCreateProducto } from '@validation/products/validateCreateProdu
 import { useFormik } from 'formik'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import InputSelectProducts from '../../../components/shared/Input/InputSelectProducts'
 
 const CreateProduct = () => {
   const router = useNavigate()
@@ -155,7 +156,7 @@ const CreateProduct = () => {
             touched={touched?.descripcionLarga ?? false}
           />
         </div>
-
+        {/* Input para seleccionar imagen principal y secundaria */}
         <InputImage
           value={values.imagenPrincipal}
           onChange={(value) => setFieldValue('imagenPrincipal', value)}
@@ -171,9 +172,22 @@ const CreateProduct = () => {
           error={errors.imagenSecundaria}
           touched={touched?.imagenSecundaria?.url ?? false}
         />
+
+        {/* Input para seleccionar una galeria de imágenes */}
         <div className="col-span-2">
           <InputSelectImages
             label="Galeria de imágenes"
+            onChange={(values) => setFieldValue('galeria', values)}
+            value={values.galeria}
+            error={errors.galeria}
+            touched={touched?.imagenSecundaria?.url ?? false}
+          />
+        </div>
+
+        {/* Input para asociar productos relacionados */}
+        <div className="col-span-2">
+          <InputSelectProducts
+            label="Seleccione productos relacionados"
             onChange={(values) => setFieldValue('galeria', values)}
             value={values.galeria}
             error={errors.galeria}

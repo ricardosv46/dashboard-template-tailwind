@@ -49,7 +49,6 @@ const ImagesPage = () => {
       .map((_, i) => i + 1)
   }
   const paginas = generatedTotal(nTotal, state.numeroPagina)
-  console.log(paginas)
 
   return (
     <PlantillaPage

@@ -13,6 +13,7 @@ import { classNames } from '@utils/classNames'
 import Image from '../Img/Image'
 import { toast } from 'react-toastify'
 import useToggle from '@hooks/useToggle'
+import Paginator from '@components/shared/Paginator/Paginator'
 
 export interface Imagenes {
   id?: string | null | undefined
@@ -28,11 +29,24 @@ interface Props {
 
 const ModalSelectedImages = ({ isOpen, onClose, onSelect, imgs }: Props) => {
   const [createImage] = useCreateImagenMutation()
-  const { db: images, refetch } = useImagenes({ pagina: 1, numeroPagina: 999 })
+  const [paginationValues, setPaginationValues] = useState({
+    pagina: 1,
+    numeroPagina: 10
+  })
+
+  const { db: images, refetch, nTotal } = useImagenes(paginationValues)
 
   const [isLoading, setIsLoading] = useState(false)
   const [isUploadImage, setIsUploadImage] = useState(false)
   const [selectedImages, setSelectedImages] = useState<Imagenes[]>([])
+
+  const generatedTotal = (items: number, itemporpage: number) => {
+    const n = Math.ceil(items / itemporpage)
+    return Array(n)
+      .fill(null)
+      .map((_, i) => i + 1)
+  }
+  const paginas = generatedTotal(nTotal, paginationValues.numeroPagina)
 
   const handleUpload = async (files: File[]) => {
     let hasError = false
@@ -123,6 +137,7 @@ const ModalSelectedImages = ({ isOpen, onClose, onSelect, imgs }: Props) => {
               {isUploadImage ? 'Ver galeria' : 'Subir Imagen'}
             </button>
           </div>
+          <Paginator state={paginationValues} setState={setPaginationValues} paginas={paginas} />
           <div className="flex-1 mt-5 overflow-auto">
             {/* GALERIA */}
             {!isUploadImage && (
