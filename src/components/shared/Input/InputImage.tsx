@@ -40,7 +40,9 @@ const InputImage = ({ label, touched, ...props }: Props) => {
       <button type="button" className="relative w-full" onClick={onOpen}>
         <div
           className={classNames([
-            'relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer max-w-96 ',
+            `${
+              !value?.url && 'border'
+            } relative flex flex-col items-center justify-center w-full h-48 border-dashed rounded-lg cursor-pointer max-w-96`,
             hasError ? 'border-red-600 dark:border-red-400' : 'border-slate-300'
           ])}>
           {!hasImage && (
@@ -63,11 +65,14 @@ const InputImage = ({ label, touched, ...props }: Props) => {
           )}
 
           {hasImage && (
-            <Image
-              className="absolute inset-0 z-0 object-contain w-full h-full"
-              src={value?.url!}
-              alt={value?.titulo!}
-            />
+            <>
+              <h1 className="text-gray-600 text-lg font-semibold mb-5">{label}</h1>
+              <Image
+                className="w-full max-w-[250px] shadow-lg h-[150px]  inset-0 z-0 object-contain"
+                src={value?.url!}
+                alt={value?.titulo!}
+              />
+            </>
           )}
         </div>
         <div className="absolute w-full -bottom-5">

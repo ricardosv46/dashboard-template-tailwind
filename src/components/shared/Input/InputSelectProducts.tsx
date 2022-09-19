@@ -45,7 +45,7 @@ const InputSelectProducts = ({ label, touched, ...props }: Props) => {
         <button type="button" className="relative w-full" onClick={onOpen}>
           <div
             className={classNames([
-              ' flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer  ',
+              ' flex flex-col items-center justify-center w-full h-48 border border-dashed rounded-lg cursor-pointer  ',
               hasError ? 'border-red-600 dark:border-red-400' : 'border-slate-300'
             ])}>
             <>
@@ -78,28 +78,34 @@ const InputSelectProducts = ({ label, touched, ...props }: Props) => {
       )}
 
       {!(imgs?.length === 0) && (
-        <div className="grid w-full grid-cols-1 gap-2 p-2 border-2 border-dashed rounded-lg sm:grid-cols-2 md:grid-cols-3 lg:grid-flow-col-4 xl:grid-flow-col-5 border-slate-300">
-          {imgs?.map((img) => (
-            <div className="relative overflow-hidden border border-gray-300 rounded-lg dark:border-gray-700">
-              <button
-                type="button"
-                className="absolute top-0 right-0 z-50 btn-icon btn-solid-red "
-                onClick={() => {
-                  const arrayNew = imgs.filter((value) => value.id !== img.id)
-                  setImgs((prev) => [...arrayNew])
-                }}>
-                <IconClose className="w-3 h-3" />
-              </button>
-              <Image
-                onClick={onOpen}
-                key={img.id}
-                className="inset-0 z-10 object-cover w-full cursor-pointer h-[170px]"
-                src={img?.url!}
-                alt={img?.titulo!}
-              />
-            </div>
-          ))}
-        </div>
+        <>
+          <h1 className="text-center text-gray-600 text-lg font-semibold mb-5">{label}</h1>
+          <div className="w-full shadow-xl py-4 flex flex-wrap gap-3 justify-center">
+            {imgs?.map((img) => (
+              <div>
+                <p className="text-xs mb-2 font-light text-center text-gray-500">{img?.titulo}</p>
+                <div className="relative overflow-hidden  min-w-[120px]  border border-gray-300 rounded-lg dark:border-gray-700">
+                  <button
+                    type="button"
+                    className="absolute w-5 h-6 top-0 right-0 z-50  btn-solid-red "
+                    onClick={() => {
+                      const arrayNew = imgs.filter((value) => value.id !== img.id)
+                      setImgs((prev) => [...arrayNew])
+                    }}>
+                    x
+                  </button>
+                  <Image
+                    onClick={onOpen}
+                    key={img.id}
+                    className="inset-0 z-10 object-cover w-[120px] cursor-pointer h-[100px]"
+                    src={img?.url!}
+                    alt={img?.titulo!}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   )

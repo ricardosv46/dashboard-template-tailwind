@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Modal from './Modal'
 // import { FocusableElement } from '@chakra-ui/utils'
-import useImagenes from '../../../services/useImagenes'
 import { IconCheckbox, IconClose } from '@icons'
 import { classNames } from '@utils/classNames'
 import Image from '../Img/Image'
@@ -75,13 +74,13 @@ const ModalSelectedProducts = ({ isOpen, onClose, onSelect, imgs }: Props) => {
             {/* GALERIA */}
             {!isUploadImage && (
               <div className="grid w-full gap-8 auto-rows-[200px] grid-cols-auto-fit py-5">
-                {products &&
+                {products.length > 0 &&
                   products.map((product: any) => {
                     const isSelected = selectedProducts.find(
                       (resp: any) => resp?.id === product?.productoId
                     )
                     return (
-                      <div className="w-full mb-6">
+                      <div className="w-full mb-6" key={product?.productoId}>
                         <p className="text-center font-semibold text-gray-700 mb-1">
                           {product?.titulo}
                         </p>
@@ -92,7 +91,6 @@ const ModalSelectedProducts = ({ isOpen, onClose, onSelect, imgs }: Props) => {
                               : 'border-gray-300 dark:border-gray-700',
                             'rounded-lg relative border cursor-pointer overflow-hidden w-full h-full  hover:shadow-md transition-shadow duration-300 ease-linear'
                           ])}
-                          key={product?.productoId}
                           onClick={() => {
                             const value = selectedProducts.find(
                               (value: any) => value?.id === product?.productoId
