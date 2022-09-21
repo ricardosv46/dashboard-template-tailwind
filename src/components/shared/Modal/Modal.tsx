@@ -18,14 +18,7 @@ interface Props {
   onClose?: () => void
 }
 
-const Modal = ({
-  children,
-  isOpen,
-  className,
-  hasOverlay,
-  sidebar,
-  onClose
-}: Props) => {
+const Modal = ({ children, isOpen, className, hasOverlay, sidebar, onClose }: Props) => {
   return (
     <Portal>
       {sidebar ? (
@@ -33,8 +26,7 @@ const Modal = ({
           variants={fade}
           animate={isOpen ? 'open' : 'closed'}
           initial={{ opacity: 0, pointerEvents: 'none' }}
-          className="fixed top-0 z-50 flex w-full h-screen "
-        >
+          className="fixed top-0 z-50 flex w-full h-screen ">
           {hasOverlay && <Overlay show={isOpen} onClick={onClose} />}
           <div className="z-20 w-auto h-auto">{children}</div>
         </motion.div>
@@ -43,8 +35,7 @@ const Modal = ({
           variants={fade}
           animate={isOpen ? 'open' : 'closed'}
           initial={{ opacity: 0, pointerEvents: 'none' }}
-          className="fixed top-0 z-50 grid w-full h-screen place-items-center"
-        >
+          className="fixed top-0 z-50 grid w-full h-screen place-items-center">
           {hasOverlay && <Overlay show={isOpen} onClick={onClose} />}
           <div className="z-20 grid place-items-center">{children}</div>
         </motion.div>

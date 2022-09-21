@@ -11,7 +11,8 @@ import { validateCreateProducto } from '@validation/products/validateCreateProdu
 import { useFormik } from 'formik'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import InputSelectProducts from '../../../components/shared/Input/InputSelectProducts'
+import InputSelectProducts from '@components/shared/Input/InputSelectProducts'
+import Editor from '@components/shared/Editor/Editor'
 
 const CreateProduct = () => {
   const router = useNavigate()
@@ -82,7 +83,7 @@ const CreateProduct = () => {
       </div>
       <form
         onSubmit={form.handleSubmit}
-        className="grid grid-cols-1 lg:grid-cols-3  xl:grid-cols-4 w-full gap-5 lg:gap-10">
+        className="grid grid-cols-1 lg:grid-cols-3 items-start xl:grid-cols-4 w-full gap-5 lg:gap-10">
         {/* 1 division */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10   lg:col-span-2  xl:col-span-3 ">
           <Select
@@ -155,24 +156,7 @@ const CreateProduct = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <Input
-              type="text"
-              label="Descripción Larga"
-              {...form.getFieldProps('descripcionLarga')}
-              error={errors.descripcionLarga}
-              touched={touched?.descripcionLarga ?? false}
-            />
-          </div>
-
-          {/* Input para asociar productos relacionados */}
-          <div className="lg:col-span-2">
-            <InputSelectProducts
-              label="Productos relacionados"
-              onChange={(values) => setFieldValue('galeria', values)}
-              value={values.galeria}
-              error={errors.galeria}
-              touched={touched?.imagenSecundaria?.url ?? false}
-            />
+            <Editor />
           </div>
         </div>
         {/* 2 division */}
@@ -198,6 +182,17 @@ const CreateProduct = () => {
           <div className="">
             <InputSelectImages
               label="Galeria de imágenes"
+              onChange={(values) => setFieldValue('galeria', values)}
+              value={values.galeria}
+              error={errors.galeria}
+              touched={touched?.imagenSecundaria?.url ?? false}
+            />
+          </div>
+
+          {/* Input para asociar productos relacionados */}
+          <div className="lg:col-span-2">
+            <InputSelectProducts
+              label="Productos relacionados"
               onChange={(values) => setFieldValue('galeria', values)}
               value={values.galeria}
               error={errors.galeria}
