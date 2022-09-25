@@ -34,7 +34,7 @@ const ModalSelectUrlImage = ({ isOpen, onClose }: Props) => {
   }
   const paginas = generatedTotal(nTotal, paginationValues.numeroPagina)
 
-  const copyUrl = (url: string) => {
+  const copyUrl = () => {
     toast.success('Imagen añadida exitosamente.', {
       theme: 'colored',
       position: 'top-right',
@@ -112,7 +112,7 @@ const ModalSelectUrlImage = ({ isOpen, onClose }: Props) => {
                       ])}
                       key={image?.id}
                       onClick={() => {
-                        copyUrl(image?.url!)
+                        copyUrl()
                         let imgSelector: any = document.querySelector('.jodit-wysiwyg')
                         imgSelector.innerHTML += `<p><img src="${image?.url}" style="width: 200px;"/></p>`
                       }}>

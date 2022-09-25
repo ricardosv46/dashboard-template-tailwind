@@ -13,6 +13,7 @@ import { Toast } from '@utils/Toast'
 import { useFormik } from 'formik'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import IconSearch from '../../../icons/IconSearch'
 
 const estados = [
   { label: 'Todos', value: '' },
@@ -35,6 +36,7 @@ const ProductsPage = () => {
     }
   })
   const [selectId, setSelectId] = useState<string | null | undefined>(null)
+  const [palabraClave, setPalabraClave] = useState('')
   const {
     db: dataProductos,
     loading,
@@ -42,7 +44,7 @@ const ProductsPage = () => {
     deleteProducto,
     updateEstadoProducto,
     updateDestacadoProducto
-  } = useProductos({ ...values, ...state })
+  } = useProductos({ ...values, ...state, palabraClave })
 
   const handleDelete = () => {
     deleteProducto({ productoId: Number(selectId) }).then((res) => {
@@ -93,7 +95,19 @@ const ProductsPage = () => {
             Crear Producto
           </button>
         }>
-        <div className="flex flex-col gap-5 mb-5 md:w-4/6 xl:w-1/2 sm:flex-row">
+        <div className="grid justify-center items-start grid-cols-1 md:grid-cols-5 gap-8 mb-3">
+          <div className="md:col-span-3  relative md:h-full">
+            <input
+              type="text"
+              className="border peer bg-transparent outline-none w-full h-full p-4 border-primary-600  border-b-2 rounded-tr-md rounded-tl-md"
+              placeholder="Ingrese una palabra clave"
+              onChange={(e) => setPalabraClave(e.target.value)}
+            />
+            <div className="absolute right-0 top-0 bg-primary-600 pt-3  h-full rounded-tr-md px-3 cursor-pointer">
+              <IconSearch />
+            </div>
+          </div>
+
           <Select
             label="Estado"
             value={values.estado}

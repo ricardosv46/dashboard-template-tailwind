@@ -70,6 +70,20 @@ export type BlogInput = {
   titulo?: InputMaybe<Scalars['String']>;
 };
 
+export type Carrito = {
+  __typename?: 'Carrito';
+  Producto?: Maybe<Producto>;
+  cantidad?: Maybe<Scalars['Int']>;
+  carritoId?: Maybe<Scalars['ID']>;
+  productoId?: Maybe<Scalars['Int']>;
+};
+
+export type CarritoInput = {
+  cantidad?: InputMaybe<Scalars['Int']>;
+  carritoId?: InputMaybe<Scalars['ID']>;
+  productoId?: InputMaybe<Scalars['Int']>;
+};
+
 export type CategoriaBlog = {
   __typename?: 'CategoriaBlog';
   categoriaBlogId?: Maybe<Scalars['ID']>;
@@ -394,6 +408,12 @@ export type GetAllSliders = {
   numeroTotal?: Maybe<Scalars['Int']>;
 };
 
+export type GetAllUsuarios = {
+  __typename?: 'GetAllUsuarios';
+  Usuario?: Maybe<User>;
+  numeroTotal?: Maybe<Scalars['Int']>;
+};
+
 export type GetAllVendedoras = {
   __typename?: 'GetAllVendedoras';
   data?: Maybe<Array<Vendedora>>;
@@ -425,6 +445,7 @@ export type Mutation = {
   AsignarDatosEmpresa: DatosEmpresa;
   CreateBancos: Banco;
   CreateBlog: Blog;
+  CreateCarrito: Array<Maybe<Carrito>>;
   CreateCategoriaBlog: CategoriaBlog;
   CreateCategoriaProducto: CategoriaProducto;
   CreateContactos: Contacto;
@@ -439,6 +460,7 @@ export type Mutation = {
   CreateVendedora: Vendedora;
   DeleteBancos: Scalars['String'];
   DeleteBlog: Scalars['String'];
+  DeleteCarrito: Scalars['String'];
   DeleteCategoriaBlog: Scalars['String'];
   DeleteCategoriaProducto: Scalars['String'];
   DeleteDireccionUsuario: Scalars['String'];
@@ -450,6 +472,7 @@ export type Mutation = {
   Login: User;
   RecoverPasswordUsuario: User;
   UpdateBancos: Banco;
+  UpdateCarrito: Carrito;
   UpdateCategoriaBlog: CategoriaBlog;
   UpdateCategoriaProducto: CategoriaProducto;
   UpdateDestacadoBlog: Blog;
@@ -468,6 +491,7 @@ export type Mutation = {
   UpdateEstadoPedido: Pedido;
   UpdateEstadoProducto: Producto;
   UpdateEstadoSlider: Slider;
+  UpdateEstadoUsuario: Scalars['String'];
   UpdateEstadoVendedora: Vendedora;
   UpdateImagen: Imagen;
   UpdatePasswordUsuario: User;
@@ -495,6 +519,11 @@ export type MutationCreateBancosArgs = {
 
 export type MutationCreateBlogArgs = {
   input: BlogInput;
+};
+
+
+export type MutationCreateCarritoArgs = {
+  input?: InputMaybe<Array<CarritoInput>>;
 };
 
 
@@ -574,6 +603,11 @@ export type MutationDeleteBlogArgs = {
 };
 
 
+export type MutationDeleteCarritoArgs = {
+  carritoId: Scalars['Int'];
+};
+
+
 export type MutationDeleteCategoriaBlogArgs = {
   categoriaBlogId: Scalars['Int'];
 };
@@ -626,6 +660,11 @@ export type MutationRecoverPasswordUsuarioArgs = {
 
 export type MutationUpdateBancosArgs = {
   input?: InputMaybe<BancoInput>;
+};
+
+
+export type MutationUpdateCarritoArgs = {
+  input: CarritoInput;
 };
 
 
@@ -716,6 +755,11 @@ export type MutationUpdateEstadoProductoArgs = {
 
 export type MutationUpdateEstadoSliderArgs = {
   input?: InputMaybe<UpdateEstadoSliderInput>;
+};
+
+
+export type MutationUpdateEstadoUsuarioArgs = {
+  input: UpdateEstadoUsuarioInput;
 };
 
 
@@ -946,11 +990,13 @@ export type Provincia = {
 
 export type Query = {
   __typename?: 'Query';
+  BusquedaAvanzada: GetAllProductos;
   EmitirTicket: Scalars['String'];
   GetAllBancos: GetAllBancos;
   GetAllBlogs: GetAllBlogs;
   GetAllBlogsCategoriaSlug: GetAllBlogs;
   GetAllBlogsDestacados: GetAllBlogs;
+  GetAllCarrito: Array<Maybe<Carrito>>;
   GetAllCategoriaBlogs: GetAllCategoriaBlogs;
   GetAllCategoriaProductos: GetAllCategoriaProductos;
   GetAllContactos: GetAllContactos;
@@ -963,17 +1009,16 @@ export type Query = {
   GetAllPedidoUser: GetAllPedidos;
   GetAllPedidos: GetAllPedidos;
   GetAllProductos: GetAllProductos;
+  GetAllProductosBestSelling: GetAllProductos;
   GetAllProductosCategoriaSlug: GetAllProductos;
-  GetAllProductosDestacados: GetAllProductos;
-  GetAllProductosPalabraClave: GetAllProductos;
   GetAllProductosRelacionados: GetAllProductos;
   GetAllProvincias?: Maybe<Array<Provincia>>;
   GetAllSliders: GetAllSliders;
   GetAllTarjetaUsuario?: Maybe<Array<TarjetasUsuarios>>;
+  GetAllUsuarios: GetAllUsuarios;
   GetAllVendedoras: GetAllVendedoras;
   GetBancoId: Banco;
   GetBlogSlug: Blog;
-  GetBusquedaAvanzada: GetAllProductos;
   GetCategoriaBlogSlug: CategoriaBlog;
   GetCategoriaProductoSlug: CategoriaProducto;
   GetDatosEmpresa: DatosEmpresa;
@@ -989,6 +1034,17 @@ export type Query = {
 };
 
 
+export type QueryBusquedaAvanzadaArgs = {
+  categoriaSlug?: InputMaybe<Scalars['String']>;
+  destacado?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
+  palabraClave?: InputMaybe<Scalars['String']>;
+  precio?: InputMaybe<Array<Scalars['Float']>>;
+  tipoOrdenacion?: InputMaybe<Scalars['String']>;
+};
+
+
 export type QueryEmitirTicketArgs = {
   pedidoId?: InputMaybe<Scalars['Int']>;
 };
@@ -1000,6 +1056,7 @@ export type QueryGetAllBancosArgs = {
 
 
 export type QueryGetAllBlogsArgs = {
+  destacado?: InputMaybe<Scalars['String']>;
   estado?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
@@ -1084,6 +1141,14 @@ export type QueryGetAllProductosArgs = {
   estado?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
+  palabraClave?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetAllProductosBestSellingArgs = {
+  categoriaSlug?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -1093,19 +1158,6 @@ export type QueryGetAllProductosCategoriaSlugArgs = {
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
   slug?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryGetAllProductosDestacadosArgs = {
-  numeroPagina?: InputMaybe<Scalars['Int']>;
-  pagina?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryGetAllProductosPalabraClaveArgs = {
-  numeroPagina?: InputMaybe<Scalars['Int']>;
-  pagina?: InputMaybe<Scalars['Int']>;
-  palabraClave?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1129,6 +1181,14 @@ export type QueryGetAllTarjetaUsuarioArgs = {
 };
 
 
+export type QueryGetAllUsuariosArgs = {
+  estado?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
+  tipoUsuario?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryGetAllVendedorasArgs = {
   estado?: InputMaybe<Scalars['String']>;
 };
@@ -1141,16 +1201,6 @@ export type QueryGetBancoIdArgs = {
 
 export type QueryGetBlogSlugArgs = {
   slug?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryGetBusquedaAvanzadaArgs = {
-  categoriaSlug?: InputMaybe<Scalars['String']>;
-  destacado?: InputMaybe<Scalars['String']>;
-  numeroPagina?: InputMaybe<Scalars['Int']>;
-  pagina?: InputMaybe<Scalars['Int']>;
-  precio?: InputMaybe<Array<Scalars['Float']>>;
-  tipoOrdenacion?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1331,6 +1381,11 @@ export type UpdateEstadoSliderInput = {
   sliderId?: InputMaybe<Scalars['ID']>;
 };
 
+export type UpdateEstadoUsuarioInput = {
+  estado?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type UpdateEstadoVendedoraInput = {
   estado?: InputMaybe<Scalars['String']>;
   vendedoraId?: InputMaybe<Scalars['ID']>;
@@ -1360,6 +1415,7 @@ export type User = {
   celular?: Maybe<Scalars['String']>;
   customer_id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  estado?: Maybe<Scalars['String']>;
   fechaNacimiento?: Maybe<Scalars['DateTime']>;
   foto?: Maybe<Scalars['String']>;
   genero?: Maybe<Scalars['Int']>;
@@ -1731,10 +1787,11 @@ export type GetAllProductosQueryVariables = Exact<{
   numeroPagina?: InputMaybe<Scalars['Int']>;
   estado?: InputMaybe<Scalars['String']>;
   destacado?: InputMaybe<Scalars['String']>;
+  palabraClave?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetAllProductosQuery = { __typename?: 'Query', GetAllProductos: { __typename?: 'GetAllProductos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Producto', productoId?: string | null, titulo?: string | null, slug?: string | null, estado?: string | null, descripcionCorta?: string | null, descripcionLarga?: string | null, precioReal?: number | null, precioOferta?: number | null, stockMinimo?: number | null, stockReal?: number | null, keywords?: string | null, destacado?: string | null, categoriaProductoId?: number | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, galeria?: Array<{ __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null> | null, CategoriaProducto?: { __typename?: 'CategoriaProducto', titulo?: string | null } | null }> | null } };
+export type GetAllProductosQuery = { __typename?: 'Query', GetAllProductos: { __typename?: 'GetAllProductos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Producto', productoId?: string | null, titulo?: string | null, slug?: string | null, estado?: string | null, descripcionCorta?: string | null, descripcionLarga?: string | null, precioReal?: number | null, precioOferta?: number | null, stockMinimo?: number | null, stockReal?: number | null, keywords?: string | null, destacado?: string | null, categoriaProductoId?: number | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, CategoriaProducto?: { __typename?: 'CategoriaProducto', titulo?: string | null } | null }> | null } };
 
 export type GetAllSliderQueryVariables = Exact<{
   estado?: InputMaybe<Scalars['String']>;
@@ -3981,12 +4038,13 @@ export type GetAllCategoriaProductosQueryHookResult = ReturnType<typeof useGetAl
 export type GetAllCategoriaProductosLazyQueryHookResult = ReturnType<typeof useGetAllCategoriaProductosLazyQuery>;
 export type GetAllCategoriaProductosQueryResult = Apollo.QueryResult<GetAllCategoriaProductosQuery, GetAllCategoriaProductosQueryVariables>;
 export const GetAllProductosDocument = gql`
-    query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String, $destacado: String) {
+    query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String, $destacado: String, $palabraClave: String) {
   GetAllProductos(
     pagina: $pagina
     numeroPagina: $numeroPagina
     estado: $estado
     destacado: $destacado
+    palabraClave: $palabraClave
   ) {
     numeroTotal
     data {
@@ -4007,12 +4065,6 @@ export const GetAllProductosDocument = gql`
         url
       }
       imagenSecundaria {
-        id
-        titulo
-        estado
-        url
-      }
-      galeria {
         id
         titulo
         estado
@@ -4048,6 +4100,7 @@ export const GetAllProductosDocument = gql`
  *      numeroPagina: // value for 'numeroPagina'
  *      estado: // value for 'estado'
  *      destacado: // value for 'destacado'
+ *      palabraClave: // value for 'palabraClave'
  *   },
  * });
  */

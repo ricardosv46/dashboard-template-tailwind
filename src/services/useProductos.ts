@@ -1,7 +1,7 @@
+import { useGetAllProductosQuery } from '../generated/graphql'
 import {
   useCreateProductoMutation,
   useDeleteProductoMutation,
-  useGetAllProductosQuery,
   useGetProductoSlugQuery,
   useUpdateDestacadoProductoMutation,
   useUpdateEstadoProductoMutation,
@@ -59,6 +59,7 @@ export interface IProps {
   slug?: string
   pagina?: number
   numeroPagina?: number
+  palabraClave?: string
 }
 
 export const useProductos = ({
@@ -66,6 +67,7 @@ export const useProductos = ({
   destacado = '',
   pagina = 1,
   numeroPagina = 10,
+  palabraClave = '',
   slug
 }: IProps) => {
   const { data, loading, refetch } = useGetAllProductosQuery({
@@ -74,9 +76,11 @@ export const useProductos = ({
       estado,
       pagina,
       destacado,
-      numeroPagina
+      numeroPagina,
+      palabraClave
     }
   })
+
   const { data: dataProductoSlug, loading: loadingProductoSlug } = useGetProductoSlugQuery({
     fetchPolicy: 'network-only',
     variables: {

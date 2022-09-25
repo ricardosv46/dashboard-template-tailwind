@@ -1,9 +1,11 @@
-query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String, $destacado: String) {
+# Write your query or mutation here
+query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String, $destacado: String,$palabraClave:String) {
   GetAllProductos(
     pagina: $pagina
     numeroPagina: $numeroPagina
     estado: $estado
     destacado: $destacado
+    palabraClave:$palabraClave
   ) {
     numeroTotal
     data {
@@ -24,12 +26,6 @@ query GetAllProductos($pagina: Int, $numeroPagina: Int, $estado: String, $destac
         url
       }
       imagenSecundaria {
-        id
-        titulo
-        estado
-        url
-      }
-      galeria {
         id
         titulo
         estado

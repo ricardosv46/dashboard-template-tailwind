@@ -6,6 +6,7 @@ import { classNames } from '@utils/classNames'
 import Image from '../Img/Image'
 import Paginator from '@components/shared/Paginator/Paginator'
 import { useProductos } from '../../../services/useProductos'
+import IconSearch from '../../../icons/IconSearch'
 
 interface Props {
   isOpen: boolean
@@ -19,8 +20,8 @@ const ModalSelectedProducts = ({ isOpen, onClose, onSelect, imgs }: Props) => {
     pagina: 1,
     numeroPagina: 10
   })
-
-  const { db: products, nTotal } = useProductos(paginationValues)
+  const [palabraClave, setPalabraClave] = useState('')
+  const { db: products, nTotal } = useProductos({ ...paginationValues, palabraClave })
   const [isUploadImage, setIsUploadImage] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState<any>([])
 
@@ -73,59 +74,72 @@ const ModalSelectedProducts = ({ isOpen, onClose, onSelect, imgs }: Props) => {
           <div className="flex-1 mt-5 overflow-auto">
             {/* GALERIA */}
             {!isUploadImage && (
-              <div className="grid w-full gap-8 auto-rows-[200px] grid-cols-auto-fit py-5">
-                {products.length > 0 &&
-                  products.map((product: any) => {
-                    const isSelected = selectedProducts.find(
-                      (resp: any) => resp?.id === product?.productoId
-                    )
-                    return (
-                      <div className="w-full mb-6" key={product?.productoId}>
-                        <p className="text-center font-semibold text-gray-700 mb-1">
-                          {product?.titulo}
-                        </p>
-                        <button
-                          className={classNames([
-                            isSelected
-                              ? 'border-primary-500'
-                              : 'border-gray-300 dark:border-gray-700',
-                            'rounded-lg relative border cursor-pointer overflow-hidden w-full h-full  hover:shadow-md transition-shadow duration-300 ease-linear'
-                          ])}
-                          onClick={() => {
-                            const value = selectedProducts.find(
-                              (value: any) => value?.id === product?.productoId
-                            )
-                            if (value) {
-                              const newArray = selectedProducts.filter(
-                                (value: any) => value?.id !== product.productoId
+              <>
+                <div className="w-full relative">
+                  <input
+                    type="text"
+                    className="border peer bg-transparent outline-none w-full h-full p-4 border-primary-600  border-b-2 rounded-tr-md rounded-tl-md"
+                    placeholder="Ingrese una palabra clave"
+                    onChange={(e) => setPalabraClave(e.target.value)}
+                  />
+                  <div className="absolute right-0 top-0 bg-primary-600 pt-3  h-full rounded-tr-md px-3 cursor-pointer">
+                    <IconSearch />
+                  </div>
+                </div>
+                <div className="grid w-full gap-8 auto-rows-[200px] grid-cols-auto-fit py-5">
+                  {products.length > 0 &&
+                    products.map((product: any) => {
+                      const isSelected = selectedProducts.find(
+                        (resp: any) => resp?.id === product?.productoId
+                      )
+                      return (
+                        <div className="w-full mb-6" key={product?.productoId}>
+                          <p className="text-center font-semibold text-gray-700 mb-1">
+                            {product?.titulo}
+                          </p>
+                          <button
+                            className={classNames([
+                              isSelected
+                                ? 'border-primary-500'
+                                : 'border-gray-300 dark:border-gray-700',
+                              'rounded-lg relative border cursor-pointer overflow-hidden w-full h-full  hover:shadow-md transition-shadow duration-300 ease-linear'
+                            ])}
+                            onClick={() => {
+                              const value = selectedProducts.find(
+                                (value: any) => value?.id === product?.productoId
                               )
-                              setSelectedProducts([...newArray])
-                            } else {
-                              setSelectedProducts([
-                                ...selectedProducts,
-                                {
-                                  id: product?.productoId,
-                                  url: product?.imagenPrincipal?.url,
-                                  titulo: product?.titulo
-                                }
-                              ])
-                            }
-                          }}>
-                          {isSelected && (
-                            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-5 h-5 text-black bg-primary-500">
-                              <IconCheckbox className="w-3" />
-                            </div>
-                          )}
-                          <Image
-                            className="absolute inset-0 z-10 object-contain w-full h-full"
-                            src={product?.imagenPrincipal?.url}
-                            alt={product?.imagenPrincipal?.titulo}
-                          />
-                        </button>
-                      </div>
-                    )
-                  })}
-              </div>
+                              if (value) {
+                                const newArray = selectedProducts.filter(
+                                  (value: any) => value?.id !== product.productoId
+                                )
+                                setSelectedProducts([...newArray])
+                              } else {
+                                setSelectedProducts([
+                                  ...selectedProducts,
+                                  {
+                                    id: product?.productoId,
+                                    url: product?.imagenPrincipal?.url,
+                                    titulo: product?.titulo
+                                  }
+                                ])
+                              }
+                            }}>
+                            {isSelected && (
+                              <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-5 h-5 text-black bg-primary-500">
+                                <IconCheckbox className="w-3" />
+                              </div>
+                            )}
+                            <Image
+                              className="absolute inset-0 z-10 object-contain w-full h-full"
+                              src={product?.imagenPrincipal?.url}
+                              alt={product?.imagenPrincipal?.titulo}
+                            />
+                          </button>
+                        </div>
+                      )
+                    })}
+                </div>
+              </>
             )}
           </div>
 

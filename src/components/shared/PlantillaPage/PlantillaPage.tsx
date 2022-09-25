@@ -14,21 +14,24 @@ interface Props {
 const PlantillaPage = ({ children, title, button, desc, goback = false }: Props) => {
   const router = useNavigate()
   return (
-    <div className="flex flex-col flex-1 p-10">
-      <div className="flex flex-col">
-        <div className={classNames([goback ? 'flex items-center' : ''])}>
-          {goback && (
-            <button
-              className="p-1 mt-1 mr-3 rounded-full btn-icon btn-solid-primary"
-              onClick={() => router(-1)}>
-              <IconChevronLeft />
-            </button>
-          )}
+    <div className="flex flex-col flex-1 p-10 ">
+      <div className="flex flex-col sm:flex-row gap-5 items-start mb-5">
+        <div className="">
+          <div className={classNames([goback ? 'flex items-center' : ''])}>
+            {goback && (
+              <button
+                className="p-1 mt-1 mr-3 rounded-full btn-icon btn-solid-primary"
+                onClick={() => router(-1)}>
+                <IconChevronLeft />
+              </button>
+            )}
 
-          <h1 className="text-3xl font-bold dark:text-slate-200">{title}</h1>
+            <h1 className="text-3xl font-bold dark:text-slate-200">{title}</h1>
+          </div>
+
+          <p className="my-3 text-sm md:text-lg text-slate-400">{desc}</p>
         </div>
 
-        <p className="my-3 text-sm md:text-lg text-slate-400">{desc}</p>
         <div className="w-full mb-3 ml-auto sm:w-max">{button}</div>
       </div>
       {children}

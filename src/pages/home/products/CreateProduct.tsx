@@ -13,6 +13,7 @@ import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import InputSelectProducts from '@components/shared/Input/InputSelectProducts'
 import Editor from '@components/shared/Editor/Editor'
+import InputAddOptions from '@components/shared/Input/InputAddOptions'
 
 const CreateProduct = () => {
   const router = useNavigate()
@@ -136,12 +137,11 @@ const CreateProduct = () => {
             touched={touched?.stockReal ?? false}
           />
           <div className="lg:col-span-2">
-            <Input
-              type="text"
-              label="Keywords"
-              {...form.getFieldProps('keywords')}
-              error={errors.keywords}
-              touched={touched?.keywords ?? false}
+            {/* en textKeywords le envias una cadena de texto separado por una coma para que pueda pintarlo en pantalla */}
+            {/* en el onChange te va devolver un string separado por comas */}
+            <InputAddOptions
+              textKeywords="Belleza,Salud,Vive una vida saludable"
+              onChange={(value) => console.log(value)}
             />
           </div>
 
