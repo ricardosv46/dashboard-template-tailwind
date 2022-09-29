@@ -29,13 +29,14 @@ const CreateProduct = () => {
       descripcionCorta: values.descripcionCorta,
       descripcionLarga: values.descripcionLarga,
       categoriaProductoId: Number(values.categoriaProductoId),
-      precioOferta: Number(values.precioOferta),
+      precioOferta: values.precioOferta ? Number(values.precioOferta) : Number(values.precioReal),
       precioReal: Number(values.precioReal),
       stockMinimo: Number(values.stockMinimo),
       stockReal: Number(values.stockReal),
       galeria: galeriaIds,
       imagenPrincipal: Number(values.imagenPrincipal.id),
-      imagenSecundaria: Number(values.imagenSecundaria.id)
+      imagenSecundaria: Number(values.imagenSecundaria.id),
+      relacionado: values.relacionado?.map((value: any) => value.id)
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Creado Correctamente.' })
@@ -69,9 +70,11 @@ const CreateProduct = () => {
         titulo: '',
         url: ''
       },
-      galeria: []
+      galeria: [],
+      relacionado: []
     }
   })
+  console.log(values)
 
   const galeriaIds = useMemo(() => {
     return values.galeria.map(({ id }: any) => id)
@@ -141,7 +144,7 @@ const CreateProduct = () => {
             {/* en el onChange te va devolver un string separado por comas */}
             <InputAddOptions
               textKeywords="Belleza,Salud,Vive una vida saludable"
-              onChange={(value) => console.log(value)}
+              onChange={(values) => setFieldValue('keywords', values)}
             />
           </div>
 
@@ -156,7 +159,11 @@ const CreateProduct = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <Editor />
+            <Editor
+              titulo="Descripcion del producto"
+              onChangue={(values) => setFieldValue('descripcionLarga', values)}
+              contenido=""
+            />
           </div>
         </div>
         {/* 2 division */}
@@ -185,7 +192,7 @@ const CreateProduct = () => {
               onChange={(values) => setFieldValue('galeria', values)}
               value={values.galeria}
               error={errors.galeria}
-              touched={touched?.imagenSecundaria?.url ?? false}
+              touched={touched?.galeria ?? false}
             />
           </div>
 
@@ -193,10 +200,9 @@ const CreateProduct = () => {
           <div className="lg:col-span-2">
             <InputSelectProducts
               label="Productos relacionados"
-              onChange={(values) => setFieldValue('galeria', values)}
-              value={values.galeria}
-              error={errors.galeria}
-              touched={touched?.imagenSecundaria?.url ?? false}
+              onChange={(values) => setFieldValue('relacionado', values)}
+              value={values.relacionado}
+              error={errors.relacionado}
             />
           </div>
         </div>

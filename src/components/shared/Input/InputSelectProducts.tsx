@@ -21,6 +21,8 @@ interface Props {
 }
 
 const InputSelectProducts = ({ label, touched, ...props }: Props) => {
+  const { error } = props
+
   const { isOpen, onClose, onOpen } = useToggle()
 
   const [imgs, setImgs] = useState<Imagenes[]>([])
@@ -82,7 +84,7 @@ const InputSelectProducts = ({ label, touched, ...props }: Props) => {
           <h1 className="text-center text-gray-600 text-lg font-semibold mb-5">{label}</h1>
           <div className="w-full shadow-xl py-4 flex flex-wrap gap-3 justify-center">
             {imgs?.map((img) => (
-              <div>
+              <div key={img.id}>
                 <p className="text-xs mb-2 font-light text-center text-gray-500">{img?.titulo}</p>
                 <div className="relative overflow-hidden  min-w-[120px]  border border-gray-300 rounded-lg dark:border-gray-700">
                   <button
@@ -96,7 +98,6 @@ const InputSelectProducts = ({ label, touched, ...props }: Props) => {
                   </button>
                   <Image
                     onClick={onOpen}
-                    key={img.id}
                     className="inset-0 z-10 object-cover w-[120px] cursor-pointer h-[100px]"
                     src={img?.url!}
                     alt={img?.titulo!}

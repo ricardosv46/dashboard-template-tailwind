@@ -19,10 +19,6 @@ export const validateCreateProducto = (values: FormikValues) => {
     errors.precioReal = 'El precio real deber ser un número válido'
   }
 
-  if (!isNumberDecimal(values.precioOferta)) {
-    errors.precioOferta = 'El precio oferta deber ser un número válido'
-  }
-
   if (!isNumberEntero(values.stockMinimo)) {
     errors.stockMinimo = 'El stock Mínimo  deber ser un número válido'
   }
@@ -56,12 +52,8 @@ export const validateCreateProducto = (values: FormikValues) => {
   }
 
   if (isEmpty(values.galeria[0]?.url)) {
-    errors.galeria = 'La galeria debe tener al menos una imagen'
+    errors.galeria = 'La galeria es requerida'
   }
-
-  // if (values.galeria?.length > 0) {
-  //   errors?.galeria[0]?.url = ''
-  // }
 
   return errors
 }

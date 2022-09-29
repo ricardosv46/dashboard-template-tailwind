@@ -19,6 +19,7 @@ interface ICreateProducto {
   imagenPrincipal: number
   imagenSecundaria: number
   galeria: string[]
+  relacionado: string[]
   keywords: string
   categoriaProductoId: number
 }
@@ -107,7 +108,8 @@ export const useProductos = ({
     imagenSecundaria,
     galeria,
     keywords,
-    categoriaProductoId
+    categoriaProductoId,
+    relacionado
   }: ICreateProducto) => {
     try {
       await CreateProducto({
@@ -124,7 +126,8 @@ export const useProductos = ({
             imagenSecundaria,
             galeria,
             keywords,
-            categoriaProductoId
+            categoriaProductoId,
+            relacionado
           }
         }
       })

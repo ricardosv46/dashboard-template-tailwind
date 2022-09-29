@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 interface IProps {
   textKeywords?: string
   onChange: (value: any) => void
+  error?: any
 }
 
-const InputAddOptions = ({ textKeywords, onChange }: IProps) => {
+const InputAddOptions = ({ textKeywords, onChange, ...props }: IProps) => {
   const [keywords, setKeywords] = useState<any>([])
   const [text, setText] = useState('')
 

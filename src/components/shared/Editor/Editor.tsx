@@ -5,12 +5,14 @@ import ModalSelectUrlImage from '../Modal/ModalSelectUrlImage'
 import './index.css'
 interface IEditor {
   titulo?: string
+  onChangue: (value: any) => void
+  contenido?: string
 }
 
-const Editor = ({ titulo }: IEditor) => {
+const Editor = ({ titulo, onChangue, contenido = '' }: IEditor) => {
   const editor = useRef(null)
   const { isOpen, onClose, onOpen } = useToggle()
-  const [content, setContent] = useState('')
+  const [content, setContent] = useState(contenido)
   const [showPreview, setShowPreview] = useState(false)
 
   const config: any = {
@@ -40,6 +42,7 @@ const Editor = ({ titulo }: IEditor) => {
             }}
             onChange={(newContent) => {
               setContent(newContent)
+              onChangue(newContent)
             }}
           />
         ),

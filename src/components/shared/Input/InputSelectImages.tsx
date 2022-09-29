@@ -17,7 +17,7 @@ interface Props {
   value?: Imagenes[]
   onChange: (image: Imagenes[]) => void
   error?: any
-  touched?: boolean
+  touched?: any
 }
 
 const InputSelectImages = ({ label, touched, ...props }: Props) => {
@@ -82,7 +82,9 @@ const InputSelectImages = ({ label, touched, ...props }: Props) => {
           <h1 className="text-gray-600 font-semibold text-center text-lg mb-5">{label}</h1>
           <div className="w-full shadow-lg py-4 flex flex-wrap gap-3 justify-center">
             {imgs?.map((img) => (
-              <div className=" relative overflow-hidden border border-gray-300 rounded-lg dark:border-gray-700">
+              <div
+                className=" relative overflow-hidden border border-gray-300 rounded-lg dark:border-gray-700"
+                key={img.id}>
                 <button
                   type="button"
                   className="absolute top-0 right-0 z-50 h-6 w-5 btn-solid-red "
@@ -94,7 +96,6 @@ const InputSelectImages = ({ label, touched, ...props }: Props) => {
                 </button>
                 <Image
                   onClick={onOpen}
-                  key={img.id}
                   className="inset-0 z-10 object-cover w-[100px] cursor-pointer h-[80px]"
                   src={img?.url!}
                   alt={img?.titulo!}
