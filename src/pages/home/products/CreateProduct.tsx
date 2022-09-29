@@ -143,7 +143,7 @@ const CreateProduct = () => {
             {/* en textKeywords le envias una cadena de texto separado por una coma para que pueda pintarlo en pantalla */}
             {/* en el onChange te va devolver un string separado por comas */}
             <InputAddOptions
-              textKeywords="Belleza,Salud,Vive una vida saludable"
+              textKeywords=""
               onChange={(values) => setFieldValue('keywords', values)}
             />
           </div>

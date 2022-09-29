@@ -63,7 +63,6 @@ export const useBlogs = ({
     fetchPolicy: 'network-only',
     variables: {
       estado,
-      destacado,
       pagina,
       numeroPagina
     }
