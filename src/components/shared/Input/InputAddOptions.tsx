@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface IProps {
   textKeywords?: string
@@ -9,16 +9,17 @@ interface IProps {
 const InputAddOptions = ({ textKeywords, onChange, ...props }: IProps) => {
   const [keywords, setKeywords] = useState<any>([])
   const [text, setText] = useState('')
-
+  const refINput = useRef<HTMLInputElement>(null)
   const addOptions = () => {
-    if (!text) return
+    if (!text.trim()) return
 
     const value = keywords.find((elem: any) => elem === text)
     if (!value) {
-      setKeywords([...keywords, text])
+      setKeywords([...keywords, text.trim()])
       setText('')
       onChange(keywords.toString())
     }
+    refINput.current?.focus()
   }
 
   useEffect(() => {
@@ -38,8 +39,9 @@ const InputAddOptions = ({ textKeywords, onChange, ...props }: IProps) => {
           type="text"
           className="border peer bg-transparent outline-none w-full h-full p-4 border-primary-600  border-b-2 rounded-tr-md rounded-tl-md"
           placeholder="Ingrese una Keyword"
-          onChange={(e) => setText(e.target.value.trim())}
+          onChange={(e) => setText(e.target.value)}
           value={text}
+          ref={refINput}
         />
         <div
           className="absolute right-0 top-0 text-white flex items-center text-2xl bg-primary-600   h-full rounded-tr-md px-3 cursor-pointer"

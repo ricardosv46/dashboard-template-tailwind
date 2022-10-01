@@ -8,9 +8,9 @@ export const validateCreateCategoriaProducto = (values: FormikValues) => {
     errors.titulo = 'El titulo es requerido'
   }
 
-  if (isEmpty(values.keywords)) {
-    errors.keywords = 'Los keywords son requeridos'
-  }
+  // if (isEmpty(values.keywords)) {
+  //   errors.keywords = 'Los keywords son requeridos'
+  // }
 
   if (isEmpty(values.descripcion)) {
     errors.descripcion = 'La descripción es requerido'

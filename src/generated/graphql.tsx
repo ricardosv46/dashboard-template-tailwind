@@ -470,7 +470,7 @@ export type Mutation = {
   DeleteSlider: Scalars['String'];
   DeleteVendedora: Scalars['String'];
   Login: User;
-  RecoverPasswordUsuario: User;
+  RecoverPasswordUsuario: Scalars['String'];
   UpdateBancos: Banco;
   UpdateCarrito: Carrito;
   UpdateCategoriaBlog: CategoriaBlog;
@@ -654,7 +654,7 @@ export type MutationLoginArgs = {
 
 
 export type MutationRecoverPasswordUsuarioArgs = {
-  input: UserInput;
+  email: Scalars['String'];
 };
 
 
@@ -1792,6 +1792,13 @@ export type GetAllProductosQueryVariables = Exact<{
 
 
 export type GetAllProductosQuery = { __typename?: 'Query', GetAllProductos: { __typename?: 'GetAllProductos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Producto', productoId?: string | null, titulo?: string | null, slug?: string | null, estado?: string | null, descripcionCorta?: string | null, descripcionLarga?: string | null, precioReal?: number | null, precioOferta?: number | null, stockMinimo?: number | null, stockReal?: number | null, keywords?: string | null, destacado?: string | null, categoriaProductoId?: number | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, CategoriaProducto?: { __typename?: 'CategoriaProducto', titulo?: string | null } | null }> | null } };
+
+export type GetAllProductosRelacionadosQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllProductosRelacionadosQuery = { __typename?: 'Query', GetAllProductosRelacionados: { __typename?: 'GetAllProductos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Producto', productoId?: string | null, titulo?: string | null, imagenPrincipal?: { __typename?: 'Imagen', url?: string | null } | null }> | null } };
 
 export type GetAllSliderQueryVariables = Exact<{
   estado?: InputMaybe<Scalars['String']>;
@@ -4115,6 +4122,48 @@ export function useGetAllProductosLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetAllProductosQueryHookResult = ReturnType<typeof useGetAllProductosQuery>;
 export type GetAllProductosLazyQueryHookResult = ReturnType<typeof useGetAllProductosLazyQuery>;
 export type GetAllProductosQueryResult = Apollo.QueryResult<GetAllProductosQuery, GetAllProductosQueryVariables>;
+export const GetAllProductosRelacionadosDocument = gql`
+    query GetAllProductosRelacionados($slug: String) {
+  GetAllProductosRelacionados(slug: $slug) {
+    numeroTotal
+    data {
+      productoId
+      titulo
+      imagenPrincipal {
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllProductosRelacionadosQuery__
+ *
+ * To run a query within a React component, call `useGetAllProductosRelacionadosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllProductosRelacionadosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllProductosRelacionadosQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetAllProductosRelacionadosQuery(baseOptions?: Apollo.QueryHookOptions<GetAllProductosRelacionadosQuery, GetAllProductosRelacionadosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllProductosRelacionadosQuery, GetAllProductosRelacionadosQueryVariables>(GetAllProductosRelacionadosDocument, options);
+      }
+export function useGetAllProductosRelacionadosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllProductosRelacionadosQuery, GetAllProductosRelacionadosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllProductosRelacionadosQuery, GetAllProductosRelacionadosQueryVariables>(GetAllProductosRelacionadosDocument, options);
+        }
+export type GetAllProductosRelacionadosQueryHookResult = ReturnType<typeof useGetAllProductosRelacionadosQuery>;
+export type GetAllProductosRelacionadosLazyQueryHookResult = ReturnType<typeof useGetAllProductosRelacionadosLazyQuery>;
+export type GetAllProductosRelacionadosQueryResult = Apollo.QueryResult<GetAllProductosRelacionadosQuery, GetAllProductosRelacionadosQueryVariables>;
 export const GetAllSliderDocument = gql`
     query GetAllSlider($estado: String) {
   GetAllSliders(estado: $estado) {

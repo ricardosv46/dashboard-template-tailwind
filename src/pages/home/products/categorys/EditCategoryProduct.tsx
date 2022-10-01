@@ -1,4 +1,5 @@
 import Input from '@components/shared/Input/Input'
+import InputAddOptions from '@components/shared/Input/InputAddOptions'
 import InputImage from '@components/shared/Input/InputImage'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import { Show } from '@components/shared/Show/Show'
@@ -92,7 +93,7 @@ const EditCategoryProduct = () => {
         isDefault={<Spinner className="w-10 h-10 mx-auto my-20 border-4" />}>
         <form
           onSubmit={form.handleSubmit}
-          className="flex flex-col w-full max-w-3xl gap-5 mx-auto mt-10 md:grid sm:grid-cols-2 ">
+          className="flex flex-col w-full max-w-3xl gap-8 mx-auto mt-10  ">
           <Input
             type="text"
             label="Titulo"
@@ -100,37 +101,36 @@ const EditCategoryProduct = () => {
             error={errors.titulo}
             touched={touched?.titulo ?? false}
           />
+
+          <InputAddOptions
+            onChange={(value) => setFieldValue('keywords', value)}
+            textKeywords={dbCategoriaProductoSlug?.keywords!}
+          />
           <Input
             type="text"
-            label="Keywords"
-            {...form.getFieldProps('keywords')}
-            error={errors.keywords}
-            touched={touched?.keywords ?? false}
-          />
-          <div className="col-span-2">
-            <Input
-              type="text"
-              label="Descripción"
-              {...form.getFieldProps('descripcion')}
-              error={errors.descripcion}
-              touched={touched?.descripcion ?? false}
-            />
-          </div>
-          <InputImage
-            value={values.imagenPrincipal}
-            onChange={(value) => setFieldValue('imagenPrincipal', value)}
-            label=" Imagen Principal"
-            error={errors.imagenPrincipal}
-            touched={touched?.imagenPrincipal?.url ?? false}
+            label="Descripción"
+            {...form.getFieldProps('descripcion')}
+            error={errors.descripcion}
+            touched={touched?.descripcion ?? false}
           />
 
-          <InputImage
-            value={values.imagenSecundaria}
-            onChange={(value) => setFieldValue('imagenSecundaria', value)}
-            label=" Imagen Secundaria"
-            error={errors.imagenSecundaria}
-            touched={touched?.imagenSecundaria?.url ?? false}
-          />
+          <div className="flex flex-col sm:flex-row gap-5">
+            <InputImage
+              value={values.imagenPrincipal}
+              onChange={(value) => setFieldValue('imagenPrincipal', value)}
+              label=" Imagen Principal"
+              error={errors.imagenPrincipal}
+              touched={touched?.imagenPrincipal?.url ?? false}
+            />
+
+            <InputImage
+              value={values.imagenSecundaria}
+              onChange={(value) => setFieldValue('imagenSecundaria', value)}
+              label=" Imagen Secundaria"
+              error={errors.imagenSecundaria}
+              touched={touched?.imagenSecundaria?.url ?? false}
+            />
+          </div>
 
           <div className="flex items-center justify-center col-span-2">
             <button

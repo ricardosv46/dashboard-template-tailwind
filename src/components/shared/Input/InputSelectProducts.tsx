@@ -14,18 +14,19 @@ export interface Imagenes {
 
 interface Props {
   label: string
-  value?: Imagenes[]
+  value?: Imagenes[] | any[]
+  productsInitial?: any[]
   onChange: (image: Imagenes[]) => void
   error?: any
   touched?: boolean
 }
 
-const InputSelectProducts = ({ label, touched, ...props }: Props) => {
+const InputSelectProducts = ({ label, touched, productsInitial, ...props }: Props) => {
   const { error } = props
 
   const { isOpen, onClose, onOpen } = useToggle()
 
-  const [imgs, setImgs] = useState<Imagenes[]>([])
+  const [imgs, setImgs] = useState<any[]>(productsInitial || [])
 
   const handleSelect = (resp: Imagenes[]) => {
     setImgs(resp)

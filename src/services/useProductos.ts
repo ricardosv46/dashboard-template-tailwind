@@ -36,6 +36,7 @@ interface IUpdateProducto {
   imagenPrincipal: number
   imagenSecundaria: number
   galeria: string[]
+  relacionado: string[]
   keywords: string
   categoriaProductoId: number
 }
@@ -138,7 +139,11 @@ export const useProductos = ({
     }
   }
 
-  const [UpdateProducto, { loading: loadingUpdate }] = useUpdateProductoMutation()
+  const [UpdateProducto, { loading: loadingUpdate }] = useUpdateProductoMutation({
+    onError: (e) => {
+      e.graphQLErrors[0].message
+    }
+  })
 
   const updateProducto = async ({
     productoId,
@@ -153,7 +158,8 @@ export const useProductos = ({
     imagenSecundaria,
     galeria,
     keywords,
-    categoriaProductoId
+    categoriaProductoId,
+    relacionado
   }: IUpdateProducto) => {
     try {
       await UpdateProducto({
@@ -171,7 +177,8 @@ export const useProductos = ({
             imagenSecundaria,
             galeria,
             keywords,
-            categoriaProductoId
+            categoriaProductoId,
+            relacionado
           }
         }
       })

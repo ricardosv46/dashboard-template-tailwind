@@ -18,13 +18,13 @@ interface Props {
   onChange: (image: Imagenes[]) => void
   error?: any
   touched?: any
+  imgsInitial?: any
 }
 
-const InputSelectImages = ({ label, touched, ...props }: Props) => {
+const InputSelectImages = ({ label, imgsInitial, touched, ...props }: Props) => {
   const { isOpen, onClose, onOpen } = useToggle()
 
-  const [imgs, setImgs] = useState<Imagenes[]>([])
-
+  const [imgs, setImgs] = useState<Imagenes[]>(imgsInitial)
   const handleSelect = (resp: Imagenes[]) => {
     setImgs(resp)
   }

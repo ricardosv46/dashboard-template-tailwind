@@ -1,5 +1,9 @@
+import Editor from '@components/shared/Editor/Editor'
 import Input from '@components/shared/Input/Input'
+import InputAddOptions from '@components/shared/Input/InputAddOptions'
 import InputImage from '@components/shared/Input/InputImage'
+import InputSelectImages from '@components/shared/Input/InputSelectImages'
+import InputSelectProducts from '@components/shared/Input/InputSelectProducts'
 import PlantillaPage from '@components/shared/PlantillaPage/PlantillaPage'
 import Select from '@components/shared/Select/Select'
 import { Show } from '@components/shared/Show/Show'
@@ -11,6 +15,7 @@ import { validateCreateProducto } from '@validation/products/validateCreateProdu
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useGetAllProductosRelacionadosQuery } from '../../../generated/graphql'
 
 const EditProduct = () => {
   const router = useNavigate()
@@ -20,6 +25,12 @@ const EditProduct = () => {
   })
   const { updateProducto, loadingUpdate, loadingProductoSlug, dbProductoSlug } = useProductos({
     slug
+  })
+  const { data: dbPR, loading: loadingPR } = useGetAllProductosRelacionadosQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      slug
+    }
   })
 
   const onSubmit = async () => {
@@ -34,7 +45,8 @@ const EditProduct = () => {
       precioReal: Number(values.precioReal),
       stockMinimo: Number(values.stockMinimo),
       stockReal: Number(values.stockReal),
-      galeria: [],
+      galeria: values.galeria?.map((value: any) => value.id),
+      relacionado: values.relacionado?.map((value: any) => value.id),
       imagenPrincipal: Number(values.imagenPrincipal.id),
       imagenSecundaria: Number(values.imagenSecundaria.id)
     }).then((res) => {
@@ -47,7 +59,7 @@ const EditProduct = () => {
     })
   }
 
-  const { values, errors, touched, setFieldValue, setValues, ...form } = useFormik({
+  const { values, errors, touched, setFieldValue, setValues, ...form }: any = useFormik({
     onSubmit,
     validate: validateCreateProducto,
     initialValues: {
@@ -69,9 +81,12 @@ const EditProduct = () => {
         id: '',
         titulo: '',
         url: ''
-      }
+      },
+      galeria: [],
+      relacionado: []
     }
   })
+  console.log('data traida plis:,', values)
 
   useEffect(() => {
     if (!loadingProductoSlug) {
@@ -95,13 +110,21 @@ const EditProduct = () => {
             id: dbProductoSlug?.imagenSecundaria?.id!,
             titulo: dbProductoSlug?.imagenSecundaria?.titulo!,
             url: dbProductoSlug?.imagenSecundaria?.url!
-          }
+          },
+          galeria: dbProductoSlug?.galeria!,
+          relacionado: dbPR?.GetAllProductosRelacionados?.data?.map((value: any) => {
+            return {
+              id: value.productoId,
+              titulo: value.titulo,
+              url: value.imagenPrincipal.url
+            }
+          })
         })
       } else {
         router('/products')
       }
     }
-  }, [loadingProductoSlug])
+  }, [loadingProductoSlug, loadingPR])
 
   return (
     <PlantillaPage title="Editar Producto" goback>
@@ -114,96 +137,134 @@ const EditProduct = () => {
         isDefault={<Spinner className="w-10 h-10 mx-auto my-20 border-4" />}>
         <form
           onSubmit={form.handleSubmit}
-          className="flex flex-col w-full max-w-3xl gap-5 mx-auto mt-10 md:grid sm:grid-cols-2 ">
-          <Input
-            type="text"
-            label="Titulo"
-            {...form.getFieldProps('titulo')}
-            error={errors.titulo}
-            touched={touched?.titulo ?? false}
-          />
-          <Select
-            label="Categoria"
-            value={values.categoriaProductoId}
-            options={dataCategoriaProducto}
-            onChange={({ value }) => {
-              setFieldValue('categoriaProductoId', value)
-            }}
-            dataExtractor={{
-              label: 'titulo',
-              value: 'categoriaProductoId'
-            }}
-            error={errors.categoriaProductoId}
-            touched={touched?.categoriaProductoId ?? false}
-          />
-          <Input
-            type="text"
-            label="Precio Real"
-            {...form.getFieldProps('precioReal')}
-            error={errors.precioReal}
-            touched={touched?.precioReal ?? false}
-          />
-          <Input
-            type="text"
-            label="Precio Oferta"
-            {...form.getFieldProps('precioOferta')}
-            error={errors.precioOferta}
-            touched={touched?.precioOferta ?? false}
-          />
-          <Input
-            type="text"
-            label="Stock Mínimo"
-            {...form.getFieldProps('stockMinimo')}
-            error={errors.stockMinimo}
-            touched={touched?.stockMinimo ?? false}
-          />
-          <Input
-            type="text"
-            label="Stock Real"
-            {...form.getFieldProps('stockReal')}
-            error={errors.stockReal}
-            touched={touched?.stockReal ?? false}
-          />
-          <Input
-            type="text"
-            label="Keywords"
-            {...form.getFieldProps('keywords')}
-            error={errors.keywords}
-            touched={touched?.keywords ?? false}
-          />
-
-          <Input
-            type="text"
-            label="Descripción Corta"
-            {...form.getFieldProps('descripcionCorta')}
-            error={errors.descripcionCorta}
-            touched={touched?.descripcionCorta ?? false}
-          />
-          <div className="col-span-2">
+          className="grid grid-cols-1 lg:grid-cols-3 items-start xl:grid-cols-4 w-full gap-5 lg:gap-10">
+          {/* 1 division */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10   lg:col-span-2  xl:col-span-3 ">
+            <Select
+              label="Categoria"
+              value={values.categoriaProductoId}
+              options={dataCategoriaProducto}
+              onChange={({ value }) => {
+                setFieldValue('categoriaProductoId', value)
+              }}
+              dataExtractor={{
+                label: 'titulo',
+                value: 'categoriaProductoId'
+              }}
+              error={errors.categoriaProductoId}
+              touched={touched?.categoriaProductoId ?? false}
+            />
             <Input
               type="text"
-              label="Descripción Larga"
-              {...form.getFieldProps('descripcionLarga')}
-              error={errors.descripcionLarga}
-              touched={touched?.descripcionLarga ?? false}
+              label="Titulo"
+              {...form.getFieldProps('titulo')}
+              error={errors.titulo}
+              touched={touched?.titulo ?? false}
             />
+            <Input
+              type="text"
+              label="Precio Real"
+              {...form.getFieldProps('precioReal')}
+              error={errors.precioReal}
+              touched={touched?.precioReal ?? false}
+            />
+            <Input
+              type="text"
+              label="Precio Oferta"
+              {...form.getFieldProps('precioOferta')}
+              error={errors.precioOferta}
+              touched={touched?.precioOferta ?? false}
+            />
+            <Input
+              type="text"
+              label="Stock Mínimo"
+              {...form.getFieldProps('stockMinimo')}
+              error={errors.stockMinimo}
+              touched={touched?.stockMinimo ?? false}
+            />
+            <Input
+              type="text"
+              label="Stock Real"
+              {...form.getFieldProps('stockReal')}
+              error={errors.stockReal}
+              touched={touched?.stockReal ?? false}
+            />
+            <div className="lg:col-span-2">
+              {/* en textKeywords le envias una cadena de texto separado por una coma para que pueda pintarlo en pantalla */}
+              {/* en el onChange te va devolver un string separado por comas */}
+              <InputAddOptions
+                textKeywords={dbProductoSlug?.keywords || ''}
+                onChange={(values) => setFieldValue('keywords', values)}
+              />
+            </div>
+
+            <div className="lg:col-span-2">
+              <Input
+                type="text"
+                label="Descripción Corta"
+                {...form.getFieldProps('descripcionCorta')}
+                error={errors.descripcionCorta}
+                touched={touched?.descripcionCorta ?? false}
+              />
+            </div>
+
+            <div className="lg:col-span-2">
+              <Editor
+                titulo="Descripcion del producto"
+                onChangue={(values) => setFieldValue('descripcionLarga', values)}
+                contenido={dbProductoSlug?.descripcionLarga || ''}
+              />
+            </div>
           </div>
 
-          <InputImage
-            value={values.imagenPrincipal}
-            onChange={(value) => setFieldValue('imagenPrincipal', value)}
-            label=" Imagen Principal"
-            error={errors.imagenPrincipal}
-            touched={touched?.imagenPrincipal?.url ?? false}
-          />
+          {/* 2 division */}
+          <div className=" flex flex-col gap-10 mt-10 lg:mt-0">
+            {/* Input para seleccionar imagen principal y secundaria */}
+            <InputImage
+              value={values.imagenPrincipal}
+              onChange={(value) => setFieldValue('imagenPrincipal', value)}
+              label=" Imagen Principal"
+              error={errors.imagenPrincipal}
+              touched={touched?.imagenPrincipal?.url ?? false}
+            />
 
-          <InputImage
-            value={values.imagenSecundaria}
-            onChange={(value) => setFieldValue('imagenSecundaria', value)}
-            label=" Imagen Secundaria"
-            error={errors.imagenSecundaria}
-            touched={touched?.imagenSecundaria?.url ?? false}
-          />
+            <InputImage
+              value={values.imagenSecundaria}
+              onChange={(value) => setFieldValue('imagenSecundaria', value)}
+              label=" Imagen Secundaria"
+              error={errors.imagenSecundaria}
+              touched={touched?.imagenSecundaria?.url ?? false}
+            />
+
+            {/* Input para seleccionar una galeria de imágenes */}
+            <div className="">
+              <InputSelectImages
+                label="Galeria de imágenes"
+                onChange={(values) => setFieldValue('galeria', values)}
+                imgsInitial={dbProductoSlug?.galeria}
+                value={values.galeria}
+                error={errors.galeria}
+                touched={touched?.galeria ?? false}
+              />
+            </div>
+
+            {/* Input para asociar productos relacionados */}
+            <div className="lg:col-span-2">
+              <InputSelectProducts
+                label="Productos relacionados"
+                onChange={(values) => setFieldValue('relacionado', values)}
+                productsInitial={dbPR?.GetAllProductosRelacionados.data?.map((value: any) => {
+                  return {
+                    id: value.productoId,
+                    titulo: value.titulo,
+                    url: value.imagenPrincipal.url
+                  }
+                })}
+                value={values.relacionado}
+                error={errors.relacionado}
+              />
+            </div>
+          </div>
 
           <div className="flex items-center justify-center col-span-2">
             <button

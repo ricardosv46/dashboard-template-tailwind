@@ -1,0 +1,12 @@
+query GetAllProductosRelacionados($slug: String) {
+  GetAllProductosRelacionados(slug: $slug) {
+    numeroTotal
+    data {
+      productoId
+      titulo
+      imagenPrincipal {
+        url
+      }
+    }
+  }
+}
