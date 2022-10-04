@@ -162,7 +162,7 @@ export const useProductos = ({
     relacionado
   }: IUpdateProducto) => {
     try {
-      await UpdateProducto({
+      const resp = await UpdateProducto({
         variables: {
           input: {
             productoId,
@@ -182,6 +182,8 @@ export const useProductos = ({
           }
         }
       })
+      console.log(resp)
+
       refetch()
       return { ok: true }
     } catch (error: any) {

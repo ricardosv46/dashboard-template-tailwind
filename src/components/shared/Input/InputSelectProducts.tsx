@@ -16,17 +16,24 @@ interface Props {
   label: string
   value?: Imagenes[] | any[]
   productsInitial?: any[]
+  loadingPR?: boolean
   onChange: (image: Imagenes[]) => void
   error?: any
   touched?: boolean
 }
 
-const InputSelectProducts = ({ label, touched, productsInitial, ...props }: Props) => {
+const InputSelectProducts = ({ label, touched, productsInitial, loadingPR, ...props }: Props) => {
   const { error } = props
 
   const { isOpen, onClose, onOpen } = useToggle()
 
-  const [imgs, setImgs] = useState<any[]>(productsInitial || [])
+  const [imgs, setImgs] = useState<any[]>([])
+
+  useEffect(() => {
+    if (productsInitial) {
+      setImgs(productsInitial)
+    }
+  }, [loadingPR])
 
   const handleSelect = (resp: Imagenes[]) => {
     setImgs(resp)

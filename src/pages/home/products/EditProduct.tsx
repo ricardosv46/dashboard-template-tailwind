@@ -34,14 +34,14 @@ const EditProduct = () => {
   })
 
   const onSubmit = async () => {
-    updateProducto({
+    const inputValues = {
       productoId: dbProductoSlug?.productoId!,
       titulo: values.titulo,
       keywords: values.keywords,
       descripcionCorta: values.descripcionCorta,
       descripcionLarga: values.descripcionLarga,
       categoriaProductoId: Number(values.categoriaProductoId),
-      precioOferta: Number(values.precioOferta),
+      precioOferta: values.precioOferta ? Number(values.precioOferta) : Number(values.precioReal),
       precioReal: Number(values.precioReal),
       stockMinimo: Number(values.stockMinimo),
       stockReal: Number(values.stockReal),
@@ -49,7 +49,9 @@ const EditProduct = () => {
       relacionado: values.relacionado?.map((value: any) => value.id),
       imagenPrincipal: Number(values.imagenPrincipal.id),
       imagenSecundaria: Number(values.imagenSecundaria.id)
-    }).then((res) => {
+    }
+
+    updateProducto(inputValues).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Actualizado Correctamente.' })
         router('/products')
@@ -86,7 +88,6 @@ const EditProduct = () => {
       relacionado: []
     }
   })
-  console.log('data traida plis:,', values)
 
   useEffect(() => {
     if (!loadingProductoSlug) {
@@ -262,6 +263,7 @@ const EditProduct = () => {
                 })}
                 value={values.relacionado}
                 error={errors.relacionado}
+                loadingPR={loadingPR}
               />
             </div>
           </div>
