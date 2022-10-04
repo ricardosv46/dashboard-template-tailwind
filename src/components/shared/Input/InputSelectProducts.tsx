@@ -22,7 +22,13 @@ interface Props {
   touched?: boolean
 }
 
-const InputSelectProducts = ({ label, touched, productsInitial, loadingPR, ...props }: Props) => {
+const InputSelectProducts = ({
+  label,
+  touched,
+  productsInitial = [],
+  loadingPR,
+  ...props
+}: Props) => {
   const { error } = props
 
   const { isOpen, onClose, onOpen } = useToggle()

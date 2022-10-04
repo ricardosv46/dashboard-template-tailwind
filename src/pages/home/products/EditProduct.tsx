@@ -128,9 +128,9 @@ const EditProduct = () => {
   }, [loadingProductoSlug, loadingPR])
 
   return (
-    <PlantillaPage title="Editar Producto" goback>
+    <PlantillaPage title="" goback>
       <div className="flex justify-center">
-        <h1 className="title-9 dark:text-slate-200">Editar Producto</h1>
+        <h1 className="title-9 dark:text-slate-200 mb-5">Editar Producto</h1>
       </div>
       <Show
         condition={loadingProductoSlug}
@@ -238,7 +238,7 @@ const EditProduct = () => {
             />
 
             {/* Input para seleccionar una galeria de imágenes */}
-            <div className="">
+            <div className="mb-10">
               <InputSelectImages
                 label="Galeria de imágenes"
                 onChange={(values) => setFieldValue('galeria', values)}
@@ -268,11 +268,11 @@ const EditProduct = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-center col-span-2">
+          <div className="flex  mt-10 items-center justify-center lg:col-span-3 xl:col-span-4">
             <button
               type="submit"
               disabled={loadingUpdate}
-              className="w-full md:w-1/2 btn btn-solid-primary">
+              className="max-w-[300px] btn btn-solid-primary">
               Actualizar Producto
               {loadingUpdate && <Spinner className="w-5 h-5" />}
             </button>

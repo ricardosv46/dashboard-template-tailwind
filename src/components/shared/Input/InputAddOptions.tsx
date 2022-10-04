@@ -57,7 +57,7 @@ const InputAddOptions = ({ textKeywords, onChange, ...props }: IProps) => {
               <div key={index} className="relative border border-primary-600 rounded-md">
                 <p className="pl-3 pr-10 py-2 text-sm text-primary-700">{value}</p>
                 <p
-                  className="absolute flex justify-center items-center cursor-pointer text-sm text-primary-600 border-l-primary-600 border-l h-full px-2 right-0 top-0"
+                  className="absolute flex justify-center items-center cursor-pointer text-sm text-red-700 border-l-primary-600 border-l h-full px-2 right-0 top-0"
                   onClick={() => {
                     const newArray = keywords.filter((elem: any) => elem !== value)
                     setKeywords([...newArray])

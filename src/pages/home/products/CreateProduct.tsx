@@ -74,14 +74,13 @@ const CreateProduct = () => {
       relacionado: []
     }
   })
-  console.log(values)
 
   const galeriaIds = useMemo(() => {
     return values.galeria.map(({ id }: any) => id)
   }, [values.galeria])
 
   return (
-    <PlantillaPage title="Crear Producto" goback>
+    <PlantillaPage title="" goback>
       <div className="flex justify-center">
         <h1 className="title-9 dark:text-slate-200 mb-5">Crear Producto</h1>
       </div>

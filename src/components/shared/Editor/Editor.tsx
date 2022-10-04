@@ -48,9 +48,9 @@ const Editor = ({ titulo, onChangue, contenido = '' }: IEditor) => {
         ),
         []
       )}
-      <div className="flex justify-center items-center my-5 gap-5">
+      <div className="flex justify-start items-center my-5 gap-5">
         <p
-          className="max-w-[300px] btn btn-solid-primary cursor-pointer "
+          className="max-w-[200px] text-sm px-2 btn btn-solid-second bg-blue-600 cursor-pointer "
           onClick={() => setShowPreview(!showPreview)}>
           {!showPreview ? 'Mostrar' : 'Ocultar'} vista previa
         </p>
