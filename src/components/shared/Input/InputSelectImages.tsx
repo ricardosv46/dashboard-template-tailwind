@@ -95,13 +95,17 @@ const InputSelectImages = ({ label, imgsInitial = [], touched, ...props }: Props
                   x
                 </button>
                 <Image
-                  onClick={onOpen}
-                  className="inset-0 z-10 object-cover w-[100px] cursor-pointer h-[80px]"
+                  className="inset-0 z-10 object-cover w-[100px]  h-[80px]"
                   src={img?.url!}
                   alt={img?.titulo!}
                 />
               </div>
             ))}
+            <div
+              className="w-[100px] cursor-pointer h-[80px] border-primary-600 border rounded-lg flex justify-center items-center text-primary-600 text-2xl"
+              onClick={onOpen}>
+              +
+            </div>
           </div>
         </>
       )}

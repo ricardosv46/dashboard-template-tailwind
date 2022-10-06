@@ -111,14 +111,18 @@ const InputSelectProducts = ({
                     x
                   </button>
                   <Image
-                    onClick={onOpen}
-                    className="inset-0 z-10 object-cover w-[120px] cursor-pointer h-[100px]"
+                    className="inset-0 z-10 object-cover w-[120px]  h-[100px]"
                     src={img?.url!}
                     alt={img?.titulo!}
                   />
                 </div>
               </div>
             ))}
+            <div
+              className="w-[120px] cursor-pointer h-[122px] border-primary-600 border rounded-lg flex justify-center items-center text-primary-600 text-2xl"
+              onClick={onOpen}>
+              +
+            </div>
           </div>
         </>
       )}

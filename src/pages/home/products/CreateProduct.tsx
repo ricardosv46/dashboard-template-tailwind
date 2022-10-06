@@ -9,14 +9,17 @@ import { useProductos } from '@services/useProductos'
 import { Toast } from '@utils/Toast'
 import { validateCreateProducto } from '@validation/products/validateCreateProducto'
 import { useFormik } from 'formik'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import InputSelectProducts from '@components/shared/Input/InputSelectProducts'
 import Editor from '@components/shared/Editor/Editor'
 import InputAddOptions from '@components/shared/Input/InputAddOptions'
 
+const prototypeTable = `<table style="border-collapse:collapse;width: 100%;"><tbody><tr>	<td style="width: 48.9726%;"><strong>Procesador<br><br></strong></td>	<td style="width: 50.6849%;"><span style="color: rgb(102, 102, 102);">Intel core i7</span></td></tr><tr>	<td><strong>Tamaño de pantalla<br><br></strong></td>	<td><span style="color: rgb(102, 102, 102);">15.6 pulgadas</span></td></tr><tr>	<td><strong>Modelo del procesador<br></strong><br></td>	<td><span style="color: rgb(102, 102, 102);">Intel® Core¿ i7-1255U</span><br></td></tr><tr>	<td><strong>Duración aproximada de la batería<br></strong><br></td>	<td style="vertical-align: top;"><span style="color: rgb(102, 102, 102);">Hasta 10 horas y 45 minutos</span><br></td></tr><tr>	<td><br></td>	<td><br></td></tr><tr>	<td><br></td>	<td><br></td></tr><tr>	<td><br></td>	<td><br></td></tr><tr>	<td><br></td>	<td><br></td></tr></tbody></table>`
 const CreateProduct = () => {
   const router = useNavigate()
+  const [mostrarDescripcion, setMostrarDescripcion] = useState(false)
+  const [mostrarEspecificaciones, setMostrarEspecificaciones] = useState(false)
   const { db: dataCategoriaProducto, loading: locadingCategoria } = useCategoriaProductos({
     estado: 'Activado'
   })
@@ -74,7 +77,7 @@ const CreateProduct = () => {
       relacionado: []
     }
   })
-
+  console.log('los valores que seran chan chan', values)
   const galeriaIds = useMemo(() => {
     return values.galeria.map(({ id }: any) => id)
   }, [values.galeria])
@@ -158,11 +161,39 @@ const CreateProduct = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <Editor
-              titulo="Descripcion del producto"
-              onChangue={(values) => setFieldValue('descripcionLarga', values)}
-              contenido=""
-            />
+            <div className="border border-primary-600 flex justify-between  items-center py-2 px-4 rounded-md">
+              <p className="text-primary-600 font-bold">Descripción Larga</p>
+              <p
+                className="cursor-pointer text-primary-600 font-bold text-4xl px-2"
+                onClick={() => setMostrarDescripcion(!mostrarDescripcion)}>
+                {mostrarDescripcion ? '-' : '+'}
+              </p>
+            </div>
+
+            <div className={`${mostrarDescripcion ? 'block' : 'hidden'} mt-3`}>
+              <Editor
+                titulo="Descripcion del producto"
+                onChangue={(values) => setFieldValue('descripcionLarga', values)}
+                contenido=""
+              />
+            </div>
+          </div>
+          <div className="lg:col-span-2">
+            <div className="border border-primary-600 flex justify-between  items-center py-2 px-4 rounded-md">
+              <p className="text-primary-600 font-bold">Especificaciones</p>
+              <p
+                className="cursor-pointer text-primary-600 font-bold text-4xl px-2"
+                onClick={() => setMostrarEspecificaciones(!mostrarEspecificaciones)}>
+                {mostrarEspecificaciones ? '-' : '+'}
+              </p>
+            </div>
+            <div className={`${mostrarEspecificaciones ? 'block' : 'hidden'} mt-3`}>
+              <Editor
+                titulo="Descripcion del producto"
+                onChangue={(values) => setFieldValue('descripcionLarga', values)}
+                contenido={prototypeTable}
+              />
+            </div>
           </div>
         </div>
         {/* 2 division */}
