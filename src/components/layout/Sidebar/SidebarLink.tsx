@@ -44,11 +44,7 @@ const SidebarLink = ({ icon: Icon, name, to, onClick, subMenu, mobile }: Props) 
       {subMenu.value
         ? isOpen && (
             <div
-              className={classNames([
-                'flex flex-col gap-2 py-2 w-full',
-                mobile ? '' : 'hidden',
-                styles.cerrar
-              ])}>
+              className={classNames(['flex md:hidden flex-col gap-2 py-2 w-full', styles.cerrar])}>
               {subMenu.paths
                 .filter((path) => path.render)
                 .map(({ icon, name, to, path }) => (
