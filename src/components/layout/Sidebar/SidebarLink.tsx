@@ -1,4 +1,4 @@
-import { IconChevronLeft, IconChevronUp } from '@icons'
+import { IconChevronUp } from '@icons'
 import { SidebarLinkType } from '@interface/index'
 import { classNames } from '@utils/classNames'
 import { useState } from 'react'
@@ -10,14 +10,14 @@ type Props = SidebarLinkType & { onClick?: () => void; mobile?: boolean }
 
 const SidebarLink = ({ icon: Icon, name, to, onClick, subMenu, mobile }: Props) => {
   const match = useMatch(to!)
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
   return (
     <div>
       <Link
         to={subMenu?.value ? location.pathname : to}
-        className={`px-3 py-4 h-14  rounded-lg cursor-pointer text-center flex justify-between transition-all duration-300 ease-linear hover:bg-white hover:text-primary-500 ${
+        className={`p-3 rounded-lg cursor-pointer text-center flex justify-between transition-all duration-300 ease-linear hover:bg-white hover:text-primary-500 ${
           !subMenu.value && match ? 'bg-white text-primary-500' : 'bg-transparent text-gray-400'
         } ${match ? 'dark:bg-gray-700' : 'dark:bg-transparent'}`}
         onClick={() => {
@@ -26,7 +26,7 @@ const SidebarLink = ({ icon: Icon, name, to, onClick, subMenu, mobile }: Props) 
           }
           setIsOpen(!isOpen)
         }}>
-        <div className={`flex items-center gap-3 `}>
+        <div className="flex items-center gap-3 ">
           <Icon className="w-4 h-4" />
 
           <p className={` text-base font-semibold  ${styles.oculto}`}>{name}</p>
@@ -55,6 +55,7 @@ const SidebarLink = ({ icon: Icon, name, to, onClick, subMenu, mobile }: Props) 
                   />
                 ))}
             </div>
+            // eslint-disable-next-line indent
           )
         : null}
     </div>

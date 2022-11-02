@@ -13,7 +13,6 @@ const SubmenuLink = ({ icon: Icon, name, to, onClick }: Props) => {
       } ${match ? 'dark:bg-gray-700' : 'dark:bg-transparent'}`}
       onClick={onClick}>
       <Icon className="w-4 h-4" />
-
       <p className="font-semibold ">{name}</p>
     </Link>
   )

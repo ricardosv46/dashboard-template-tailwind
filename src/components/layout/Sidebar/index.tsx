@@ -1,4 +1,4 @@
-import ToggleTheme from '@components/shared/ToggleTheme/ToggleTheme'
+// import ToggleTheme from '@components/shared/ToggleTheme/ToggleTheme'
 import useToggle from '@hooks/useToggle'
 import { IconClose, IconHome, IconLogo, IconLogout, IconMinus, IconPlus } from '@icons'
 import { homeRoutes } from '@routes/routes'
@@ -25,8 +25,8 @@ const Sidebar = ({ onClose, mobile = false }: Props) => {
         mobile ? 'w-[300px]' : isOpen ? `w-[300px] ${styles.anchor} ` : 'w-[72px]'
       ])}>
       <div className="h-screen pb-20 overflow-scroll bg-gray-100 dark:bg-gray-700 scroll-smooth no-scrollbar ">
-        <div className="flex items-center justify-center pt-10 h-28">
-          <div className={`px-5 flex  w-full justify-between`}>
+        <div className="flex items-center justify-center  pt-4  pb-2">
+          <div className="px-5 flex  w-full justify-between">
             <IconLogo className={styles.oculto} />
             {/* eslint-disable */}
             {mobile ? (
