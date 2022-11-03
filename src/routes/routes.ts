@@ -1,6 +1,8 @@
+/* eslint-disable no-tabs */
 import { IconBank, IconCart, IconFile, IconImage, IconMoney, IconOptions, IconUser } from '@icons'
 import { Route } from '@interface/index'
 import { lazy } from 'react'
+import IconOrder from '../icons/IconOrder'
 
 const BlogsPage = lazy(() => import('../pages/home/blogs/BlogsPage'))
 const ImagesPage = lazy(() => import('../pages/home/ImagesPage'))
@@ -35,6 +37,8 @@ const EditSeller = lazy(() => import('../pages/home/finance/sellers/EditSeller')
 const CreateSeller = lazy(() => import('../pages/home/finance/sellers/CreateSeller'))
 const EditPassword = lazy(() => import('../pages/home/account/EditPassword'))
 const EditProfile = lazy(() => import('../pages/home/account/EditProfile'))
+// vista Pedidos
+const OrderPage = lazy(() => import('../pages/home/pedidos/OrderPage'))
 
 export const homeRoutes: Route[] = [
   {
@@ -193,7 +197,34 @@ export const homeRoutes: Route[] = [
       ]
     }
   },
-
+  {
+    icon: IconOrder,
+    name: 'Pedidos',
+    to: '/pedidos',
+    path: 'pedidos',
+    component: OrderPage,
+    subMenu: {
+      value: false,
+      paths: [
+        {
+          icon: IconOptions,
+          name: 'Crear Slider',
+          path: '/sliders/create-slider',
+          to: '',
+          component: CreateSlider,
+          render: false
+        },
+        {
+          icon: IconOptions,
+          name: 'Editar Slider',
+          path: '/sliders/edit-slider/:slug',
+          to: '',
+          component: EditSlider,
+          render: false
+        }
+      ]
+    }
+  },
   {
     icon: IconBank,
     name: 'Finanzas',
@@ -279,6 +310,7 @@ export const homeRoutes: Route[] = [
       ]
     }
   },
+
   {
     icon: IconUser,
     name: 'Cuenta',

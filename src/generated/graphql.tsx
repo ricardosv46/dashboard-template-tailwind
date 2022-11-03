@@ -249,7 +249,6 @@ export type DireccionEnvio = {
   celular?: Maybe<Scalars['String']>;
   direccion?: Maybe<Scalars['String']>;
   direccionEnvioId?: Maybe<Scalars['ID']>;
-  email?: Maybe<Scalars['String']>;
   nombreAgencia?: Maybe<Scalars['String']>;
   pedidoId?: Maybe<Scalars['Int']>;
 };
@@ -261,7 +260,6 @@ export type DireccionEnvioInput = {
   celular?: InputMaybe<Scalars['String']>;
   direccion?: InputMaybe<Scalars['String']>;
   direccionEnvioId?: InputMaybe<Scalars['ID']>;
-  email?: InputMaybe<Scalars['String']>;
   nombreAgencia?: InputMaybe<Scalars['String']>;
 };
 
@@ -336,6 +334,12 @@ export type Filtros = {
   precios?: Maybe<Array<Scalars['Float']>>;
 };
 
+export type GetAllArrayUsuarios = {
+  __typename?: 'GetAllArrayUsuarios';
+  Usuario?: Maybe<Array<Maybe<User>>>;
+  numeroTotal?: Maybe<Scalars['Int']>;
+};
+
 export type GetAllBancos = {
   __typename?: 'GetAllBancos';
   data?: Maybe<Array<Banco>>;
@@ -408,15 +412,21 @@ export type GetAllSliders = {
   numeroTotal?: Maybe<Scalars['Int']>;
 };
 
-export type GetAllUsuarios = {
-  __typename?: 'GetAllUsuarios';
-  Usuario?: Maybe<User>;
+export type GetAllSoportes = {
+  __typename?: 'GetAllSoportes';
+  data?: Maybe<Array<Soporte>>;
   numeroTotal?: Maybe<Scalars['Int']>;
 };
 
-export type GetAllVendedoras = {
-  __typename?: 'GetAllVendedoras';
-  data?: Maybe<Array<Vendedora>>;
+export type GetAllSuscriptores = {
+  __typename?: 'GetAllSuscriptores';
+  data?: Maybe<Array<Suscriptores>>;
+  numeroTotal?: Maybe<Scalars['Int']>;
+};
+
+export type GetAllUsuarios = {
+  __typename?: 'GetAllUsuarios';
+  Usuario?: Maybe<User>;
   numeroTotal?: Maybe<Scalars['Int']>;
 };
 
@@ -456,8 +466,9 @@ export type Mutation = {
   CreatePrecioEnvioDistrito: Distrito;
   CreateProducto: Producto;
   CreateSlider: Slider;
+  CreateSoporte: Soporte;
+  CreateSuscriptores: Suscriptores;
   CreateUsuario: User;
-  CreateVendedora: Vendedora;
   DeleteBancos: Scalars['String'];
   DeleteBlog: Scalars['String'];
   DeleteCarrito: Scalars['String'];
@@ -468,7 +479,8 @@ export type Mutation = {
   DeleteImagen: Scalars['String'];
   DeleteProducto: Scalars['String'];
   DeleteSlider: Scalars['String'];
-  DeleteVendedora: Scalars['String'];
+  DeleteSoporte: Scalars['String'];
+  DeleteSuscriptores: Scalars['String'];
   Login: User;
   RecoverPasswordUsuario: Scalars['String'];
   UpdateBancos: Banco;
@@ -491,14 +503,15 @@ export type Mutation = {
   UpdateEstadoPedido: Pedido;
   UpdateEstadoProducto: Producto;
   UpdateEstadoSlider: Slider;
+  UpdateEstadoSoporte: Soporte;
   UpdateEstadoUsuario: Scalars['String'];
-  UpdateEstadoVendedora: Vendedora;
   UpdateImagen: Imagen;
   UpdatePasswordUsuario: User;
   UpdateProducto: Producto;
   UpdateSlider: Slider;
+  UpdateSoporte: Soporte;
+  UpdateSuscriptores: Suscriptores;
   UpdateUsuario: User;
-  UpdateVendedora: Vendedora;
   UpdateVistoNotificacionPedido: NotificacionPedido;
   UpdateVistoPedido: Pedido;
   UploadVoucher: Pedido;
@@ -582,14 +595,19 @@ export type MutationCreateSliderArgs = {
 };
 
 
-export type MutationCreateUsuarioArgs = {
-  input: UserInput;
-  photo?: InputMaybe<Scalars['Upload']>;
+export type MutationCreateSoporteArgs = {
+  input: SoporteInput;
 };
 
 
-export type MutationCreateVendedoraArgs = {
-  input: VendedoraInput;
+export type MutationCreateSuscriptoresArgs = {
+  input: SuscriptoresInput;
+};
+
+
+export type MutationCreateUsuarioArgs = {
+  input: UserInput;
+  photo?: InputMaybe<Scalars['Upload']>;
 };
 
 
@@ -643,8 +661,13 @@ export type MutationDeleteSliderArgs = {
 };
 
 
-export type MutationDeleteVendedoraArgs = {
-  vendedoraId: Scalars['Int'];
+export type MutationDeleteSoporteArgs = {
+  SoporteId: Scalars['Int'];
+};
+
+
+export type MutationDeleteSuscriptoresArgs = {
+  suscriptorId: Scalars['Int'];
 };
 
 
@@ -758,13 +781,13 @@ export type MutationUpdateEstadoSliderArgs = {
 };
 
 
-export type MutationUpdateEstadoUsuarioArgs = {
-  input: UpdateEstadoUsuarioInput;
+export type MutationUpdateEstadoSoporteArgs = {
+  input?: InputMaybe<UpdateEstadoSoporteInput>;
 };
 
 
-export type MutationUpdateEstadoVendedoraArgs = {
-  input?: InputMaybe<UpdateEstadoVendedoraInput>;
+export type MutationUpdateEstadoUsuarioArgs = {
+  input: UpdateEstadoUsuarioInput;
 };
 
 
@@ -790,14 +813,19 @@ export type MutationUpdateSliderArgs = {
 };
 
 
-export type MutationUpdateUsuarioArgs = {
-  input?: InputMaybe<UserInput>;
-  photo?: InputMaybe<Scalars['Upload']>;
+export type MutationUpdateSoporteArgs = {
+  input?: InputMaybe<SoporteInput>;
 };
 
 
-export type MutationUpdateVendedoraArgs = {
-  input?: InputMaybe<VendedoraInput>;
+export type MutationUpdateSuscriptoresArgs = {
+  input?: InputMaybe<SuscriptoresInput>;
+};
+
+
+export type MutationUpdateUsuarioArgs = {
+  input?: InputMaybe<UserInput>;
+  photo?: InputMaybe<Scalars['Upload']>;
 };
 
 
@@ -947,11 +975,14 @@ export type Producto = {
   descripcionCorta?: Maybe<Scalars['String']>;
   descripcionLarga?: Maybe<Scalars['String']>;
   destacado?: Maybe<Scalars['String']>;
+  especificaciones?: Maybe<Scalars['String']>;
   estado?: Maybe<Scalars['String']>;
   galeria?: Maybe<Array<Maybe<Imagen>>>;
   imagenPrincipal?: Maybe<Imagen>;
   imagenSecundaria?: Maybe<Imagen>;
   keywords?: Maybe<Scalars['String']>;
+  nroPedidos?: Maybe<Scalars['Int']>;
+  nroTotalProducVendidoFecha?: Maybe<Scalars['Int']>;
   precioOferta?: Maybe<Scalars['Float']>;
   precioReal?: Maybe<Scalars['Float']>;
   productoId?: Maybe<Scalars['ID']>;
@@ -966,6 +997,7 @@ export type ProductoInput = {
   categoriaProductoId?: InputMaybe<Scalars['Int']>;
   descripcionCorta?: InputMaybe<Scalars['String']>;
   descripcionLarga?: InputMaybe<Scalars['String']>;
+  especificaciones?: InputMaybe<Scalars['String']>;
   estado?: InputMaybe<Scalars['String']>;
   galeria?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   imagenPrincipal?: InputMaybe<Scalars['Int']>;
@@ -1011,12 +1043,17 @@ export type Query = {
   GetAllProductos: GetAllProductos;
   GetAllProductosBestSelling: GetAllProductos;
   GetAllProductosCategoriaSlug: GetAllProductos;
+  GetAllProductosMasVendidos: GetAllProductos;
+  GetAllProductosMasVendidosSemana: GetAllProductos;
+  GetAllProductosPorAgotarse: GetAllProductos;
   GetAllProductosRelacionados: GetAllProductos;
   GetAllProvincias?: Maybe<Array<Provincia>>;
   GetAllSliders: GetAllSliders;
+  GetAllSoportes: GetAllSoportes;
+  GetAllSuscriptores: GetAllSuscriptores;
   GetAllTarjetaUsuario?: Maybe<Array<TarjetasUsuarios>>;
   GetAllUsuarios: GetAllUsuarios;
-  GetAllVendedoras: GetAllVendedoras;
+  GetAllUsuariosRegistradosUltimoMes: GetAllArrayUsuarios;
   GetBancoId: Banco;
   GetBlogSlug: Blog;
   GetCategoriaBlogSlug: CategoriaBlog;
@@ -1030,7 +1067,7 @@ export type Query = {
   GetProductoSlug: Producto;
   GetReniec: Reniec;
   GetSliderId: Slider;
-  GetVendedoraId: Vendedora;
+  GetSoporteId: Soporte;
 };
 
 
@@ -1161,6 +1198,29 @@ export type QueryGetAllProductosCategoriaSlugArgs = {
 };
 
 
+export type QueryGetAllProductosMasVendidosArgs = {
+  categoriaSlug?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryGetAllProductosMasVendidosSemanaArgs = {
+  FechaFin?: InputMaybe<Scalars['String']>;
+  FechaInicio?: InputMaybe<Scalars['String']>;
+  categoriaSlug?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryGetAllProductosPorAgotarseArgs = {
+  categoriaSlug?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryGetAllProductosRelacionadosArgs = {
   slug?: InputMaybe<Scalars['String']>;
 };
@@ -1173,6 +1233,19 @@ export type QueryGetAllProvinciasArgs = {
 
 export type QueryGetAllSlidersArgs = {
   estado?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetAllSoportesArgs = {
+  estado?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetAllSuscriptoresArgs = {
+  FechaFin?: InputMaybe<Scalars['String']>;
+  FechaInicio?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -1189,8 +1262,11 @@ export type QueryGetAllUsuariosArgs = {
 };
 
 
-export type QueryGetAllVendedorasArgs = {
-  estado?: InputMaybe<Scalars['String']>;
+export type QueryGetAllUsuariosRegistradosUltimoMesArgs = {
+  FechaFin?: InputMaybe<Scalars['String']>;
+  FechaInicio?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -1249,8 +1325,8 @@ export type QueryGetSliderIdArgs = {
 };
 
 
-export type QueryGetVendedoraIdArgs = {
-  vendedoraId?: InputMaybe<Scalars['Int']>;
+export type QueryGetSoporteIdArgs = {
+  soporteId?: InputMaybe<Scalars['Int']>;
 };
 
 export type Recibo = {
@@ -1288,6 +1364,26 @@ export type SliderInput = {
   titulo?: InputMaybe<Scalars['String']>;
 };
 
+export type Soporte = {
+  __typename?: 'Soporte';
+  apellidos?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['DateTime']>;
+  estado?: Maybe<Scalars['String']>;
+  imagenPrincipal?: Maybe<Imagen>;
+  link?: Maybe<Scalars['String']>;
+  nombres?: Maybe<Scalars['String']>;
+  soporteId?: Maybe<Scalars['ID']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
+};
+
+export type SoporteInput = {
+  apellidos?: InputMaybe<Scalars['String']>;
+  imagenPrincipal?: InputMaybe<Scalars['Int']>;
+  link?: InputMaybe<Scalars['String']>;
+  nombres?: InputMaybe<Scalars['String']>;
+  soporteId?: InputMaybe<Scalars['ID']>;
+};
+
 /** The available directions for ordering a list of records. */
 export enum SortOrder {
   /** Sort records in ascending order. */
@@ -1295,6 +1391,19 @@ export enum SortOrder {
   /** Sort records in descending order. */
   Desc = 'DESC'
 }
+
+export type Suscriptores = {
+  __typename?: 'Suscriptores';
+  correo?: Maybe<Scalars['String']>;
+  nombres?: Maybe<Scalars['String']>;
+  suscriptorId?: Maybe<Scalars['ID']>;
+};
+
+export type SuscriptoresInput = {
+  correo?: InputMaybe<Scalars['String']>;
+  nombres?: InputMaybe<Scalars['String']>;
+  suscriptorId?: InputMaybe<Scalars['ID']>;
+};
 
 export type TarjetasUsuarios = {
   __typename?: 'TarjetasUsuarios';
@@ -1381,14 +1490,14 @@ export type UpdateEstadoSliderInput = {
   sliderId?: InputMaybe<Scalars['ID']>;
 };
 
+export type UpdateEstadoSoporteInput = {
+  estado?: InputMaybe<Scalars['String']>;
+  soporteId?: InputMaybe<Scalars['ID']>;
+};
+
 export type UpdateEstadoUsuarioInput = {
   estado?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
-};
-
-export type UpdateEstadoVendedoraInput = {
-  estado?: InputMaybe<Scalars['String']>;
-  vendedoraId?: InputMaybe<Scalars['ID']>;
 };
 
 export type UpdatePasswordInput = {
@@ -1439,26 +1548,6 @@ export type UserInput = {
   password?: InputMaybe<Scalars['String']>;
   tipoDocumento?: InputMaybe<Scalars['String']>;
   tipoUsuario?: InputMaybe<Scalars['Int']>;
-};
-
-export type Vendedora = {
-  __typename?: 'Vendedora';
-  apellidos?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['DateTime']>;
-  estado?: Maybe<Scalars['String']>;
-  imagenPrincipal?: Maybe<Imagen>;
-  link?: Maybe<Scalars['String']>;
-  nombres?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['DateTime']>;
-  vendedoraId?: Maybe<Scalars['ID']>;
-};
-
-export type VendedoraInput = {
-  apellidos?: InputMaybe<Scalars['String']>;
-  imagenPrincipal?: InputMaybe<Scalars['Int']>;
-  link?: InputMaybe<Scalars['String']>;
-  nombres?: InputMaybe<Scalars['String']>;
-  vendedoraId?: InputMaybe<Scalars['ID']>;
 };
 
 export type Reniec = {
@@ -1687,13 +1776,6 @@ export type DeleteImagenMutationVariables = Exact<{
 
 export type DeleteImagenMutation = { __typename?: 'Mutation', DeleteImagen: string };
 
-export type UpdateVistoPedidoMutationVariables = Exact<{
-  input: UpdateVistoPedidoInput;
-}>;
-
-
-export type UpdateVistoPedidoMutation = { __typename?: 'Mutation', UpdateVistoPedido: { __typename?: 'Pedido', pedidoId?: string | null, fechaPedido?: any | null, estado?: string | null, visto?: number | null, tipoPago?: number | null, tipoVenta?: string | null, medioPago?: string | null, numeroOperacion?: string | null, tipoEnvio?: string | null, precioEnvio?: number | null, precioTotal?: number | null, voucher?: string | null, ticketPdf?: string | null, direccionEnvio?: string | null, usuarioId?: number | null, Usuario?: { __typename?: 'User', id?: string | null, tipoUsuario?: number | null, tipoDocumento?: string | null, numeroDocumento?: string | null, genero?: number | null, nombres?: string | null, apellidos?: string | null, celular?: string | null, fechaNacimiento?: any | null, foto?: string | null, email?: string | null, apiToken?: string | null, customer_id?: string | null } | null, DetallePedido?: Array<{ __typename?: 'DetallePedido', detallePedidoId?: string | null, titulo?: string | null, imagenPrincipal?: string | null, cantidad?: number | null, precio?: number | null, total?: number | null, pedidoId?: number | null, productoId?: number | null }> | null, DireccionEnvio?: { __typename?: 'DireccionEnvio', direccionEnvioId?: string | null, email?: string | null, celular?: string | null, DeparCodi?: number | null, ProvCodi?: number | null, DistCodi?: number | null, direccion?: string | null, nombreAgencia?: string | null, pedidoId?: number | null } | null, Recibo?: { __typename?: 'Recibo', reciboId?: string | null, ruc?: string | null, razonSocial?: string | null, pedidoId?: number | null } | null } };
-
 export type UpdateBlogMutationVariables = Exact<{
   input: BlogInput;
 }>;
@@ -1707,41 +1789,6 @@ export type UpdateEstadoBancoMutationVariables = Exact<{
 
 
 export type UpdateEstadoBancoMutation = { __typename?: 'Mutation', UpdateEstadoBanco: { __typename?: 'Banco', bancoId?: string | null, titulo?: string | null, estado?: string | null, numeroCuenta?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
-
-export type CreateVendedoraMutationVariables = Exact<{
-  input: VendedoraInput;
-}>;
-
-
-export type CreateVendedoraMutation = { __typename?: 'Mutation', CreateVendedora: { __typename?: 'Vendedora', vendedoraId?: string | null, nombres?: string | null, apellidos?: string | null, link?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
-
-export type DeleteVendedoraMutationVariables = Exact<{
-  vendedoraId: Scalars['Int'];
-}>;
-
-
-export type DeleteVendedoraMutation = { __typename?: 'Mutation', DeleteVendedora: string };
-
-export type UpdateEstadoPedidoMutationVariables = Exact<{
-  input: UpdateEstadoPedidoInput;
-}>;
-
-
-export type UpdateEstadoPedidoMutation = { __typename?: 'Mutation', UpdateEstadoPedido: { __typename?: 'Pedido', pedidoId?: string | null, fechaPedido?: any | null, estado?: string | null, visto?: number | null, tipoPago?: number | null, tipoVenta?: string | null, medioPago?: string | null, numeroOperacion?: string | null, tipoEnvio?: string | null, precioEnvio?: number | null, precioTotal?: number | null, voucher?: string | null, ticketPdf?: string | null, direccionEnvio?: string | null, usuarioId?: number | null, Usuario?: { __typename?: 'User', id?: string | null, tipoUsuario?: number | null, tipoDocumento?: string | null, numeroDocumento?: string | null, genero?: number | null, nombres?: string | null, apellidos?: string | null, celular?: string | null, fechaNacimiento?: any | null, foto?: string | null, email?: string | null, apiToken?: string | null, customer_id?: string | null } | null, DetallePedido?: Array<{ __typename?: 'DetallePedido', detallePedidoId?: string | null, titulo?: string | null, imagenPrincipal?: string | null, cantidad?: number | null, precio?: number | null, total?: number | null, pedidoId?: number | null, productoId?: number | null }> | null, DireccionEnvio?: { __typename?: 'DireccionEnvio', direccionEnvioId?: string | null, email?: string | null, celular?: string | null, DeparCodi?: number | null, ProvCodi?: number | null, DistCodi?: number | null, direccion?: string | null, nombreAgencia?: string | null, pedidoId?: number | null } | null, Recibo?: { __typename?: 'Recibo', reciboId?: string | null, ruc?: string | null, razonSocial?: string | null, pedidoId?: number | null } | null } };
-
-export type UpdateEstadoVendedoraMutationVariables = Exact<{
-  input?: InputMaybe<UpdateEstadoVendedoraInput>;
-}>;
-
-
-export type UpdateEstadoVendedoraMutation = { __typename?: 'Mutation', UpdateEstadoVendedora: { __typename?: 'Vendedora', vendedoraId?: string | null, nombres?: string | null, apellidos?: string | null, link?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
-
-export type UpdateVendedoraMutationVariables = Exact<{
-  input: VendedoraInput;
-}>;
-
-
-export type UpdateVendedoraMutation = { __typename?: 'Mutation', UpdateVendedora: { __typename?: 'Vendedora', vendedoraId?: string | null, nombres?: string | null, apellidos?: string | null, link?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
 
 export type CreateSliderMutationVariables = Exact<{
   input: SliderInput;
@@ -1891,21 +1938,7 @@ export type GetAllPedidosQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPedidosQuery = { __typename?: 'Query', GetAllPedidos: { __typename?: 'GetAllPedidos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Pedido', pedidoId?: string | null, fechaPedido?: any | null, estado?: string | null, visto?: number | null, tipoPago?: number | null, tipoVenta?: string | null, medioPago?: string | null, numeroOperacion?: string | null, tipoEnvio?: string | null, precioEnvio?: number | null, precioTotal?: number | null, voucher?: string | null, ticketPdf?: string | null, direccionEnvio?: string | null, usuarioId?: number | null, Usuario?: { __typename?: 'User', id?: string | null, tipoUsuario?: number | null, tipoDocumento?: string | null, numeroDocumento?: string | null, genero?: number | null, nombres?: string | null, apellidos?: string | null, celular?: string | null, fechaNacimiento?: any | null, foto?: string | null, email?: string | null, apiToken?: string | null, customer_id?: string | null } | null, DetallePedido?: Array<{ __typename?: 'DetallePedido', detallePedidoId?: string | null, titulo?: string | null, imagenPrincipal?: string | null, cantidad?: number | null, precio?: number | null, total?: number | null, pedidoId?: number | null, productoId?: number | null }> | null, DireccionEnvio?: { __typename?: 'DireccionEnvio', direccionEnvioId?: string | null, email?: string | null, celular?: string | null, DeparCodi?: number | null, ProvCodi?: number | null, DistCodi?: number | null, direccion?: string | null, nombreAgencia?: string | null } | null, Recibo?: { __typename?: 'Recibo', reciboId?: string | null, ruc?: string | null, razonSocial?: string | null } | null }> | null } };
-
-export type GetAllVendedorasQueryVariables = Exact<{
-  estado?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type GetAllVendedorasQuery = { __typename?: 'Query', GetAllVendedoras: { __typename?: 'GetAllVendedoras', numeroTotal?: number | null, data?: Array<{ __typename?: 'Vendedora', vendedoraId?: string | null, nombres?: string | null, apellidos?: string | null, link?: string | null, estado?: string | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null }> | null } };
-
-export type GetVendedoraIdQueryVariables = Exact<{
-  vendedoraId?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type GetVendedoraIdQuery = { __typename?: 'Query', GetVendedoraId: { __typename?: 'Vendedora', vendedoraId?: string | null, nombres?: string | null, apellidos?: string | null, link?: string | null, estado?: string | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null } };
+export type GetAllPedidosQuery = { __typename?: 'Query', GetAllPedidos: { __typename?: 'GetAllPedidos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Pedido', fechaPedido?: any | null, estado?: string | null, precioTotal?: number | null, voucher?: string | null, visto?: number | null, tipoVenta?: string | null, pedidoId?: string | null, medioPago?: string | null, DetallePedido?: Array<{ __typename?: 'DetallePedido', cantidad?: number | null, detallePedidoId?: string | null, pedidoId?: number | null, imagenPrincipal?: string | null, precio?: number | null, productoId?: number | null, titulo?: string | null, total?: number | null }> | null, Usuario?: { __typename?: 'User', nombres?: string | null, numeroDocumento?: string | null, apellidos?: string | null, email?: string | null } | null }> | null } };
 
 
 export const DeleteSliderDocument = gql`
@@ -3324,95 +3357,6 @@ export function useDeleteImagenMutation(baseOptions?: Apollo.MutationHookOptions
 export type DeleteImagenMutationHookResult = ReturnType<typeof useDeleteImagenMutation>;
 export type DeleteImagenMutationResult = Apollo.MutationResult<DeleteImagenMutation>;
 export type DeleteImagenMutationOptions = Apollo.BaseMutationOptions<DeleteImagenMutation, DeleteImagenMutationVariables>;
-export const UpdateVistoPedidoDocument = gql`
-    mutation UpdateVistoPedido($input: UpdateVistoPedidoInput!) {
-  UpdateVistoPedido(input: $input) {
-    pedidoId
-    fechaPedido
-    estado
-    visto
-    tipoPago
-    tipoVenta
-    medioPago
-    numeroOperacion
-    tipoEnvio
-    precioEnvio
-    precioTotal
-    voucher
-    ticketPdf
-    direccionEnvio
-    usuarioId
-    Usuario {
-      id
-      tipoUsuario
-      tipoDocumento
-      numeroDocumento
-      genero
-      nombres
-      apellidos
-      celular
-      fechaNacimiento
-      foto
-      email
-      apiToken
-      customer_id
-    }
-    DetallePedido {
-      detallePedidoId
-      titulo
-      imagenPrincipal
-      cantidad
-      precio
-      total
-      pedidoId
-      productoId
-    }
-    DireccionEnvio {
-      direccionEnvioId
-      email
-      celular
-      DeparCodi
-      ProvCodi
-      DistCodi
-      direccion
-      nombreAgencia
-      pedidoId
-    }
-    Recibo {
-      reciboId
-      ruc
-      razonSocial
-      pedidoId
-    }
-  }
-}
-    `;
-export type UpdateVistoPedidoMutationFn = Apollo.MutationFunction<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>;
-
-/**
- * __useUpdateVistoPedidoMutation__
- *
- * To run a mutation, you first call `useUpdateVistoPedidoMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateVistoPedidoMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateVistoPedidoMutation, { data, loading, error }] = useUpdateVistoPedidoMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateVistoPedidoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>(UpdateVistoPedidoDocument, options);
-      }
-export type UpdateVistoPedidoMutationHookResult = ReturnType<typeof useUpdateVistoPedidoMutation>;
-export type UpdateVistoPedidoMutationResult = Apollo.MutationResult<UpdateVistoPedidoMutation>;
-export type UpdateVistoPedidoMutationOptions = Apollo.BaseMutationOptions<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>;
 export const UpdateBlogDocument = gql`
     mutation updateBlog($input: BlogInput!) {
   updateBlog(input: $input) {
@@ -3513,261 +3457,6 @@ export function useUpdateEstadoBancoMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateEstadoBancoMutationHookResult = ReturnType<typeof useUpdateEstadoBancoMutation>;
 export type UpdateEstadoBancoMutationResult = Apollo.MutationResult<UpdateEstadoBancoMutation>;
 export type UpdateEstadoBancoMutationOptions = Apollo.BaseMutationOptions<UpdateEstadoBancoMutation, UpdateEstadoBancoMutationVariables>;
-export const CreateVendedoraDocument = gql`
-    mutation CreateVendedora($input: VendedoraInput!) {
-  CreateVendedora(input: $input) {
-    vendedoraId
-    nombres
-    apellidos
-    link
-    estado
-    imagenPrincipal {
-      id
-      titulo
-      estado
-      url
-    }
-    created_at
-    updated_at
-  }
-}
-    `;
-export type CreateVendedoraMutationFn = Apollo.MutationFunction<CreateVendedoraMutation, CreateVendedoraMutationVariables>;
-
-/**
- * __useCreateVendedoraMutation__
- *
- * To run a mutation, you first call `useCreateVendedoraMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateVendedoraMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createVendedoraMutation, { data, loading, error }] = useCreateVendedoraMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateVendedoraMutation(baseOptions?: Apollo.MutationHookOptions<CreateVendedoraMutation, CreateVendedoraMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateVendedoraMutation, CreateVendedoraMutationVariables>(CreateVendedoraDocument, options);
-      }
-export type CreateVendedoraMutationHookResult = ReturnType<typeof useCreateVendedoraMutation>;
-export type CreateVendedoraMutationResult = Apollo.MutationResult<CreateVendedoraMutation>;
-export type CreateVendedoraMutationOptions = Apollo.BaseMutationOptions<CreateVendedoraMutation, CreateVendedoraMutationVariables>;
-export const DeleteVendedoraDocument = gql`
-    mutation DeleteVendedora($vendedoraId: Int!) {
-  DeleteVendedora(vendedoraId: $vendedoraId)
-}
-    `;
-export type DeleteVendedoraMutationFn = Apollo.MutationFunction<DeleteVendedoraMutation, DeleteVendedoraMutationVariables>;
-
-/**
- * __useDeleteVendedoraMutation__
- *
- * To run a mutation, you first call `useDeleteVendedoraMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteVendedoraMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteVendedoraMutation, { data, loading, error }] = useDeleteVendedoraMutation({
- *   variables: {
- *      vendedoraId: // value for 'vendedoraId'
- *   },
- * });
- */
-export function useDeleteVendedoraMutation(baseOptions?: Apollo.MutationHookOptions<DeleteVendedoraMutation, DeleteVendedoraMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteVendedoraMutation, DeleteVendedoraMutationVariables>(DeleteVendedoraDocument, options);
-      }
-export type DeleteVendedoraMutationHookResult = ReturnType<typeof useDeleteVendedoraMutation>;
-export type DeleteVendedoraMutationResult = Apollo.MutationResult<DeleteVendedoraMutation>;
-export type DeleteVendedoraMutationOptions = Apollo.BaseMutationOptions<DeleteVendedoraMutation, DeleteVendedoraMutationVariables>;
-export const UpdateEstadoPedidoDocument = gql`
-    mutation UpdateEstadoPedido($input: UpdateEstadoPedidoInput!) {
-  UpdateEstadoPedido(input: $input) {
-    pedidoId
-    fechaPedido
-    estado
-    visto
-    tipoPago
-    tipoVenta
-    medioPago
-    numeroOperacion
-    tipoEnvio
-    precioEnvio
-    precioTotal
-    voucher
-    ticketPdf
-    direccionEnvio
-    usuarioId
-    Usuario {
-      id
-      tipoUsuario
-      tipoDocumento
-      numeroDocumento
-      genero
-      nombres
-      apellidos
-      celular
-      fechaNacimiento
-      foto
-      email
-      apiToken
-      customer_id
-    }
-    DetallePedido {
-      detallePedidoId
-      titulo
-      imagenPrincipal
-      cantidad
-      precio
-      total
-      pedidoId
-      productoId
-    }
-    DireccionEnvio {
-      direccionEnvioId
-      email
-      celular
-      DeparCodi
-      ProvCodi
-      DistCodi
-      direccion
-      nombreAgencia
-      pedidoId
-    }
-    Recibo {
-      reciboId
-      ruc
-      razonSocial
-      pedidoId
-    }
-  }
-}
-    `;
-export type UpdateEstadoPedidoMutationFn = Apollo.MutationFunction<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>;
-
-/**
- * __useUpdateEstadoPedidoMutation__
- *
- * To run a mutation, you first call `useUpdateEstadoPedidoMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateEstadoPedidoMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateEstadoPedidoMutation, { data, loading, error }] = useUpdateEstadoPedidoMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateEstadoPedidoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>(UpdateEstadoPedidoDocument, options);
-      }
-export type UpdateEstadoPedidoMutationHookResult = ReturnType<typeof useUpdateEstadoPedidoMutation>;
-export type UpdateEstadoPedidoMutationResult = Apollo.MutationResult<UpdateEstadoPedidoMutation>;
-export type UpdateEstadoPedidoMutationOptions = Apollo.BaseMutationOptions<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>;
-export const UpdateEstadoVendedoraDocument = gql`
-    mutation UpdateEstadoVendedora($input: UpdateEstadoVendedoraInput) {
-  UpdateEstadoVendedora(input: $input) {
-    vendedoraId
-    nombres
-    apellidos
-    link
-    estado
-    imagenPrincipal {
-      id
-      titulo
-      estado
-      url
-    }
-    created_at
-    updated_at
-  }
-}
-    `;
-export type UpdateEstadoVendedoraMutationFn = Apollo.MutationFunction<UpdateEstadoVendedoraMutation, UpdateEstadoVendedoraMutationVariables>;
-
-/**
- * __useUpdateEstadoVendedoraMutation__
- *
- * To run a mutation, you first call `useUpdateEstadoVendedoraMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateEstadoVendedoraMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateEstadoVendedoraMutation, { data, loading, error }] = useUpdateEstadoVendedoraMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateEstadoVendedoraMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEstadoVendedoraMutation, UpdateEstadoVendedoraMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateEstadoVendedoraMutation, UpdateEstadoVendedoraMutationVariables>(UpdateEstadoVendedoraDocument, options);
-      }
-export type UpdateEstadoVendedoraMutationHookResult = ReturnType<typeof useUpdateEstadoVendedoraMutation>;
-export type UpdateEstadoVendedoraMutationResult = Apollo.MutationResult<UpdateEstadoVendedoraMutation>;
-export type UpdateEstadoVendedoraMutationOptions = Apollo.BaseMutationOptions<UpdateEstadoVendedoraMutation, UpdateEstadoVendedoraMutationVariables>;
-export const UpdateVendedoraDocument = gql`
-    mutation UpdateVendedora($input: VendedoraInput!) {
-  UpdateVendedora(input: $input) {
-    vendedoraId
-    nombres
-    apellidos
-    link
-    estado
-    imagenPrincipal {
-      id
-      titulo
-      estado
-      url
-    }
-    created_at
-    updated_at
-  }
-}
-    `;
-export type UpdateVendedoraMutationFn = Apollo.MutationFunction<UpdateVendedoraMutation, UpdateVendedoraMutationVariables>;
-
-/**
- * __useUpdateVendedoraMutation__
- *
- * To run a mutation, you first call `useUpdateVendedoraMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateVendedoraMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateVendedoraMutation, { data, loading, error }] = useUpdateVendedoraMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateVendedoraMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVendedoraMutation, UpdateVendedoraMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateVendedoraMutation, UpdateVendedoraMutationVariables>(UpdateVendedoraDocument, options);
-      }
-export type UpdateVendedoraMutationHookResult = ReturnType<typeof useUpdateVendedoraMutation>;
-export type UpdateVendedoraMutationResult = Apollo.MutationResult<UpdateVendedoraMutation>;
-export type UpdateVendedoraMutationOptions = Apollo.BaseMutationOptions<UpdateVendedoraMutation, UpdateVendedoraMutationVariables>;
 export const CreateSliderDocument = gql`
     mutation CreateSlider($input: SliderInput!) {
   CreateSlider(input: $input) {
@@ -4764,64 +4453,33 @@ export type GetAllImagenesQueryResult = Apollo.QueryResult<GetAllImagenesQuery, 
 export const GetAllPedidosDocument = gql`
     query GetAllPedidos($numeroPagina: Int, $pagina: Int) {
   GetAllPedidos(numeroPagina: $numeroPagina, pagina: $pagina) {
-    numeroTotal
     data {
-      pedidoId
+      DetallePedido {
+        cantidad
+        detallePedidoId
+        pedidoId
+        imagenPrincipal
+        precio
+        productoId
+        titulo
+        total
+      }
       fechaPedido
       estado
-      visto
-      tipoPago
-      tipoVenta
-      medioPago
-      numeroOperacion
-      tipoEnvio
-      precioEnvio
+      Usuario {
+        nombres
+        numeroDocumento
+        apellidos
+        email
+      }
       precioTotal
       voucher
-      ticketPdf
-      direccionEnvio
-      usuarioId
-      Usuario {
-        id
-        tipoUsuario
-        tipoDocumento
-        numeroDocumento
-        genero
-        nombres
-        apellidos
-        celular
-        fechaNacimiento
-        foto
-        email
-        apiToken
-        customer_id
-      }
-      DetallePedido {
-        detallePedidoId
-        titulo
-        imagenPrincipal
-        cantidad
-        precio
-        total
-        pedidoId
-        productoId
-      }
-      DireccionEnvio {
-        direccionEnvioId
-        email
-        celular
-        DeparCodi
-        ProvCodi
-        DistCodi
-        direccion
-        nombreAgencia
-      }
-      Recibo {
-        reciboId
-        ruc
-        razonSocial
-      }
+      visto
+      tipoVenta
+      pedidoId
+      medioPago
     }
+    numeroTotal
   }
 }
     `;
@@ -4854,98 +4512,3 @@ export function useGetAllPedidosLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetAllPedidosQueryHookResult = ReturnType<typeof useGetAllPedidosQuery>;
 export type GetAllPedidosLazyQueryHookResult = ReturnType<typeof useGetAllPedidosLazyQuery>;
 export type GetAllPedidosQueryResult = Apollo.QueryResult<GetAllPedidosQuery, GetAllPedidosQueryVariables>;
-export const GetAllVendedorasDocument = gql`
-    query GetAllVendedoras($estado: String) {
-  GetAllVendedoras(estado: $estado) {
-    numeroTotal
-    data {
-      vendedoraId
-      nombres
-      apellidos
-      link
-      estado
-      imagenPrincipal {
-        id
-        titulo
-        estado
-        url
-      }
-      created_at
-      updated_at
-    }
-  }
-}
-    `;
-
-/**
- * __useGetAllVendedorasQuery__
- *
- * To run a query within a React component, call `useGetAllVendedorasQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllVendedorasQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAllVendedorasQuery({
- *   variables: {
- *      estado: // value for 'estado'
- *   },
- * });
- */
-export function useGetAllVendedorasQuery(baseOptions?: Apollo.QueryHookOptions<GetAllVendedorasQuery, GetAllVendedorasQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllVendedorasQuery, GetAllVendedorasQueryVariables>(GetAllVendedorasDocument, options);
-      }
-export function useGetAllVendedorasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllVendedorasQuery, GetAllVendedorasQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllVendedorasQuery, GetAllVendedorasQueryVariables>(GetAllVendedorasDocument, options);
-        }
-export type GetAllVendedorasQueryHookResult = ReturnType<typeof useGetAllVendedorasQuery>;
-export type GetAllVendedorasLazyQueryHookResult = ReturnType<typeof useGetAllVendedorasLazyQuery>;
-export type GetAllVendedorasQueryResult = Apollo.QueryResult<GetAllVendedorasQuery, GetAllVendedorasQueryVariables>;
-export const GetVendedoraIdDocument = gql`
-    query GetVendedoraId($vendedoraId: Int) {
-  GetVendedoraId(vendedoraId: $vendedoraId) {
-    vendedoraId
-    nombres
-    apellidos
-    link
-    estado
-    imagenPrincipal {
-      id
-      titulo
-      estado
-      url
-    }
-  }
-}
-    `;
-
-/**
- * __useGetVendedoraIdQuery__
- *
- * To run a query within a React component, call `useGetVendedoraIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetVendedoraIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetVendedoraIdQuery({
- *   variables: {
- *      vendedoraId: // value for 'vendedoraId'
- *   },
- * });
- */
-export function useGetVendedoraIdQuery(baseOptions?: Apollo.QueryHookOptions<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>(GetVendedoraIdDocument, options);
-      }
-export function useGetVendedoraIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>(GetVendedoraIdDocument, options);
-        }
-export type GetVendedoraIdQueryHookResult = ReturnType<typeof useGetVendedoraIdQuery>;
-export type GetVendedoraIdLazyQueryHookResult = ReturnType<typeof useGetVendedoraIdLazyQuery>;
-export type GetVendedoraIdQueryResult = Apollo.QueryResult<GetVendedoraIdQuery, GetVendedoraIdQueryVariables>;

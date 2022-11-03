@@ -1,8 +1,4 @@
-import {
-  useGetAllPedidosQuery,
-  useUpdateEstadoPedidoMutation,
-  useUpdateVistoPedidoMutation
-} from '../generated/graphql'
+import { useGetAllPedidosQuery } from '../generated/graphql'
 
 /* interface ICreateProducto {
   titulo: string
@@ -49,7 +45,7 @@ export interface IUpdateEstadoPedido {
   estado: string
 }
 export const usePedidos = (input = { pagina: 1, numeroPagina: 10 }) => {
-  const { data, loading, refetch } = useGetAllPedidosQuery({
+  const { data, loading } = useGetAllPedidosQuery({
     fetchPolicy: 'network-only',
     variables: {
       ...input
@@ -58,44 +54,6 @@ export const usePedidos = (input = { pagina: 1, numeroPagina: 10 }) => {
 
   const db = data?.GetAllPedidos?.data ?? []
   const nTotal = data?.GetAllPedidos?.numeroTotal ?? 0
-
-  const [UpdateVistoPedido, { loading: loadingUpdateVistoPedido }] = useUpdateVistoPedidoMutation()
-
-  const updateVistoPedido = async ({ pedidoId, visto }: IUpdateVistoPedido) => {
-    try {
-      await UpdateVistoPedido({
-        variables: {
-          input: {
-            pedidoId,
-            visto
-          }
-        }
-      })
-      refetch()
-      return { ok: true }
-    } catch (error: any) {
-      return { ok: false, error: 'Error no se pudo actualizar ver pedido' }
-    }
-  }
-
-  const [UpdateEstadoPedido, { loading: loadingUpdateEstado }] = useUpdateEstadoPedidoMutation()
-
-  const updateEstadoPedido = async ({ pedidoId, estado }: IUpdateEstadoPedido) => {
-    try {
-      await UpdateEstadoPedido({
-        variables: {
-          input: {
-            pedidoId,
-            estado
-          }
-        }
-      })
-      refetch()
-      return { ok: true }
-    } catch (error: any) {
-      return { ok: false, error: 'Error no se pudo actualizar el estado' }
-    }
-  }
 
   /*
 
@@ -184,11 +142,7 @@ export const usePedidos = (input = { pagina: 1, numeroPagina: 10 }) => {
   return {
     loading,
     db,
-    nTotal,
-    updateVistoPedido,
-    loadingUpdateVistoPedido,
-    updateEstadoPedido,
-    loadingUpdateEstado
+    nTotal
     /*  createProducto,
      loadingCreate,
      deleteProducto,
