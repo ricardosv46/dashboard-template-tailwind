@@ -1,5 +1,19 @@
-query GetAllPedidos($numeroPagina: Int, $pagina: Int) {
-  GetAllPedidos(numeroPagina: $numeroPagina, pagina: $pagina) {
+query GetAllPedidos(
+  $numeroPagina: Int
+  $pagina: Int
+  $FechaInicio: String
+  $FechaFin: String
+  $nombreCliente: String
+  $email: String
+) {
+  GetAllPedidos(
+    numeroPagina: $numeroPagina
+    pagina: $pagina
+    FechaInicio: $FechaInicio
+    FechaFin: $FechaFin
+    nombreCliente: $nombreCliente
+    email: $email
+  ) {
     data {
       DetallePedido {
         cantidad

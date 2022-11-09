@@ -8,7 +8,7 @@ const Aviso = ({ fecha, visto }: IProps) => {
   return (
     <>
       {show && (
-        <span className="bg-blue-600 p-1 rounded-xl text-[12px] text-white font-normal ml-2">
+        <span className="bg-blue-600 px-2 py-[1px] rounded-xl text-[11px] text-white font-normal ml-2">
           Nuevo
         </span>
       )}

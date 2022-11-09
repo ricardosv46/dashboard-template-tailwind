@@ -141,7 +141,7 @@ export const useProductos = ({
 
   const [UpdateProducto, { loading: loadingUpdate }] = useUpdateProductoMutation({
     onError: (e) => {
-      e.graphQLErrors[0].message
+      console.log(e.graphQLErrors[0].message)
     }
   })
 

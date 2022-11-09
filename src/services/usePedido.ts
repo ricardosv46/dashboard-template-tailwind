@@ -1,4 +1,19 @@
-import { useGetAllPedidosQuery } from '../generated/graphql'
+import {
+  useGetAllPedidosQuery,
+  useUpdateEstadoPedidoMutation,
+  useUpdateVistoPedidoMutation
+} from '../generated/graphql'
+
+// Interface general
+
+interface IGeneralUsePedido {
+  pagina?: any
+  numeroPagina?: any
+  email?: any
+  FechaInicio?: any
+  FechaFin?: any
+  nombreCliente?: any
+}
 
 /* interface ICreateProducto {
   titulo: string
@@ -36,7 +51,7 @@ export interface IDeleteProducto {
 } */
 
 export interface IUpdateVistoPedido {
-  pedidoId: string
+  pedidoId: string | undefined
   visto: string
 }
 
@@ -44,104 +59,80 @@ export interface IUpdateEstadoPedido {
   pedidoId: string
   estado: string
 }
-export const usePedidos = (input = { pagina: 1, numeroPagina: 10 }) => {
-  const { data, loading } = useGetAllPedidosQuery({
+export const usePedidos = ({
+  pagina = 1,
+  numeroPagina = 10,
+  email = '',
+  FechaInicio = '',
+  FechaFin = '',
+  nombreCliente = ''
+}: IGeneralUsePedido) => {
+  const { data, loading, refetch } = useGetAllPedidosQuery({
     fetchPolicy: 'network-only',
     variables: {
-      ...input
+      pagina,
+      email,
+      FechaFin,
+      FechaInicio,
+      nombreCliente,
+      numeroPagina
     }
   })
 
   const db = data?.GetAllPedidos?.data ?? []
   const nTotal = data?.GetAllPedidos?.numeroTotal ?? 0
 
-  /*
+  // actualizar el pedido
+  const [updateEstadoPedidoMutation] = useUpdateEstadoPedidoMutation({
+    onError: (e) => {
+      console.log(e.graphQLErrors[0].message)
+    }
+  })
+  const updateEstadoPedido = async ({ pedidoId, estado }: IUpdateEstadoPedido) => {
+    try {
+      await updateEstadoPedidoMutation({
+        variables: {
+          input: {
+            pedidoId,
+            estado
+          }
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo actualizar el estado' }
+    }
+  }
 
-   const [UpdateProducto, { loading: loadingUpdate }] = useUpdateProductoMutation()
-
-   const updateProducto = async ({
-     productoId,
-     titulo,
-     descripcionCorta,
-     descripcionLarga,
-     precioReal,
-     precioOferta,
-     stockMinimo,
-     stockReal,
-     imagenPrincipal,
-     imagenSecundaria,
-     galeria,
-     keywords,
-     categoriaProductoId
-   }: IUpdateProducto) => {
-     try {
-       await UpdateProducto({
-         variables: {
-           input: {
-             productoId,
-             titulo,
-             descripcionCorta,
-             descripcionLarga,
-             precioReal,
-             precioOferta,
-             stockMinimo,
-             stockReal,
-             imagenPrincipal,
-             imagenSecundaria,
-             galeria,
-             keywords,
-             categoriaProductoId
-           }
-         }
-       })
-       refetch()
-       return { ok: true }
-     } catch (error: any) {
-       return { ok: false, error: 'Error no se pudo actualizar el producto' }
-     }
-   }
-
-   const [UpdateDestacadoProducto, { loading: loadingUpdateDestacado }] = useUpdateDestacadoProductoMutation()
-
-   const updateDestacadoProducto = async ({
-     productoId,
-     destacado
-   }: IUpdateDestacadoProducto) => {
-     try {
-       await UpdateDestacadoProducto({
-         variables: {
-           input: {
-             productoId,
-             destacado
-           }
-         }
-       })
-       refetch()
-       return { ok: true }
-     } catch (error: any) {
-       return { ok: false, error: 'Error no se pudo actualizar el destacado' }
-     }
-   }
-
-   const [DeleteProducto, { loading: loadingDelete }] = useDeleteProductoMutation()
-
-   const deleteProducto = async ({ productoId }: IDeleteProducto) => {
-     try {
-       await DeleteProducto({
-         variables: {
-           productoId
-         }
-       })
-       refetch()
-       return { ok: true }
-     } catch (error: any) {
-       return { ok: false, error: 'Error no se pudo eliminar el Producto' }
-     }
-   } */
+  // actualizar visto del pedido
+  const [updateVistoPedidoMutation] = useUpdateVistoPedidoMutation({
+    onError: (e) => {
+      console.log(e.graphQLErrors[0].message)
+    }
+  })
+  const updateVistoPedido = async ({ pedidoId, visto }: IUpdateVistoPedido) => {
+    try {
+      await updateVistoPedidoMutation({
+        variables: {
+          input: {
+            pedidoId,
+            visto
+          }
+        }
+      })
+      refetch()
+      return { ok: true }
+    } catch (error: any) {
+      return { ok: false, error: 'Error no se pudo actualizar el estado' }
+    }
+  }
 
   return {
     loading,
     db,
+    updateEstadoPedido,
+    updateVistoPedido,
     nTotal
     /*  createProducto,
      loadingCreate,

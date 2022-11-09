@@ -3,8 +3,8 @@ import Sidebar from '@components/layout/Sidebar'
 import Spinner from '@components/shared/Spinner/Spinner'
 import WelcomePage from '@pages/home/WelcomePage'
 import NotFound from '@pages/NotFound'
-import { Suspense, useEffect, useMemo } from 'react'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Suspense, useMemo } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import { getRoutes } from './routes'
 
 const HomeRouter = () => {

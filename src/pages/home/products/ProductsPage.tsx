@@ -28,6 +28,7 @@ const ProductsPage = () => {
     pagina: 1,
     numeroPagina: 10
   })
+  // eslint-disable-next-line no-unused-vars
   const { values, errors, touched, setFieldValue, ...form } = useFormik({
     onSubmit: () => {},
     initialValues: {

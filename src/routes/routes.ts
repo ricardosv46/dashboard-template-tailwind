@@ -39,7 +39,7 @@ const EditPassword = lazy(() => import('../pages/home/account/EditPassword'))
 const EditProfile = lazy(() => import('../pages/home/account/EditProfile'))
 // vista Pedidos
 const OrderPage = lazy(() => import('../pages/home/pedidos/OrderPage'))
-
+const DetallePedido = lazy(() => import('../pages/home/pedidos/DetallePedido'))
 export const homeRoutes: Route[] = [
   {
     icon: IconImage,
@@ -208,10 +208,10 @@ export const homeRoutes: Route[] = [
       paths: [
         {
           icon: IconOptions,
-          name: 'Crear Slider',
-          path: '/sliders/create-slider',
+          name: 'Detalle pedido',
+          path: '/pedidos/detalle-pedido/:id',
           to: '',
-          component: CreateSlider,
+          component: DetallePedido,
           render: false
         },
         {

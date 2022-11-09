@@ -1,3 +1,6 @@
+/* eslint-disable indent */
+/* eslint-disable spaced-comment */
+/* eslint-disable multiline-ternary */
 import {
   useId,
   useState,

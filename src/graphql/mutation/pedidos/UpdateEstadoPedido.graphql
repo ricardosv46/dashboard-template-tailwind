@@ -1,0 +1,6 @@
+mutation UpdateEstadoPedido($input: UpdateEstadoPedidoInput!) {
+  UpdateEstadoPedido(input: $input) {
+    pedidoId
+    estado
+  }
+}

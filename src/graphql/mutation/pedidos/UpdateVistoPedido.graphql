@@ -1,1 +1,6 @@
-
+mutation UpdateVistoPedido($input: UpdateVistoPedidoInput!) {
+  UpdateVistoPedido(input: $input) {
+    visto
+    pedidoId
+  }
+}

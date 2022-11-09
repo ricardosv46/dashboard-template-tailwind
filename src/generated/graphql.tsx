@@ -1052,8 +1052,10 @@ export type Query = {
   GetAllSoportes: GetAllSoportes;
   GetAllSuscriptores: GetAllSuscriptores;
   GetAllTarjetaUsuario?: Maybe<Array<TarjetasUsuarios>>;
+  GetAllUsuarioMesCompraron: GetAllArrayUsuarios;
   GetAllUsuarios: GetAllUsuarios;
   GetAllUsuariosRegistradosUltimoMes: GetAllArrayUsuarios;
+  GetAllVentasAnio: Array<Maybe<VentasAnio>>;
   GetBancoId: Banco;
   GetBlogSlug: Blog;
   GetCategoriaBlogSlug: CategoriaBlog;
@@ -1168,6 +1170,10 @@ export type QueryGetAllPedidoUserArgs = {
 
 
 export type QueryGetAllPedidosArgs = {
+  FechaFin?: InputMaybe<Scalars['String']>;
+  FechaInicio?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  nombreCliente?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
 };
@@ -1251,6 +1257,15 @@ export type QueryGetAllSuscriptoresArgs = {
 
 export type QueryGetAllTarjetaUsuarioArgs = {
   customer_id?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetAllUsuarioMesCompraronArgs = {
+  FechaFin?: InputMaybe<Scalars['String']>;
+  FechaInicio?: InputMaybe<Scalars['String']>;
+  categoriaSlug?: InputMaybe<Scalars['String']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -1521,6 +1536,7 @@ export type User = {
   __typename?: 'User';
   apellidos?: Maybe<Scalars['String']>;
   apiToken?: Maybe<Scalars['String']>;
+  cantidadComprada?: Maybe<Scalars['Int']>;
   celular?: Maybe<Scalars['String']>;
   customer_id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -1529,6 +1545,7 @@ export type User = {
   foto?: Maybe<Scalars['String']>;
   genero?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['ID']>;
+  montoTotalComprado?: Maybe<Scalars['Float']>;
   nombres?: Maybe<Scalars['String']>;
   numeroDocumento?: Maybe<Scalars['String']>;
   tipoDocumento?: Maybe<Scalars['String']>;
@@ -1548,6 +1565,13 @@ export type UserInput = {
   password?: InputMaybe<Scalars['String']>;
   tipoDocumento?: InputMaybe<Scalars['String']>;
   tipoUsuario?: InputMaybe<Scalars['Int']>;
+};
+
+export type VentasAnio = {
+  __typename?: 'VentasAnio';
+  cantidad?: Maybe<Scalars['Int']>;
+  mes?: Maybe<Scalars['String']>;
+  monto?: Maybe<Scalars['Float']>;
 };
 
 export type Reniec = {
@@ -1776,6 +1800,20 @@ export type DeleteImagenMutationVariables = Exact<{
 
 export type DeleteImagenMutation = { __typename?: 'Mutation', DeleteImagen: string };
 
+export type UpdateEstadoPedidoMutationVariables = Exact<{
+  input: UpdateEstadoPedidoInput;
+}>;
+
+
+export type UpdateEstadoPedidoMutation = { __typename?: 'Mutation', UpdateEstadoPedido: { __typename?: 'Pedido', pedidoId?: string | null, estado?: string | null } };
+
+export type UpdateVistoPedidoMutationVariables = Exact<{
+  input: UpdateVistoPedidoInput;
+}>;
+
+
+export type UpdateVistoPedidoMutation = { __typename?: 'Mutation', UpdateVistoPedido: { __typename?: 'Pedido', visto?: number | null, pedidoId?: string | null } };
+
 export type UpdateBlogMutationVariables = Exact<{
   input: BlogInput;
 }>;
@@ -1935,6 +1973,10 @@ export type GetAllImagenesQuery = { __typename?: 'Query', GetAllImagenes?: { __t
 export type GetAllPedidosQueryVariables = Exact<{
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
+  FechaInicio?: InputMaybe<Scalars['String']>;
+  FechaFin?: InputMaybe<Scalars['String']>;
+  nombreCliente?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -3357,6 +3399,74 @@ export function useDeleteImagenMutation(baseOptions?: Apollo.MutationHookOptions
 export type DeleteImagenMutationHookResult = ReturnType<typeof useDeleteImagenMutation>;
 export type DeleteImagenMutationResult = Apollo.MutationResult<DeleteImagenMutation>;
 export type DeleteImagenMutationOptions = Apollo.BaseMutationOptions<DeleteImagenMutation, DeleteImagenMutationVariables>;
+export const UpdateEstadoPedidoDocument = gql`
+    mutation UpdateEstadoPedido($input: UpdateEstadoPedidoInput!) {
+  UpdateEstadoPedido(input: $input) {
+    pedidoId
+    estado
+  }
+}
+    `;
+export type UpdateEstadoPedidoMutationFn = Apollo.MutationFunction<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>;
+
+/**
+ * __useUpdateEstadoPedidoMutation__
+ *
+ * To run a mutation, you first call `useUpdateEstadoPedidoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEstadoPedidoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEstadoPedidoMutation, { data, loading, error }] = useUpdateEstadoPedidoMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateEstadoPedidoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>(UpdateEstadoPedidoDocument, options);
+      }
+export type UpdateEstadoPedidoMutationHookResult = ReturnType<typeof useUpdateEstadoPedidoMutation>;
+export type UpdateEstadoPedidoMutationResult = Apollo.MutationResult<UpdateEstadoPedidoMutation>;
+export type UpdateEstadoPedidoMutationOptions = Apollo.BaseMutationOptions<UpdateEstadoPedidoMutation, UpdateEstadoPedidoMutationVariables>;
+export const UpdateVistoPedidoDocument = gql`
+    mutation UpdateVistoPedido($input: UpdateVistoPedidoInput!) {
+  UpdateVistoPedido(input: $input) {
+    visto
+    pedidoId
+  }
+}
+    `;
+export type UpdateVistoPedidoMutationFn = Apollo.MutationFunction<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>;
+
+/**
+ * __useUpdateVistoPedidoMutation__
+ *
+ * To run a mutation, you first call `useUpdateVistoPedidoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateVistoPedidoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateVistoPedidoMutation, { data, loading, error }] = useUpdateVistoPedidoMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateVistoPedidoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>(UpdateVistoPedidoDocument, options);
+      }
+export type UpdateVistoPedidoMutationHookResult = ReturnType<typeof useUpdateVistoPedidoMutation>;
+export type UpdateVistoPedidoMutationResult = Apollo.MutationResult<UpdateVistoPedidoMutation>;
+export type UpdateVistoPedidoMutationOptions = Apollo.BaseMutationOptions<UpdateVistoPedidoMutation, UpdateVistoPedidoMutationVariables>;
 export const UpdateBlogDocument = gql`
     mutation updateBlog($input: BlogInput!) {
   updateBlog(input: $input) {
@@ -4451,8 +4561,15 @@ export type GetAllImagenesQueryHookResult = ReturnType<typeof useGetAllImagenesQ
 export type GetAllImagenesLazyQueryHookResult = ReturnType<typeof useGetAllImagenesLazyQuery>;
 export type GetAllImagenesQueryResult = Apollo.QueryResult<GetAllImagenesQuery, GetAllImagenesQueryVariables>;
 export const GetAllPedidosDocument = gql`
-    query GetAllPedidos($numeroPagina: Int, $pagina: Int) {
-  GetAllPedidos(numeroPagina: $numeroPagina, pagina: $pagina) {
+    query GetAllPedidos($numeroPagina: Int, $pagina: Int, $FechaInicio: String, $FechaFin: String, $nombreCliente: String, $email: String) {
+  GetAllPedidos(
+    numeroPagina: $numeroPagina
+    pagina: $pagina
+    FechaInicio: $FechaInicio
+    FechaFin: $FechaFin
+    nombreCliente: $nombreCliente
+    email: $email
+  ) {
     data {
       DetallePedido {
         cantidad
@@ -4498,6 +4615,10 @@ export const GetAllPedidosDocument = gql`
  *   variables: {
  *      numeroPagina: // value for 'numeroPagina'
  *      pagina: // value for 'pagina'
+ *      FechaInicio: // value for 'FechaInicio'
+ *      FechaFin: // value for 'FechaFin'
+ *      nombreCliente: // value for 'nombreCliente'
+ *      email: // value for 'email'
  *   },
  * });
  */

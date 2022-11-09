@@ -14,8 +14,8 @@ interface Props {
 const PlantillaPage = ({ children, title, button, desc, goback = false }: Props) => {
   const router = useNavigate()
   return (
-    <div className="flex flex-col flex-1 p-10 ">
-      <div className="flex flex-col sm:flex-row gap-5 items-start mb-5">
+    <div className="flex flex-col flex-1 p-10">
+      <div className="flex flex-col sm:flex-row gap-5 items-start ">
         <div className="">
           <div className={classNames([goback ? 'flex items-center' : ''])}>
             {goback && (

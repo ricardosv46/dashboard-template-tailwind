@@ -20,7 +20,7 @@ import { useGetAllProductosRelacionadosQuery } from '../../../generated/graphql'
 const EditProduct = () => {
   const router = useNavigate()
   const { slug } = useParams()
-  const { db: dataCategoriaProducto, loading: locadingCategoria } = useCategoriaProductos({
+  const { db: dataCategoriaProducto } = useCategoriaProductos({
     estado: 'Activado'
   })
   const { updateProducto, loadingUpdate, loadingProductoSlug, dbProductoSlug } = useProductos({

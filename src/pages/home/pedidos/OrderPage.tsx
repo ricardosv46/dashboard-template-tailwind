@@ -6,16 +6,37 @@ import { usePedidos } from '@services/usePedido'
 import { useState } from 'react'
 import Aviso from './components/Aviso'
 import { recortarCadena, ordenarFecha } from '../../../helpers/helpers'
+import { ToggleSwitch } from '@components/shared/ToggleSwitch/ToggleSwitch'
+import { IconEye } from '@icons'
+import { useNavigate } from 'react-router-dom'
+import { Toast } from '@utils/Toast'
 const OrderPage = () => {
+  const router = useNavigate()
   const [state, setState] = useState({
     pagina: 1,
     numeroPagina: 10
   })
   // eslint-disable-next-line no-unused-vars
 
-  const { db: dataPedidos, loading, nTotal } = usePedidos(state)
-  console.log(dataPedidos)
+  const {
+    db: dataPedidos,
+    loading,
+    updateEstadoPedido,
+    nTotal
+  } = usePedidos({ email: '', FechaInicio: '', FechaFin: '', nombreCliente: '', ...state })
 
+  const handleUpdateEstado = (id: string, estado: string) => {
+    updateEstadoPedido({
+      pedidoId: id,
+      estado: estado === '1' ? '0' : '1'
+    }).then((res) => {
+      if (res?.ok) {
+        Toast({ type: 'success', message: 'Estado Actualizado Correctamente.' })
+      } else {
+        Toast({ type: 'error', message: res?.error! })
+      }
+    })
+  }
   return (
     <>
       <PlantillaPage title="Pedidos" desc="Desde aqui podras visualizar todos los pedidos">
@@ -69,10 +90,23 @@ const OrderPage = () => {
                   <td className={`${item.visto === 0 ? 'font-bold' : 'text-gray-400'} text-left`}>
                     S/. {item?.precioTotal}.00
                   </td>
-                  <td
-                    className={`${
-                      item.visto === 0 ? 'font-bold' : 'text-gray-400'
-                    } text-center`}></td>
+                  <td>
+                    <div className="flex justify-center ">
+                      <ToggleSwitch
+                        onClick={() => {
+                          handleUpdateEstado(item?.pedidoId!, item?.estado!)
+                        }}
+                        value={item.estado === '1'}
+                      />
+                    </div>
+                  </td>
+                  <td className="">
+                    <div
+                      className="flex justify-center cursor-pointer py-1"
+                      onClick={() => router(`detalle-pedido/${item.pedidoId}`)}>
+                      <IconEye className="w-5 h-4 text-primary-500" />
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
