@@ -1,4 +1,4 @@
-import {
+/*  import {
   useCreateVendedoraMutation,
   useDeleteVendedoraMutation,
   useGetAllVendedorasQuery,
@@ -161,4 +161,4 @@ export const useVendedoras = ({ estado = '', vendedoraId }: IProps) => {
     loadingVendedoraId,
     updateEstadoVendedora
   }
-}
+} */
