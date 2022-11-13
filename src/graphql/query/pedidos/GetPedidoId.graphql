@@ -1,0 +1,61 @@
+query GetPedidoId($pedidoId: Int) {
+  GetPedidoId(pedidoId: $pedidoId) {
+    DetallePedido {
+      cantidad
+      detallePedidoId
+      imagenPrincipal
+      pedidoId
+      precio
+      productoId
+      titulo
+      total
+    }
+    DireccionEnvio {
+      DeparCodi
+      DistCodi
+      ProvCodi
+      celular
+      direccion
+      direccionEnvioId
+      nombreAgencia
+      pedidoId
+    }
+    Recibo {
+      ruc
+      reciboId
+      razonSocial
+      pedidoId
+    }
+    Usuario {
+      apellidos
+      apiToken
+      celular
+      customer_id
+      email
+      estado
+      fechaNacimiento
+      foto
+      genero
+      id
+      nombres
+      numeroDocumento
+      tipoDocumento
+      tipoUsuario
+    }
+    direccionEnvio
+    estado
+    fechaPedido
+    medioPago
+    numeroOperacion
+    pedidoId
+    precioEnvio
+    precioTotal
+    ticketPdf
+    tipoEnvio
+    tipoPago
+    tipoVenta
+    usuarioId
+    visto
+    voucher
+  }
+}

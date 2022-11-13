@@ -1982,6 +1982,13 @@ export type GetAllPedidosQueryVariables = Exact<{
 
 export type GetAllPedidosQuery = { __typename?: 'Query', GetAllPedidos: { __typename?: 'GetAllPedidos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Pedido', fechaPedido?: any | null, estado?: string | null, precioTotal?: number | null, voucher?: string | null, visto?: number | null, tipoVenta?: string | null, pedidoId?: string | null, medioPago?: string | null, DetallePedido?: Array<{ __typename?: 'DetallePedido', cantidad?: number | null, detallePedidoId?: string | null, pedidoId?: number | null, imagenPrincipal?: string | null, precio?: number | null, productoId?: number | null, titulo?: string | null, total?: number | null }> | null, Usuario?: { __typename?: 'User', nombres?: string | null, numeroDocumento?: string | null, apellidos?: string | null, email?: string | null } | null }> | null } };
 
+export type GetPedidoIdQueryVariables = Exact<{
+  pedidoId?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetPedidoIdQuery = { __typename?: 'Query', GetPedidoId: { __typename?: 'Pedido', direccionEnvio?: string | null, estado?: string | null, fechaPedido?: any | null, medioPago?: string | null, numeroOperacion?: string | null, pedidoId?: string | null, precioEnvio?: number | null, precioTotal?: number | null, ticketPdf?: string | null, tipoEnvio?: string | null, tipoPago?: number | null, tipoVenta?: string | null, usuarioId?: number | null, visto?: number | null, voucher?: string | null, DetallePedido?: Array<{ __typename?: 'DetallePedido', cantidad?: number | null, detallePedidoId?: string | null, imagenPrincipal?: string | null, pedidoId?: number | null, precio?: number | null, productoId?: number | null, titulo?: string | null, total?: number | null }> | null, DireccionEnvio?: { __typename?: 'DireccionEnvio', DeparCodi?: number | null, DistCodi?: number | null, ProvCodi?: number | null, celular?: string | null, direccion?: string | null, direccionEnvioId?: string | null, nombreAgencia?: string | null, pedidoId?: number | null } | null, Recibo?: { __typename?: 'Recibo', ruc?: string | null, reciboId?: string | null, razonSocial?: string | null, pedidoId?: number | null } | null, Usuario?: { __typename?: 'User', apellidos?: string | null, apiToken?: string | null, celular?: string | null, customer_id?: string | null, email?: string | null, estado?: string | null, fechaNacimiento?: any | null, foto?: string | null, genero?: number | null, id?: string | null, nombres?: string | null, numeroDocumento?: string | null, tipoDocumento?: string | null, tipoUsuario?: number | null } | null } };
+
 
 export const DeleteSliderDocument = gql`
     mutation DeleteSlider($sliderId: Int!) {
@@ -4633,3 +4640,94 @@ export function useGetAllPedidosLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetAllPedidosQueryHookResult = ReturnType<typeof useGetAllPedidosQuery>;
 export type GetAllPedidosLazyQueryHookResult = ReturnType<typeof useGetAllPedidosLazyQuery>;
 export type GetAllPedidosQueryResult = Apollo.QueryResult<GetAllPedidosQuery, GetAllPedidosQueryVariables>;
+export const GetPedidoIdDocument = gql`
+    query GetPedidoId($pedidoId: Int) {
+  GetPedidoId(pedidoId: $pedidoId) {
+    DetallePedido {
+      cantidad
+      detallePedidoId
+      imagenPrincipal
+      pedidoId
+      precio
+      productoId
+      titulo
+      total
+    }
+    DireccionEnvio {
+      DeparCodi
+      DistCodi
+      ProvCodi
+      celular
+      direccion
+      direccionEnvioId
+      nombreAgencia
+      pedidoId
+    }
+    Recibo {
+      ruc
+      reciboId
+      razonSocial
+      pedidoId
+    }
+    Usuario {
+      apellidos
+      apiToken
+      celular
+      customer_id
+      email
+      estado
+      fechaNacimiento
+      foto
+      genero
+      id
+      nombres
+      numeroDocumento
+      tipoDocumento
+      tipoUsuario
+    }
+    direccionEnvio
+    estado
+    fechaPedido
+    medioPago
+    numeroOperacion
+    pedidoId
+    precioEnvio
+    precioTotal
+    ticketPdf
+    tipoEnvio
+    tipoPago
+    tipoVenta
+    usuarioId
+    visto
+    voucher
+  }
+}
+    `;
+
+/**
+ * __useGetPedidoIdQuery__
+ *
+ * To run a query within a React component, call `useGetPedidoIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPedidoIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPedidoIdQuery({
+ *   variables: {
+ *      pedidoId: // value for 'pedidoId'
+ *   },
+ * });
+ */
+export function useGetPedidoIdQuery(baseOptions?: Apollo.QueryHookOptions<GetPedidoIdQuery, GetPedidoIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPedidoIdQuery, GetPedidoIdQueryVariables>(GetPedidoIdDocument, options);
+      }
+export function useGetPedidoIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPedidoIdQuery, GetPedidoIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPedidoIdQuery, GetPedidoIdQueryVariables>(GetPedidoIdDocument, options);
+        }
+export type GetPedidoIdQueryHookResult = ReturnType<typeof useGetPedidoIdQuery>;
+export type GetPedidoIdLazyQueryHookResult = ReturnType<typeof useGetPedidoIdLazyQuery>;
+export type GetPedidoIdQueryResult = Apollo.QueryResult<GetPedidoIdQuery, GetPedidoIdQueryVariables>;

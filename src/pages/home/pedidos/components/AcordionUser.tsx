@@ -1,7 +1,7 @@
 import { IconChevronUp } from '@icons'
 import { useState } from 'react'
 
-const AcordionUser = () => {
+const AcordionUser = ({ data }: any) => {
   const [show, setShow] = useState(false)
   return (
     <div className="w-full pb-4">
@@ -18,8 +18,25 @@ const AcordionUser = () => {
           <IconChevronUp />
         </p>
       </div>
-      <div className={`${show ? 'block' : 'hidden'}  border shadow-md pl-3 mt-3 py-3  rounded-md `}>
-        texto
+      <div
+        className={`${
+          show ? 'block' : 'hidden'
+        } text-sm text-gray-700 border shadow-md pl-3 mt-3 py-3  rounded-md `}>
+        <div className="flex gap-2">
+          <p className=" font-bold"> Nombres: </p> <p>{data?.Usuario?.nombres}</p>
+        </div>
+        <div className="flex gap-2 mt-3">
+          <p className=" font-bold"> Apellidos: </p> <p>{data?.Usuario?.apellidos}</p>
+        </div>
+        <div className="flex gap-2 mt-3">
+          <p className=" font-bold"> D.N.I: </p> <p>{data?.Usuario?.numeroDocumento}</p>
+        </div>
+        <div className="flex gap-2 mt-3">
+          <p className=" font-bold"> Correo: </p> <p>{data?.Usuario?.email}</p>
+        </div>
+        <div className="flex gap-2 mt-3">
+          <p className=" font-bold"> Celular: </p> <p>{data?.Usuario?.celular}</p>
+        </div>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import {
   useGetAllPedidosQuery,
+  useGetPedidoIdQuery,
   useUpdateEstadoPedidoMutation,
   useUpdateVistoPedidoMutation
 } from '../generated/graphql'
@@ -13,6 +14,7 @@ interface IGeneralUsePedido {
   FechaInicio?: any
   FechaFin?: any
   nombreCliente?: any
+  pedidoId?: any
 }
 
 /* interface ICreateProducto {
@@ -65,7 +67,8 @@ export const usePedidos = ({
   email = '',
   FechaInicio = '',
   FechaFin = '',
-  nombreCliente = ''
+  nombreCliente = '',
+  pedidoId
 }: IGeneralUsePedido) => {
   const { data, loading, refetch } = useGetAllPedidosQuery({
     fetchPolicy: 'network-only',
@@ -128,9 +131,22 @@ export const usePedidos = ({
     }
   }
 
+  // obtener detalle del pedido id
+
+  const { data: dataDetalle, loading: loadingDetalle } = useGetPedidoIdQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      pedidoId
+    }
+  })
+
+  const dbDetalle = dataDetalle?.GetPedidoId ?? []
+
   return {
     loading,
     db,
+    dbDetalle,
+    loadingDetalle,
     updateEstadoPedido,
     updateVistoPedido,
     nTotal

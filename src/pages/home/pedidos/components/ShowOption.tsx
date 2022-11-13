@@ -1,23 +1,22 @@
-import React from 'react'
 import OptionUser from './OptionUser'
 import OptionProducts from './OptionProducts'
 import OptionAddress from './OptionAddress'
 import OptionPayment from './OptionPayment'
-
 interface IProps {
   option: number
+  data: any
 }
 
-const ShowOption = ({ option = 1 }: IProps) => {
+const ShowOption = ({ option = 1, data }: IProps) => {
   switch (option) {
     case 1:
-      return <OptionUser />
+      return <OptionUser data={data} />
     case 2:
-      return <OptionProducts />
+      return <OptionProducts data={data} />
     case 3:
-      return <OptionAddress />
+      return <OptionAddress data={data} />
     case 4:
-      return <OptionPayment />
+      return <OptionPayment data={data} />
     default:
       break
   }
@@ -27,5 +26,4 @@ const ShowOption = ({ option = 1 }: IProps) => {
     </div>
   )
 }
-
 export default ShowOption

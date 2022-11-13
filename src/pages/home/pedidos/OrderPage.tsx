@@ -88,7 +88,7 @@ const OrderPage = () => {
                     {item?.medioPago}
                   </td>
                   <td className={`${item.visto === 0 ? 'font-bold' : 'text-gray-400'} text-left`}>
-                    S/. {item?.precioTotal}.00
+                    S/. {item?.precioTotal}
                   </td>
                   <td>
                     <div className="flex justify-center ">

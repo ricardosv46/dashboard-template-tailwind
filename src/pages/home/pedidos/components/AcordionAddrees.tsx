@@ -1,7 +1,7 @@
 import { IconChevronUp } from '@icons'
 import { useState } from 'react'
 
-const AcordionAddrees = () => {
+const AcordionAddrees = ({ data }: any) => {
   const [show, setShow] = useState(false)
   return (
     <div className="w-full pb-4">
@@ -19,7 +19,7 @@ const AcordionAddrees = () => {
         </p>
       </div>
       <div className={`${show ? 'block' : 'hidden'}  border shadow-md pl-3 mt-3 py-3  rounded-md `}>
-        texto
+        <p className="text-gray-700 text-sm">* {data?.direccionEnvio}</p>
       </div>
     </div>
   )
