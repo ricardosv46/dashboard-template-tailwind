@@ -136,3 +136,8 @@
 // }
 
 // export default SellersPage
+
+const SellersPage = () => {
+  return <h1>test</h1>
+}
+export default SellersPage

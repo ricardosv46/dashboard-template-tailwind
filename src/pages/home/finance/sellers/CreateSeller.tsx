@@ -100,3 +100,8 @@
 // }
 
 // export default CreateSeller
+
+const CreateSeller = () => {
+  return <h1>test</h1>
+}
+export default CreateSeller
