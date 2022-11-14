@@ -23,9 +23,8 @@ const AcordionProducts = ({ data }: any) => {
         {data?.DetallePedido?.map((product: any, index: any) => {
           suma = suma + product.total
           return (
-            <>
+            <div key={product.detallePedidoId}>
               <div
-                key={product.detallePedidoId}
                 className="flex justify-between
                items-start text-gray-700 py-2">
                 <div className="flex gap-1 w-full">
@@ -48,7 +47,7 @@ const AcordionProducts = ({ data }: any) => {
                 </div>
               </div>
               {!(data?.DetallePedido?.length - 1 === index) && <hr />}
-            </>
+            </div>
           )
         })}
         <div className="w-full h-[1.5px] bg-primary-600 my-2"></div>

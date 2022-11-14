@@ -15,8 +15,6 @@ const DetallePedido = () => {
   const [option, setOption] = useState(1)
   const { id } = useParams()
   const { updateVistoPedido, dbDetalle, loadingDetalle }: any = usePedidos({ pedidoId: id })
-  console.log(dbDetalle)
-
   useEffect(() => {
     if (dbDetalle?.visto === 0 || dbDetalle?.visto === '0') {
       updateVistoPedido({
