@@ -1892,6 +1892,21 @@ export type GetAllSliderQueryVariables = Exact<{
 
 export type GetAllSliderQuery = { __typename?: 'Query', GetAllSliders: { __typename?: 'GetAllSliders', numeroTotal?: number | null, data?: Array<{ __typename?: 'Slider', sliderId?: string | null, titulo?: string | null, tipoLink?: string | null, link?: string | null, estado?: string | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, url?: string | null } | null }> | null } };
 
+export type GetAllSuscriptoresQueryVariables = Exact<{
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  pagina?: InputMaybe<Scalars['Int']>;
+  FechaInicio?: InputMaybe<Scalars['String']>;
+  FechaFin?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllSuscriptoresQuery = { __typename?: 'Query', GetAllSuscriptores: { __typename?: 'GetAllSuscriptores', numeroTotal?: number | null, data?: Array<{ __typename?: 'Suscriptores', suscriptorId?: string | null, nombres?: string | null, correo?: string | null }> | null } };
+
+export type GetAllVentasAnioQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllVentasAnioQuery = { __typename?: 'Query', GetAllVentasAnio: Array<{ __typename?: 'VentasAnio', mes?: string | null, monto?: number | null, cantidad?: number | null } | null> };
+
 export type GetBancoIdQueryVariables = Exact<{
   bancoId?: InputMaybe<Scalars['Int']>;
 }>;
@@ -4017,6 +4032,90 @@ export function useGetAllSliderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllSliderQueryHookResult = ReturnType<typeof useGetAllSliderQuery>;
 export type GetAllSliderLazyQueryHookResult = ReturnType<typeof useGetAllSliderLazyQuery>;
 export type GetAllSliderQueryResult = Apollo.QueryResult<GetAllSliderQuery, GetAllSliderQueryVariables>;
+export const GetAllSuscriptoresDocument = gql`
+    query GetAllSuscriptores($numeroPagina: Int, $pagina: Int, $FechaInicio: String, $FechaFin: String) {
+  GetAllSuscriptores(
+    numeroPagina: $numeroPagina
+    pagina: $pagina
+    FechaInicio: $FechaInicio
+    FechaFin: $FechaFin
+  ) {
+    numeroTotal
+    data {
+      suscriptorId
+      nombres
+      correo
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllSuscriptoresQuery__
+ *
+ * To run a query within a React component, call `useGetAllSuscriptoresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllSuscriptoresQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllSuscriptoresQuery({
+ *   variables: {
+ *      numeroPagina: // value for 'numeroPagina'
+ *      pagina: // value for 'pagina'
+ *      FechaInicio: // value for 'FechaInicio'
+ *      FechaFin: // value for 'FechaFin'
+ *   },
+ * });
+ */
+export function useGetAllSuscriptoresQuery(baseOptions?: Apollo.QueryHookOptions<GetAllSuscriptoresQuery, GetAllSuscriptoresQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllSuscriptoresQuery, GetAllSuscriptoresQueryVariables>(GetAllSuscriptoresDocument, options);
+      }
+export function useGetAllSuscriptoresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllSuscriptoresQuery, GetAllSuscriptoresQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllSuscriptoresQuery, GetAllSuscriptoresQueryVariables>(GetAllSuscriptoresDocument, options);
+        }
+export type GetAllSuscriptoresQueryHookResult = ReturnType<typeof useGetAllSuscriptoresQuery>;
+export type GetAllSuscriptoresLazyQueryHookResult = ReturnType<typeof useGetAllSuscriptoresLazyQuery>;
+export type GetAllSuscriptoresQueryResult = Apollo.QueryResult<GetAllSuscriptoresQuery, GetAllSuscriptoresQueryVariables>;
+export const GetAllVentasAnioDocument = gql`
+    query GetAllVentasAnio {
+  GetAllVentasAnio {
+    mes
+    monto
+    cantidad
+  }
+}
+    `;
+
+/**
+ * __useGetAllVentasAnioQuery__
+ *
+ * To run a query within a React component, call `useGetAllVentasAnioQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllVentasAnioQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllVentasAnioQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllVentasAnioQuery(baseOptions?: Apollo.QueryHookOptions<GetAllVentasAnioQuery, GetAllVentasAnioQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllVentasAnioQuery, GetAllVentasAnioQueryVariables>(GetAllVentasAnioDocument, options);
+      }
+export function useGetAllVentasAnioLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllVentasAnioQuery, GetAllVentasAnioQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllVentasAnioQuery, GetAllVentasAnioQueryVariables>(GetAllVentasAnioDocument, options);
+        }
+export type GetAllVentasAnioQueryHookResult = ReturnType<typeof useGetAllVentasAnioQuery>;
+export type GetAllVentasAnioLazyQueryHookResult = ReturnType<typeof useGetAllVentasAnioLazyQuery>;
+export type GetAllVentasAnioQueryResult = Apollo.QueryResult<GetAllVentasAnioQuery, GetAllVentasAnioQueryVariables>;
 export const GetBancoIdDocument = gql`
     query GetBancoId($bancoId: Int) {
   GetBancoId(bancoId: $bancoId) {

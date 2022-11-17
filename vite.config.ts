@@ -23,7 +23,8 @@ export default defineConfig({
       '@validation': resolve(__dirname, './src/validation'),
       '@assets': resolve(__dirname, './src/assets'),
       '@data': resolve(__dirname, './src/data'),
-      '@routes': resolve(__dirname, './src/routes')
+      '@routes': resolve(__dirname, './src/routes'),
+      '@helpers': resolve(__dirname, './src/helpers')
     }
   }
 })

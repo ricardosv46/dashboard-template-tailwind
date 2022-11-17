@@ -2,6 +2,8 @@ import { SVGProps } from 'react'
 
 const IconOrder = (props: SVGProps<SVGSVGElement>) => (
   <svg
+    stroke="currentColor"
+    fill="currentColor"
     data-name="레이어 1"
     id="레이어_1"
     viewBox="0 0 40 40"

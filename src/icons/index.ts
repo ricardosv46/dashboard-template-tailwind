@@ -28,6 +28,8 @@ import IconCart from './IconCart'
 import IconBank from './IconBank'
 import IconMoney from './IconMoney'
 import IconUser from './IconUser'
+import IconStatsUp from './IconStatsUp'
+import IconMail from './IconMail'
 
 export {
   IconLogo,
@@ -59,5 +61,7 @@ export {
   IconCart,
   IconBank,
   IconMoney,
-  IconUser
+  IconUser,
+  IconStatsUp,
+  IconMail
 }

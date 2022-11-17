@@ -1,0 +1,20 @@
+query GetAllSuscriptores(
+  $numeroPagina: Int
+  $pagina: Int
+  $FechaInicio: String
+  $FechaFin: String
+) {
+  GetAllSuscriptores(
+    numeroPagina: $numeroPagina
+    pagina: $pagina
+    FechaInicio: $FechaInicio
+    FechaFin: $FechaFin
+  ) {
+    numeroTotal
+    data {
+      suscriptorId
+      nombres
+      correo
+    }
+  }
+}
