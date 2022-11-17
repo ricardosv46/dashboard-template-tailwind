@@ -53,7 +53,7 @@ const SubscribersPage = lazy(() => import('../pages/home/subscribers/Subscribers
 const OrderPage = lazy(() => import('../pages/home/pedidos/OrderPage'))
 const DetallePedido = lazy(() => import('../pages/home/pedidos/DetallePedido'))
 // vistas estadísticas
-const FinishedProduct = lazy(() => import('../pages/home/statistics/FinishedProduct'))
+const FinishedProduct = lazy(() => import('../pages/home/statistics/finishedProduct'))
 
 export const homeRoutes: Route[] = [
   {

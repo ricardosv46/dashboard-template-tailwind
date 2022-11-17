@@ -1,0 +1,20 @@
+query GetAllProductosPorAgotarse($pagina: Int, $numeroPagina: Int, $categoriaSlug: String) {
+  GetAllProductosPorAgotarse(
+    pagina: $pagina
+    numeroPagina: $numeroPagina
+    categoriaSlug: $categoriaSlug
+  ) {
+    numeroTotal
+    data {
+      productoId
+      titulo
+      slug
+      stockReal
+      imagenPrincipal {
+        id
+        url
+        titulo
+      }
+    }
+  }
+}
