@@ -1,5 +1,15 @@
 /* eslint-disable no-tabs */
-import { IconBank, IconCart, IconFile, IconImage, IconMoney, IconOptions, IconUser } from '@icons'
+import {
+  IconBank,
+  IconCart,
+  IconFile,
+  IconImage,
+  IconMail,
+  IconMoney,
+  IconOptions,
+  IconStatsUp,
+  IconUser
+} from '@icons'
 import { Route } from '@interface/index'
 import { lazy } from 'react'
 import IconOrder from '../icons/IconOrder'
@@ -37,10 +47,32 @@ const EditSeller = lazy(() => import('../pages/home/finance/sellers/EditSeller')
 const CreateSeller = lazy(() => import('../pages/home/finance/sellers/CreateSeller'))
 const EditPassword = lazy(() => import('../pages/home/account/EditPassword'))
 const EditProfile = lazy(() => import('../pages/home/account/EditProfile'))
+const SalesYear = lazy(() => import('../pages/home/statistics/SalesYear'))
+const SubscribersPage = lazy(() => import('../pages/home/subscribers/SubscribersPage'))
 // vista Pedidos
 const OrderPage = lazy(() => import('../pages/home/pedidos/OrderPage'))
 const DetallePedido = lazy(() => import('../pages/home/pedidos/DetallePedido'))
 export const homeRoutes: Route[] = [
+  {
+    icon: IconStatsUp,
+    name: 'Estadísticas',
+    to: '/statistics',
+    path: 'statistics',
+    component: SlidersPage,
+    subMenu: {
+      value: true,
+      paths: [
+        {
+          icon: IconOptions,
+          name: 'Ventas por año',
+          path: '/statistics/sales-year',
+          to: 'statistics/sales-year',
+          component: SalesYear,
+          render: true
+        }
+      ]
+    }
+  },
   {
     icon: IconImage,
     path: 'images',
@@ -49,6 +81,7 @@ export const homeRoutes: Route[] = [
     component: ImagesPage,
     subMenu: { value: false, paths: [] }
   },
+
   {
     icon: IconImage,
     name: 'Sliders',
@@ -338,92 +371,16 @@ export const homeRoutes: Route[] = [
         }
       ]
     }
+  },
+  {
+    icon: IconMail,
+    name: 'Suscriptores',
+    path: 'suscriptores',
+    to: '/suscriptores',
+    component: SubscribersPage,
+    subMenu: { value: false, paths: [] }
   }
 ]
-
-// 	{
-// 		icon: IconPedidos,
-// 		name: 'Pedidos',
-// 		to: '/pedidos',
-// 		path: 'pedidos',
-// 		component: PedidosPage,
-// 		subMenu: {
-// 			value: false,
-// 			paths: [
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Ver pedido',
-// 					path: 'pedidos/:id',
-// 					to: '/pedidos/:id',
-// 					component: VerPedidos,
-// 					render: false
-// 				}
-// 			]
-// 		}
-// 	},
-
-// 	{
-// 		icon: IconCart,
-// 		name: 'Productos',
-// 		to: '/products',
-// 		path: 'products',
-// 		component: ProductsPage,
-// 		subMenu: {
-// 			value: true,
-// 			paths: [
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Categoria',
-// 					path: 'products-category',
-// 					to: '/products-category',
-// 					component: CategoryProduct,
-// 					render: true
-// 				},
-// 				{
-// 					icon: IconCart,
-// 					name: 'Productos',
-// 					path: 'products',
-// 					to: '/products',
-// 					component: ProductsPage,
-// 					render: true
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Crear Categoria Producto',
-// 					path: 'create-producto-category',
-// 					to: '/create-producto-category',
-// 					component: CreateCategoryProducto,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Editar Categoria Producto',
-// 					path: 'edit-producto-category/:id',
-// 					to: '/edit-producto-category/:id',
-// 					component: EditCategoryProducto,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Crear Product',
-// 					path: 'create-product',
-// 					to: '/create-product',
-// 					component: CreateProduct,
-// 					render: false
-// 				},
-// 				{
-// 					icon: IconOptions,
-// 					name: 'Editar Product',
-// 					path: 'edit-product/:id',
-// 					to: '/edit-product/:id',
-// 					component: EditProduct,
-// 					render: false
-// 				}
-// 			]
-// 		}
-// 	},
-
-// ]
 
 export const getRoutes = () => {
   const subRoutes = []

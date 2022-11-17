@@ -1,0 +1,7 @@
+query GetAllVentasAnio {
+  GetAllVentasAnio {
+    mes
+    monto
+    cantidad
+  }
+}

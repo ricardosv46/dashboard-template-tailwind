@@ -96,15 +96,15 @@ const ProductsPage = () => {
             Crear Producto
           </button>
         }>
-        <div className="grid justify-center items-start grid-cols-1 md:grid-cols-5 gap-8 mb-3">
-          <div className="md:col-span-3  relative md:h-full">
+        <div className="grid items-start justify-center grid-cols-1 gap-8 mb-3 md:grid-cols-5">
+          <div className="relative md:col-span-3 md:h-full">
             <input
               type="text"
-              className="border peer bg-transparent outline-none w-full h-full p-4 border-primary-600  border-b-2 rounded-tr-md rounded-tl-md"
+              className="w-full h-full p-4 bg-transparent border border-b-2 outline-none peer border-primary-600 rounded-tr-md rounded-tl-md"
               placeholder="Ingrese una palabra clave"
               onChange={(e) => setPalabraClave(e.target.value)}
             />
-            <div className="absolute right-0 top-0 bg-primary-600 pt-3  h-full rounded-tr-md px-3 cursor-pointer">
+            <div className="absolute top-0 right-0 h-full px-3 pt-3 cursor-pointer bg-primary-600 rounded-tr-md">
               <IconSearch />
             </div>
           </div>

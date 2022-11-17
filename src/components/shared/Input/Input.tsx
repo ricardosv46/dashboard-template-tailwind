@@ -56,10 +56,10 @@ const Input = (
         <label
           htmlFor={`input-${uid}`}
           className={classNames([
-            isValueEmpty
+            isValueEmpty && props.type !== 'date'
               ? 'top-[19px] left-3 text-primary-500'
               : 'top-1 left-2 text-primary-500 dark:text-primary-500 font-semibold ',
-            hasError
+            hasError && props.type !== 'date'
               ? 'text-red-600 dark:text-red-400'
               : 'peer-focus:text-primary-500 dark:peer-focus:text-primary-500',
             'absolute peer-focus:top-1 peer-focus:left-2 transition-all font-semibold ease-in-out duration-300'

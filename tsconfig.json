@@ -33,7 +33,8 @@
       "@modules/*": ["src/modules/*"],
       "@assets/*": ["src/assets/*"],
       "@data/*": ["src/data/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@helpers/*": ["src/helpers/*"]
     }
   },
   "include": ["src"],
