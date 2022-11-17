@@ -40,7 +40,33 @@ const EditProfile = lazy(() => import('../pages/home/account/EditProfile'))
 // vista Pedidos
 const OrderPage = lazy(() => import('../pages/home/pedidos/OrderPage'))
 const DetallePedido = lazy(() => import('../pages/home/pedidos/DetallePedido'))
+// vistas estadísticas
+const EstadisticasPage = lazy(() => import('../pages/home/estadisticas/EstadisticasPage'))
+const ProductosMasVendidos = lazy(
+  () => import('../pages/home/estadisticas/productos-mas-vendidos/index')
+)
 export const homeRoutes: Route[] = [
+  {
+    icon: IconBank,
+    name: 'Estadisticas',
+    to: '/estadisticas',
+    path: 'estadisticas',
+    component: EstadisticasPage,
+    subMenu: {
+      value: true,
+      paths: [
+        {
+          icon: IconOptions,
+          name: 'productos mas vendidos',
+          path: 'productos-mas-vendidos',
+          to: '/productos-mas-vendidos',
+          component: ProductosMasVendidos,
+          render: true
+        }
+      ]
+    }
+  },
+
   {
     icon: IconImage,
     path: 'images',
