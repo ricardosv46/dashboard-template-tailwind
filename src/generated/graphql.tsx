@@ -824,8 +824,8 @@ export type MutationUpdateSuscriptoresArgs = {
 
 
 export type MutationUpdateUsuarioArgs = {
+  foto?: InputMaybe<Scalars['Upload']>;
   input?: InputMaybe<UserInput>;
-  photo?: InputMaybe<Scalars['Upload']>;
 };
 
 
@@ -1170,9 +1170,9 @@ export type QueryGetAllPedidoUserArgs = {
 
 
 export type QueryGetAllPedidosArgs = {
-  FechaFin?: InputMaybe<Scalars['String']>;
-  FechaInicio?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
+  fechaFin?: InputMaybe<Scalars['String']>;
+  fechaInicio?: InputMaybe<Scalars['String']>;
   nombreCliente?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
@@ -1212,9 +1212,9 @@ export type QueryGetAllProductosMasVendidosArgs = {
 
 
 export type QueryGetAllProductosMasVendidosSemanaArgs = {
-  FechaFin?: InputMaybe<Scalars['String']>;
-  FechaInicio?: InputMaybe<Scalars['String']>;
   categoriaSlug?: InputMaybe<Scalars['String']>;
+  fechaFin?: InputMaybe<Scalars['String']>;
+  fechaInicio?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
 };
@@ -1248,8 +1248,8 @@ export type QueryGetAllSoportesArgs = {
 
 
 export type QueryGetAllSuscriptoresArgs = {
-  FechaFin?: InputMaybe<Scalars['String']>;
-  FechaInicio?: InputMaybe<Scalars['String']>;
+  fechaFin?: InputMaybe<Scalars['String']>;
+  fechaInicio?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
 };
@@ -1261,9 +1261,9 @@ export type QueryGetAllTarjetaUsuarioArgs = {
 
 
 export type QueryGetAllUsuarioMesCompraronArgs = {
-  FechaFin?: InputMaybe<Scalars['String']>;
-  FechaInicio?: InputMaybe<Scalars['String']>;
   categoriaSlug?: InputMaybe<Scalars['String']>;
+  fechaFin?: InputMaybe<Scalars['String']>;
+  fechaInicio?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
 };
@@ -1278,8 +1278,8 @@ export type QueryGetAllUsuariosArgs = {
 
 
 export type QueryGetAllUsuariosRegistradosUltimoMesArgs = {
-  FechaFin?: InputMaybe<Scalars['String']>;
-  FechaInicio?: InputMaybe<Scalars['String']>;
+  fechaFin?: InputMaybe<Scalars['String']>;
+  fechaInicio?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
 };
@@ -1557,14 +1557,12 @@ export type UserInput = {
   celular?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   fechaNacimiento?: InputMaybe<Scalars['Date']>;
-  foto?: InputMaybe<Scalars['String']>;
   genero?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['ID']>;
   nombres?: InputMaybe<Scalars['String']>;
   numeroDocumento?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   tipoDocumento?: InputMaybe<Scalars['String']>;
-  tipoUsuario?: InputMaybe<Scalars['Int']>;
 };
 
 export type VentasAnio = {
@@ -1576,11 +1574,11 @@ export type VentasAnio = {
 
 export type Reniec = {
   __typename?: 'reniec';
-  ApellidoMaterno?: Maybe<Scalars['String']>;
-  ApellidoPaterno?: Maybe<Scalars['String']>;
-  DNI?: Maybe<Scalars['String']>;
-  FechaNacimiento?: Maybe<Scalars['String']>;
-  Nombres?: Maybe<Scalars['String']>;
+  apellidoMaterno?: Maybe<Scalars['String']>;
+  apellidoPaterno?: Maybe<Scalars['String']>;
+  dni?: Maybe<Scalars['String']>;
+  fechaNacimiento?: Maybe<Scalars['String']>;
+  nombres?: Maybe<Scalars['String']>;
 };
 
 export type DeleteSliderMutationVariables = Exact<{
@@ -1758,6 +1756,14 @@ export type UpdateProductoMutationVariables = Exact<{
 
 export type UpdateProductoMutation = { __typename?: 'Mutation', UpdateProducto: { __typename?: 'Producto', productoId?: string | null, titulo?: string | null, slug?: string | null, descripcionCorta?: string | null, descripcionLarga?: string | null, precioReal?: number | null, precioOferta?: number | null, stockMinimo?: number | null, stockReal?: number | null, keywords?: string | null, destacado?: string | null, estado?: string | null, categoriaProductoId?: number | null, created_at?: any | null, updated_at?: any | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, imagenSecundaria?: { __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null, galeria?: Array<{ __typename?: 'Imagen', id?: string | null, titulo?: string | null, estado?: string | null, url?: string | null } | null> | null } };
 
+export type UpdateUsuarioMutationVariables = Exact<{
+  input?: InputMaybe<UserInput>;
+  foto?: InputMaybe<Scalars['Upload']>;
+}>;
+
+
+export type UpdateUsuarioMutation = { __typename?: 'Mutation', UpdateUsuario: { __typename?: 'User', id?: string | null, tipoUsuario?: number | null, tipoDocumento?: string | null, numeroDocumento?: string | null, genero?: number | null, nombres?: string | null, apellidos?: string | null, celular?: string | null, fechaNacimiento?: any | null, foto?: string | null, email?: string | null } };
+
 export type CreateEfectivoMovilMutationVariables = Exact<{
   input?: InputMaybe<EfectivoMovilInput>;
 }>;
@@ -1895,8 +1901,8 @@ export type GetAllSliderQuery = { __typename?: 'Query', GetAllSliders: { __typen
 export type GetAllSuscriptoresQueryVariables = Exact<{
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
-  FechaInicio?: InputMaybe<Scalars['String']>;
-  FechaFin?: InputMaybe<Scalars['String']>;
+  fechaInicio?: InputMaybe<Scalars['String']>;
+  fechaFin?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -1977,6 +1983,15 @@ export type GetEfectivoMovilIdQueryVariables = Exact<{
 
 export type GetEfectivoMovilIdQuery = { __typename?: 'Query', GetEfectivoMovilId: { __typename?: 'EfectivoMovil', efectivoMovilId?: string | null, titulo?: string | null, estado?: string | null, updated_at?: any | null, created_at?: any | null, numeroCelular?: string | null, imagenPrincipal?: { __typename?: 'Imagen', url?: string | null, estado?: string | null, titulo?: string | null, id?: string | null } | null, imagenQr?: { __typename?: 'Imagen', url?: string | null, estado?: string | null, titulo?: string | null, id?: string | null } | null } };
 
+export type GetAllProductosPorAgotarseQueryVariables = Exact<{
+  pagina?: InputMaybe<Scalars['Int']>;
+  numeroPagina?: InputMaybe<Scalars['Int']>;
+  categoriaSlug?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllProductosPorAgotarseQuery = { __typename?: 'Query', GetAllProductosPorAgotarse: { __typename?: 'GetAllProductos', numeroTotal?: number | null, data?: Array<{ __typename?: 'Producto', productoId?: string | null, titulo?: string | null, slug?: string | null, stockReal?: number | null, imagenPrincipal?: { __typename?: 'Imagen', id?: string | null, url?: string | null, titulo?: string | null } | null }> | null } };
+
 export type GetAllImagenesQueryVariables = Exact<{
   pagina?: InputMaybe<Scalars['Int']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
@@ -1988,8 +2003,8 @@ export type GetAllImagenesQuery = { __typename?: 'Query', GetAllImagenes?: { __t
 export type GetAllPedidosQueryVariables = Exact<{
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
-  FechaInicio?: InputMaybe<Scalars['String']>;
-  FechaFin?: InputMaybe<Scalars['String']>;
+  fechaInicio?: InputMaybe<Scalars['String']>;
+  fechaFin?: InputMaybe<Scalars['String']>;
   nombreCliente?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
 }>;
@@ -3193,6 +3208,50 @@ export function useUpdateProductoMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdateProductoMutationHookResult = ReturnType<typeof useUpdateProductoMutation>;
 export type UpdateProductoMutationResult = Apollo.MutationResult<UpdateProductoMutation>;
 export type UpdateProductoMutationOptions = Apollo.BaseMutationOptions<UpdateProductoMutation, UpdateProductoMutationVariables>;
+export const UpdateUsuarioDocument = gql`
+    mutation UpdateUsuario($input: UserInput, $foto: Upload) {
+  UpdateUsuario(input: $input, foto: $foto) {
+    id
+    tipoUsuario
+    tipoDocumento
+    numeroDocumento
+    genero
+    nombres
+    apellidos
+    celular
+    fechaNacimiento
+    foto
+    email
+  }
+}
+    `;
+export type UpdateUsuarioMutationFn = Apollo.MutationFunction<UpdateUsuarioMutation, UpdateUsuarioMutationVariables>;
+
+/**
+ * __useUpdateUsuarioMutation__
+ *
+ * To run a mutation, you first call `useUpdateUsuarioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUsuarioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUsuarioMutation, { data, loading, error }] = useUpdateUsuarioMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      foto: // value for 'foto'
+ *   },
+ * });
+ */
+export function useUpdateUsuarioMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUsuarioMutation, UpdateUsuarioMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUsuarioMutation, UpdateUsuarioMutationVariables>(UpdateUsuarioDocument, options);
+      }
+export type UpdateUsuarioMutationHookResult = ReturnType<typeof useUpdateUsuarioMutation>;
+export type UpdateUsuarioMutationResult = Apollo.MutationResult<UpdateUsuarioMutation>;
+export type UpdateUsuarioMutationOptions = Apollo.BaseMutationOptions<UpdateUsuarioMutation, UpdateUsuarioMutationVariables>;
 export const CreateEfectivoMovilDocument = gql`
     mutation CreateEfectivoMovil($input: EfectivoMovilInput) {
   CreateEfectivoMovil(input: $input) {
@@ -4033,12 +4092,12 @@ export type GetAllSliderQueryHookResult = ReturnType<typeof useGetAllSliderQuery
 export type GetAllSliderLazyQueryHookResult = ReturnType<typeof useGetAllSliderLazyQuery>;
 export type GetAllSliderQueryResult = Apollo.QueryResult<GetAllSliderQuery, GetAllSliderQueryVariables>;
 export const GetAllSuscriptoresDocument = gql`
-    query GetAllSuscriptores($numeroPagina: Int, $pagina: Int, $FechaInicio: String, $FechaFin: String) {
+    query GetAllSuscriptores($numeroPagina: Int, $pagina: Int, $fechaInicio: String, $fechaFin: String) {
   GetAllSuscriptores(
     numeroPagina: $numeroPagina
     pagina: $pagina
-    FechaInicio: $FechaInicio
-    FechaFin: $FechaFin
+    fechaInicio: $fechaInicio
+    fechaFin: $fechaFin
   ) {
     numeroTotal
     data {
@@ -4064,8 +4123,8 @@ export const GetAllSuscriptoresDocument = gql`
  *   variables: {
  *      numeroPagina: // value for 'numeroPagina'
  *      pagina: // value for 'pagina'
- *      FechaInicio: // value for 'FechaInicio'
- *      FechaFin: // value for 'FechaFin'
+ *      fechaInicio: // value for 'fechaInicio'
+ *      fechaFin: // value for 'fechaFin'
  *   },
  * });
  */
@@ -4625,6 +4684,58 @@ export function useGetEfectivoMovilIdLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetEfectivoMovilIdQueryHookResult = ReturnType<typeof useGetEfectivoMovilIdQuery>;
 export type GetEfectivoMovilIdLazyQueryHookResult = ReturnType<typeof useGetEfectivoMovilIdLazyQuery>;
 export type GetEfectivoMovilIdQueryResult = Apollo.QueryResult<GetEfectivoMovilIdQuery, GetEfectivoMovilIdQueryVariables>;
+export const GetAllProductosPorAgotarseDocument = gql`
+    query GetAllProductosPorAgotarse($pagina: Int, $numeroPagina: Int, $categoriaSlug: String) {
+  GetAllProductosPorAgotarse(
+    pagina: $pagina
+    numeroPagina: $numeroPagina
+    categoriaSlug: $categoriaSlug
+  ) {
+    numeroTotal
+    data {
+      productoId
+      titulo
+      slug
+      stockReal
+      imagenPrincipal {
+        id
+        url
+        titulo
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllProductosPorAgotarseQuery__
+ *
+ * To run a query within a React component, call `useGetAllProductosPorAgotarseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllProductosPorAgotarseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllProductosPorAgotarseQuery({
+ *   variables: {
+ *      pagina: // value for 'pagina'
+ *      numeroPagina: // value for 'numeroPagina'
+ *      categoriaSlug: // value for 'categoriaSlug'
+ *   },
+ * });
+ */
+export function useGetAllProductosPorAgotarseQuery(baseOptions?: Apollo.QueryHookOptions<GetAllProductosPorAgotarseQuery, GetAllProductosPorAgotarseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllProductosPorAgotarseQuery, GetAllProductosPorAgotarseQueryVariables>(GetAllProductosPorAgotarseDocument, options);
+      }
+export function useGetAllProductosPorAgotarseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllProductosPorAgotarseQuery, GetAllProductosPorAgotarseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllProductosPorAgotarseQuery, GetAllProductosPorAgotarseQueryVariables>(GetAllProductosPorAgotarseDocument, options);
+        }
+export type GetAllProductosPorAgotarseQueryHookResult = ReturnType<typeof useGetAllProductosPorAgotarseQuery>;
+export type GetAllProductosPorAgotarseLazyQueryHookResult = ReturnType<typeof useGetAllProductosPorAgotarseLazyQuery>;
+export type GetAllProductosPorAgotarseQueryResult = Apollo.QueryResult<GetAllProductosPorAgotarseQuery, GetAllProductosPorAgotarseQueryVariables>;
 export const GetAllImagenesDocument = gql`
     query GetAllImagenes($pagina: Int, $numeroPagina: Int) {
   GetAllImagenes(pagina: $pagina, numeroPagina: $numeroPagina) {
@@ -4667,12 +4778,12 @@ export type GetAllImagenesQueryHookResult = ReturnType<typeof useGetAllImagenesQ
 export type GetAllImagenesLazyQueryHookResult = ReturnType<typeof useGetAllImagenesLazyQuery>;
 export type GetAllImagenesQueryResult = Apollo.QueryResult<GetAllImagenesQuery, GetAllImagenesQueryVariables>;
 export const GetAllPedidosDocument = gql`
-    query GetAllPedidos($numeroPagina: Int, $pagina: Int, $FechaInicio: String, $FechaFin: String, $nombreCliente: String, $email: String) {
+    query GetAllPedidos($numeroPagina: Int, $pagina: Int, $fechaInicio: String, $fechaFin: String, $nombreCliente: String, $email: String) {
   GetAllPedidos(
     numeroPagina: $numeroPagina
     pagina: $pagina
-    FechaInicio: $FechaInicio
-    FechaFin: $FechaFin
+    fechaInicio: $fechaInicio
+    fechaFin: $fechaFin
     nombreCliente: $nombreCliente
     email: $email
   ) {
@@ -4721,8 +4832,8 @@ export const GetAllPedidosDocument = gql`
  *   variables: {
  *      numeroPagina: // value for 'numeroPagina'
  *      pagina: // value for 'pagina'
- *      FechaInicio: // value for 'FechaInicio'
- *      FechaFin: // value for 'FechaFin'
+ *      fechaInicio: // value for 'fechaInicio'
+ *      fechaFin: // value for 'fechaFin'
  *      nombreCliente: // value for 'nombreCliente'
  *      email: // value for 'email'
  *   },

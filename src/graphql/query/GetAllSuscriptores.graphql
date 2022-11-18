@@ -1,14 +1,14 @@
 query GetAllSuscriptores(
   $numeroPagina: Int
   $pagina: Int
-  $FechaInicio: String
-  $FechaFin: String
+  $fechaInicio: String
+  $fechaFin: String
 ) {
   GetAllSuscriptores(
     numeroPagina: $numeroPagina
     pagina: $pagina
-    FechaInicio: $FechaInicio
-    FechaFin: $FechaFin
+    fechaInicio: $fechaInicio
+    fechaFin: $fechaFin
   ) {
     numeroTotal
     data {

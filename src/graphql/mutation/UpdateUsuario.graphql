@@ -1,0 +1,15 @@
+mutation UpdateUsuario($input: UserInput, $foto: Upload) {
+  UpdateUsuario(input: $input, foto: $foto) {
+    id
+    tipoUsuario
+    tipoDocumento
+    numeroDocumento
+    genero
+    nombres
+    apellidos
+    celular
+    fechaNacimiento
+    foto
+    email
+  }
+}

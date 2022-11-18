@@ -1,16 +1,16 @@
 query GetAllPedidos(
   $numeroPagina: Int
   $pagina: Int
-  $FechaInicio: String
-  $FechaFin: String
+  $fechaInicio: String
+  $fechaFin: String
   $nombreCliente: String
   $email: String
 ) {
   GetAllPedidos(
     numeroPagina: $numeroPagina
     pagina: $pagina
-    FechaInicio: $FechaInicio
-    FechaFin: $FechaFin
+    fechaInicio: $fechaInicio
+    fechaFin: $fechaFin
     nombreCliente: $nombreCliente
     email: $email
   ) {
