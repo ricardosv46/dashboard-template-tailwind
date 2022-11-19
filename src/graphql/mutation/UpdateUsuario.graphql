@@ -11,5 +11,7 @@ mutation UpdateUsuario($input: UserInput, $foto: Upload) {
     fechaNacimiento
     foto
     email
+    apiToken
+    customer_id
   }
 }

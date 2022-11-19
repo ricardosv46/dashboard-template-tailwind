@@ -55,7 +55,7 @@ export const useProfile = () => {
         }
       })
       if (res.data?.UpdateUsuario) {
-        return { ok: true }
+        return { ok: true ,data:res?.data?.UpdateUsuario}
       }
       return { ok: false }
     } catch (error: any) {

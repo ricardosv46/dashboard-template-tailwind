@@ -1,8 +1,8 @@
 import { useGetAllSuscriptoresQuery, useGetAllVentasAnioQuery } from '../generated/graphql'
 
 export interface IProps {
-  FechaInicio: string
-  FechaFin: string
+  fechaInicio: string
+  fechaFin: string
   pagina: number
   numeroPagina: number
 }
@@ -11,16 +11,16 @@ export interface IProps {
 export const useSubscribers = ({
   numeroPagina = 10,
   pagina = 1,
-  FechaInicio = '',
-  FechaFin = ''
+  fechaInicio = '',
+  fechaFin = ''
 }: IProps) => {
   const { data, loading, refetch } = useGetAllSuscriptoresQuery({
     fetchPolicy: 'network-only',
     variables: {
       numeroPagina,
       pagina,
-      FechaInicio,
-      FechaFin
+      fechaInicio,
+      fechaFin
     }
   })
 

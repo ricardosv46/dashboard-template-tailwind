@@ -10,8 +10,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const initialState = {
-  FechaInicio: '',
-  FechaFin: ''
+  fechaInicio: '',
+  fechaFin: ''
 }
 
 const SubscribersPage = () => {
@@ -21,8 +21,8 @@ const SubscribersPage = () => {
   })
 
   const [filtros, setFiltros] = useState({
-    FechaInicio: '',
-    FechaFin: ''
+    fechaInicio: '',
+    fechaFin: ''
   })
 
   const onSubmit = () => {
@@ -39,8 +39,8 @@ const SubscribersPage = () => {
   const { ventasAnio, loading, ntotal } = useSubscribers({ ...state, ...filtros })
 
   const limpiarFiltro = () => {
-    form.setValues({ FechaInicio: '', FechaFin: '' })
-    setFiltros({ FechaInicio: '', FechaFin: '' })
+    form.setValues({ fechaInicio: '', fechaFin: '' })
+    setFiltros({ fechaInicio: '', fechaFin: '' })
     useState({
       pagina: 1,
       numeroPagina: 10
@@ -58,13 +58,13 @@ const SubscribersPage = () => {
           className="w-full"
           type="date"
           label="Fecha Inicial"
-          {...form.getFieldProps('FechaInicio')}
+          {...form.getFieldProps('fechaInicio')}
         />
         <Input
           className="w-full"
           type="date"
           label="Fecha Final"
-          {...form.getFieldProps('FechaFin')}
+          {...form.getFieldProps('fechaFin')}
         />
         <button className="w-full px-0 btn btn-solid-green" type="submit">
           Filtrar

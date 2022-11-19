@@ -1762,7 +1762,7 @@ export type UpdateUsuarioMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUsuarioMutation = { __typename?: 'Mutation', UpdateUsuario: { __typename?: 'User', id?: string | null, tipoUsuario?: number | null, tipoDocumento?: string | null, numeroDocumento?: string | null, genero?: number | null, nombres?: string | null, apellidos?: string | null, celular?: string | null, fechaNacimiento?: any | null, foto?: string | null, email?: string | null } };
+export type UpdateUsuarioMutation = { __typename?: 'Mutation', UpdateUsuario: { __typename?: 'User', id?: string | null, tipoUsuario?: number | null, tipoDocumento?: string | null, numeroDocumento?: string | null, genero?: number | null, nombres?: string | null, apellidos?: string | null, celular?: string | null, fechaNacimiento?: any | null, foto?: string | null, email?: string | null, apiToken?: string | null, customer_id?: string | null } };
 
 export type CreateEfectivoMovilMutationVariables = Exact<{
   input?: InputMaybe<EfectivoMovilInput>;
@@ -3222,6 +3222,8 @@ export const UpdateUsuarioDocument = gql`
     fechaNacimiento
     foto
     email
+    apiToken
+    customer_id
   }
 }
     `;

@@ -24,17 +24,17 @@ const dataGenero = [
 const EditProfile = () => {
   const router = useNavigate()
   const { updateProfile, loadingUpdateProfile } = useProfile()
-  const { user } = useAuthContext()
-
-  console.log({ user })
+  const { user, login } = useAuthContext()
 
   const onSubmit = async () => {
     updateProfile({
       id: String(user.id),
-      ...values
+      ...values,
+      photo: values?.photo?.length ? null : values?.photo
     }).then((res) => {
       if (res?.ok) {
         Toast({ type: 'success', message: 'Datos actualizado.' })
+        login(res?.data!)
         router('/')
       } else {
         Toast({ type: 'error', message: res?.error! })
@@ -57,8 +57,6 @@ const EditProfile = () => {
       photo: user?.foto ?? null
     }
   })
-
-  console.log({ values })
 
   return (
     <PlantillaPage title="Editar Perfil" goback>
